@@ -46,12 +46,19 @@ node_create(char type,...)
 	 */
 	va_start(ap, type);
 	switch (node->type) {
-	case 'c':
+	case 'n':
 		/*
-		 * Initialize constant value.
+		 * Initialize number value.
 		 */
-		node->data.constant = va_arg(ap, double);
+		node->data.number = va_arg(ap, double);
+		break;
 
+        case 'c':
+		/*
+		 * Remember pointer to symbol table record describing
+		 * constant.
+		 */
+		node->data.constant = va_arg(ap, Record *);
 		break;
 
 	case 'v':
@@ -111,6 +118,7 @@ node_destroy(Node * node)
 	 * If necessary, destroy subtree rooted at node.
 	 */
 	switch (node->type) {
+	case 'n':
 	case 'c':
 	case 'v':
 		break;
@@ -143,7 +151,10 @@ node_copy(Node * node)
 	 * node.
 	 */
 	switch (node->type) {
-		case 'c':
+        case 'n':
+		return node_create('n', node->data.number);
+
+        case 'c':
 		return node_create('c', node->data.constant);
 
 	case 'v':
@@ -163,39 +174,35 @@ node_copy(Node * node)
 Node           *
 node_simplify(Node * node)
 {
-	/*
-	 * According to node type, apply further simplifications.
-	 */
+	/* According to node type, apply further simplifications.  Constants are not simplified, in order to eventually appear unchanged in derivatives. */
 	switch (node->type) {
+		case 'n':
 		case 'c':
 		case 'v':
 		return node;
 
 	case 'f':
-		/*
-		 * Simplify function argument and if constant evaluate
-		 * function and replace function node with constant node.
-		 */
+		/* Simplify function argument and if number evaluate function and replace function node with number node. */
 		node->data.function.child = node_simplify(node->data.function.child);
-		if (node->data.function.child->type == 'c') {
+		if (node->data.function.child->type == 'n') {
 			double          value = node_evaluate(node);
 
 			node_destroy(node);
-			return node_create('c', value);
+			return node_create('n', value);
 		} else
 			return node;
 
 	case 'u':
 		/*
-		 * Simplify unary operation operand and if constant apply
-		 * operation and replace operation node with constant node.
+		 * Simplify unary operation operand and if number apply
+		 * operation and replace operation node with number node.
 		 */
 		node->data.un_op.child = node_simplify(node->data.un_op.child);
-		if (node->data.un_op.operation == '-' && node->data.un_op.child->type == 'c') {
+		if (node->data.un_op.operation == '-' && node->data.un_op.child->type == 'n') {
 			double          value = node_evaluate(node);
 
 			node_destroy(node);
-			return node_create('c', value);
+			return node_create('n', value);
 		} else
 			return node;
 
@@ -207,27 +214,27 @@ node_simplify(Node * node)
 		node->data.bin_op.right = node_simplify(node->data.bin_op.right);
 
 		/*
-		 * If operands constant apply operation and replace operation
-		 * node with constant node.
+		 * If operands numbers apply operation and replace operation
+		 * node with number node.
 		 */
-		if (node->data.bin_op.left->type == 'c' && node->data.bin_op.right->type == 'c') {
+		if (node->data.bin_op.left->type == 'n' && node->data.bin_op.right->type == 'n') {
 			double          value = node_evaluate(node);
 
 			node_destroy(node);
-			return node_create('c', value);
+			return node_create('n', value);
 		}
 		/*
 		 * Eliminate 0 as neutral addition operand.
 		 */
 		else if (node->data.bin_op.operation == '+')
-			if (node->data.bin_op.left->type == 'c' && node->data.bin_op.left->data.constant == 0) {
+			if (node->data.bin_op.left->type == 'n' && node->data.bin_op.left->data.number == 0) {
 				Node           *right;
 
 				right = node->data.bin_op.right;
 				node->data.bin_op.right = NULL;
 				node_destroy(node);
 				return right;
-			} else if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 0) {
+			} else if (node->data.bin_op.right->type == 'n' && node->data.bin_op.right->data.number == 0) {
 				Node           *left;
 
 				left = node->data.bin_op.left;
@@ -240,7 +247,7 @@ node_simplify(Node * node)
 		 * Eliminate 0 as neutral subtraction right operand.
 		 */
 		else if (node->data.bin_op.operation == '-')
-			if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 0) {
+			if (node->data.bin_op.right->type == 'n' && node->data.bin_op.right->data.number == 0) {
 				Node           *left;
 
 				left = node->data.bin_op.left;
@@ -253,14 +260,14 @@ node_simplify(Node * node)
 		 * Eliminate 1 as neutral multiplication operand.
 		 */
 		else if (node->data.bin_op.operation == '*')
-			if (node->data.bin_op.left->type == 'c' && node->data.bin_op.left->data.constant == 1) {
+			if (node->data.bin_op.left->type == 'n' && node->data.bin_op.left->data.number == 1) {
 				Node           *right;
 
 				right = node->data.bin_op.right;
 				node->data.bin_op.right = NULL;
 				node_destroy(node);
 				return right;
-			} else if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 1) {
+			} else if (node->data.bin_op.right->type == 'n' && node->data.bin_op.right->data.number == 1) {
 				Node           *left;
 
 				left = node->data.bin_op.left;
@@ -273,7 +280,7 @@ node_simplify(Node * node)
 		 * Eliminate 1 as neutral division right operand.
 		 */
 		else if (node->data.bin_op.operation == '/')
-			if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 1) {
+			if (node->data.bin_op.right->type == 'n' && node->data.bin_op.right->data.number == 1) {
 				Node           *left;
 
 				left = node->data.bin_op.left;
@@ -287,16 +294,16 @@ node_simplify(Node * node)
 		 * operands.
 		 */
 		else if (node->data.bin_op.operation == '^')
-			if (node->data.bin_op.left->type == 'c' && node->data.bin_op.left->data.constant == 0) {
+			if (node->data.bin_op.left->type == 'n' && node->data.bin_op.left->data.number == 0) {
 				node_destroy(node);
-				return node_create('c', 0.0);
-			} else if (node->data.bin_op.left->type == 'c' && node->data.bin_op.left->data.constant == 1) {
+				return node_create('n', 0.0);
+			} else if (node->data.bin_op.left->type == 'n' && node->data.bin_op.left->data.number == 1) {
 				node_destroy(node);
-				return node_create('c', 1.0);
-			} else if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 0) {
+				return node_create('n', 1.0);
+			} else if (node->data.bin_op.right->type == 'n' && node->data.bin_op.right->data.number == 0) {
 				node_destroy(node);
-				return node_create('c', 1.0);
-			} else if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 1) {
+				return node_create('n', 1.0);
+			} else if (node->data.bin_op.right->type == 'n' && node->data.bin_op.right->data.number == 1) {
 				Node           *left;
 
 				left = node->data.bin_op.left;
@@ -317,8 +324,14 @@ node_evaluate(Node * node)
 	 * According to node type, evaluate subtree rooted at node.
 	 */
 	switch (node->type) {
-		case 'c':
-		return node->data.constant;
+		case 'n':
+		return node->data.number;
+
+	case 'c':
+		/*
+		 * Constant values are used from symbol table.
+		 */
+		return node->data.constant->data.value;
 
 	case 'v':
 		/*
@@ -376,18 +389,24 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 	 * is created.
 	 */
 	switch (node->type) {
-		case 'c':
+		case 'n':
+		/*
+		 * Derivative of number equals 0.
+		 */
+		return node_create('n', 0.0);
+
+        case 'c':
 		/*
 		 * Derivative of constant equals 0.
 		 */
-		return node_create('c', 0.0);
+		return node_create('n', 0.0);
 
 	case 'v':
 		/*
 		 * Derivative of variable equals 1 if variable is derivative
 		 * variable, 0 otherwise.
 		 */
-		return node_create('c', (!strcmp(name, node->data.variable->name)) ? 1.0 : 0.0);
+		return node_create('n', (!strcmp(name, node->data.variable->name)) ? 1.0 : 0.0);
 
 	case 'f':
 		/*
@@ -404,7 +423,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 * Apply rule of square root function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "sqrt"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '*', node_create('c', 2.0), node_copy(node)));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '*', node_create('n', 2.0), node_copy(node)));
 		/*
 		 * Apply rule of sine function derivative.
 		 */
@@ -419,12 +438,12 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 * Apply rule of tangent function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "tan"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "cos"), node_copy(node->data.function.child)), node_create('c', 2.0)));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "cos"), node_copy(node->data.function.child)), node_create('n', 2.0)));
 		/*
 		 * Apply rule of cotangent function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "cot"))
-			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sin"), node_copy(node->data.function.child)), node_create('c', 2.0))));
+			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sin"), node_copy(node->data.function.child)), node_create('n', 2.0))));
                 /*
 		 * Apply rule of secant function derivative.
 		 */
@@ -439,32 +458,32 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 * Apply rule of inverse sine function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "asin"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)))));
 		/*
 		 * Apply rule of inverse cosine function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "acos"))
-			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))))));
+			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0))))));
 		/*
 		 * Apply rule of inverse tangent function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "atan"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '+', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '+', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0))));
 		/*
 		 * Apply rule of inverse cotanget function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "acot"))
-			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '+', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))));
+			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '+', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)))));
                 /*
 		 * Apply rule of inverse secant function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "asec"))
-			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_create('b', '/', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))))))));
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '/', node_create('n', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('n', 1.0), node_create('b', '/', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0))))))));
                 /*
 		 * Apply rule of inverse cosecant function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "acsc"))
-			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('u', '-', node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_create('b', '/', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))))))));
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('u', '-', node_create('b', '/', node_create('n', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('n', 1.0), node_create('b', '/', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)))))))));
 		/*
 		 * Apply rule of hyperbolic sine function derivative.
 		 */
@@ -479,12 +498,12 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 * Apply rule of hyperbolic tangent function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "tanh"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "cosh"), node_copy(node->data.function.child)), node_create('c', 2.0)));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "cosh"), node_copy(node->data.function.child)), node_create('n', 2.0)));
 		/*
 		 * Apply rule of hyperbolic cotangent function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "coth"))
-			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sinh"), node_copy(node->data.function.child)), node_create('c', 2.0))));
+			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sinh"), node_copy(node->data.function.child)), node_create('n', 2.0))));
                 /*
 		 * Apply rule of hyperbolic secant function derivative.
 		 */
@@ -499,42 +518,42 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 * Apply rule of inverse hyperbolic sine function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "asinh"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)))));
 		/*
 		 * Apply rule of inverse hyperbolic cosine function
 		 * derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "acosh"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('c', 1.0))));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)), node_create('n', 1.0))));
 		/*
 		 * Apply rule of inverse hyperbolic tangent function
 		 * derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "atanh"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0))));
 		/*
 		 * Apply rule of inverse hyperbolic cotangent function
 		 * derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "acoth"))
-			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('c', 1.0)));
+			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)), node_create('n', 1.0)));
                 /*
 		 * Apply rule of inverse hyperbolic secant function
 		 * derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "asech"))
-			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('u', '-', node_create('b', '*', node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_copy(node->data.function.child), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_copy(node->data.function.child))))), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '/', node_create('c', 1.0), node_create('b', '+', node_create('c', 1.0), node_copy(node->data.function.child)))))));
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('u', '-', node_create('b', '*', node_create('b', '/', node_create('n', 1.0), node_create('b', '*', node_copy(node->data.function.child), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('n', 1.0), node_copy(node->data.function.child))))), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '/', node_create('n', 1.0), node_create('b', '+', node_create('n', 1.0), node_copy(node->data.function.child)))))));
                 /*
 		 * Apply rule of inverse hyperbolic cosecant function
 		 * derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "acsch"))
-                        return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('u', '-', node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '+', node_create('c', 1.0), node_create('b', '/', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))))))));
+                        return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('u', '-', node_create('b', '/', node_create('n', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '+', node_create('n', 1.0), node_create('b', '/', node_create('n', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('n', 2.0)))))))));
 		/*
 		 * Apply rule of absolute value function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "abs"))
-			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('b', '*', node_create('c', 2.0), node_create('f', symbol_table_lookup(symbol_table, "step"), node_copy(node->data.function.child))), node_create('c', 1.0)));
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('b', '*', node_create('n', 2.0), node_create('f', symbol_table_lookup(symbol_table, "step"), node_copy(node->data.function.child))), node_create('n', 1.0)));
                 /*
 		 * Apply rule of step function derivative.
 		 */
@@ -584,15 +603,15 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 			/*
 			 * Apply (f/g)'=(f'*g-f*g')/g^2 derivative rule.
 			 */
-			return node_create('b', '/', node_create('b', '-', node_create('b', '*', node_derivative(node->data.bin_op.left, name, symbol_table), node_copy(node->data.bin_op.right)), node_create('b', '*', node_copy(node->data.bin_op.left), node_derivative(node->data.bin_op.right, name, symbol_table))), node_create('b', '^', node_copy(node->data.bin_op.right), node_create('c', 2.0)));
+			return node_create('b', '/', node_create('b', '-', node_create('b', '*', node_derivative(node->data.bin_op.left, name, symbol_table), node_copy(node->data.bin_op.right)), node_create('b', '*', node_copy(node->data.bin_op.left), node_derivative(node->data.bin_op.right, name, symbol_table))), node_create('b', '^', node_copy(node->data.bin_op.right), node_create('n', 2.0)));
 
 		case '^':
 			/*
-			 * If right operand of exponentiation constant apply
+			 * If right operand of exponentiation number apply
 			 * (f^n)'=n*f^(n-1)*f' derivative rule.
 			 */
-			if (node->data.bin_op.right->type == 'c')
-				return node_create('b', '*', node_create('b', '*', node_create('c', node->data.bin_op.right->data.constant), node_derivative(node->data.bin_op.left, name, symbol_table)), node_create('b', '^', node_copy(node->data.bin_op.left), node_create('c', node->data.bin_op.right->data.constant - 1.0)));
+			if (node->data.bin_op.right->type == 'n')
+				return node_create('b', '*', node_create('b', '*', node_create('n', node->data.bin_op.right->data.number), node_derivative(node->data.bin_op.left, name, symbol_table)), node_create('b', '^', node_copy(node->data.bin_op.left), node_create('n', node->data.bin_op.right->data.number - 1.0)));
 			/*
 			 * Otherwise, apply logarithmic derivative rule:
 			 * (log(f^g))'=(f^g)'/f^g =>
@@ -649,21 +668,24 @@ node_get_length(Node * node)
 	 * subtree rooted at node.
 	 */
 	switch (node->type) {
-	case 'c':
+	case 'n':
 		length = 0;
-		if (node->data.constant < 0)
+		if (node->data.number < 0)
 			length += 1;
 
                 file = tmpfile();
                 if (file) {
-                        if ((count = fprintf(file, "%g", node->data.constant)) >= 0)
+                        if ((count = fprintf(file, "%g", node->data.number)) >= 0)
                                 length += count;
                         fclose(file);
                 }
 
-		if (node->data.constant < 0)
+		if (node->data.number < 0)
 			length += 1;
 		return length;
+
+	case 'c':
+		return strlen(node->data.constant->name);
 
 	case 'v':
 		return strlen(node->data.variable->name);
@@ -691,15 +713,19 @@ node_write(Node * node, char *string)
 	 * precedence.
 	 */
 	switch (node->type) {
-		case 'c':
-		if (node->data.constant < 0) {
+		case 'n':
+		if (node->data.number < 0) {
 			sprintf(string, "%c", '(');
 			string += strlen(string);
 		}
-		sprintf(string, "%g", node->data.constant);
+		sprintf(string, "%g", node->data.number);
 		string += strlen(string);
-		if (node->data.constant < 0)
+		if (node->data.number < 0)
 			sprintf(string, "%c", ')');
+		break;
+
+	case 'c':
+		sprintf(string, "%s", node->data.constant->name);
 		break;
 
 	case 'v':

@@ -72,7 +72,7 @@ extern void input_reset (void);
 }
 
 /* Grammar terminal symbols.  */
-%token <node> NUMBER VARIABLE
+%token <node> NUMBER CONSTANT VARIABLE
 %token <record> FUNCTION
 %left '-' '+'
 %left '*' '/'
@@ -96,6 +96,7 @@ input
 
 expression
 : NUMBER
+| CONSTANT
 | VARIABLE
 | expression '+' expression {
   /* Create addition binary operation node.  */

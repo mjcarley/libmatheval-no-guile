@@ -342,8 +342,15 @@ evaluate function for specific variable values or to calculate
 function derivative over some variable.
 
 String representation of function is allowed to consist of decimal
-constants, variables, elementary functions, unary and binary
+numbers, constants, variables, elementary functions, unary and binary
 operations.
+
+Supported constants are (names that should be used are given in
+parenthesis): e (@code{e}), log2(e) (@code{log2e}), log10(e)
+(@code{log10e}), ln(2) (@code{ln2}), ln(10) (@code{ln10}), pi
+(@code{pi}), pi / 2 (@code{pi_2}), pi / 4 (@code{pi_4}), 1 / pi
+(@code{1_pi}), 2 / pi (@code{2_pi}), 2 / sqrt(pi) (@code{2_sqrtpi}),
+sqrt(2) (@code{sqrt}) and sqrt(1 / 2) (@code{sqrt1_2}).
 
 Variable name is any combination of alphanumericals and @code{_}
 characters beginning with a non-digit that is not elementary function
@@ -829,8 +836,15 @@ evaluate function for specific variable values or to calculate
 function derivative over some variable.
 
 String representation of function is allowed to consist of decimal
-constants, variables, elementary functions, unary and binary
+numbers, constants, variables, elementary functions, unary and binary
 operations.
+
+Supported constants are (names that should be used are given in
+parenthesis): e (@code{e}), log2(e) (@code{log2e}), log10(e)
+(@code{log10e}), ln(2) (@code{ln2}), ln(10) (@code{ln10}), pi
+(@code{pi}), pi / 2 (@code{pi_2}), pi / 4 (@code{pi_4}), 1 / pi
+(@code{1_pi}), 2 / pi (@code{2_pi}), 2 / sqrt(pi) (@code{2_sqrtpi}),
+sqrt(2) (@code{sqrt}) and sqrt(1 / 2) (@code{sqrt1_2}).
 
 Variable name is any combination of alphanumericals and @code{_}
 characters beginning with a non-digit that is not elementary function
@@ -1408,20 +1422,20 @@ explain project design. See @ref{Project structure} section for
 description of where each functionality is located in source code.
 
 Mathematical functions are represented as trees in computer memory.
-There are five different nodes in such a tree: constants, variables,
-functions, unary operations and binary operations.  Single data
-structure is employed for tree nodes, while union is used over what is
-different among them.  Constant have unique value, unary and binary
-operations have unique pointer(s) to their operand(s) node(s).  To
-represent variables and functions, a symbol table is employed; thus
-variables and functions have unique pointers to corresponding symbol
-table records (functions also have unique pointer to their argument
-node).  All operations related to functions (e.g. evaluation or
-derivative calculation) are implemented as recursive operations on
-tree nodes.  There exist a node operation that is not visible as
-external procedure and this is node simplification; this operation is
-very important regarding overall efficiency of other operations and is
-employed each time when new tree created.
+There are five different nodes in such a tree: number, constants,
+variables, functions, unary operations and binary operations.  Single
+data structure is employed for tree nodes, while union is used over
+what is different among them.  Numbers have unique value, unary and
+binary operations have unique pointer(s) to their operand(s) node(s).
+To represent constants, variables and functions, a symbol table is
+employed; thus constants, variables and functions have unique pointers
+to corresponding symbol table records (functions also have unique
+pointer to their argument node).  All operations related to functions
+(e.g. evaluation or derivative calculation) are implemented as
+recursive operations on tree nodes.  There exist a node operation that
+is not visible as external procedure and this is node simplification;
+this operation is very important regarding overall efficiency of other
+operations and is employed each time when new tree created.
 
 Symbol table is implemented as hash table, where each bucket has
 linked list of records stored in it.  Records store information of
@@ -1439,11 +1453,12 @@ symbol table.  Most of operations on evaluator objects are simply
 delegated to function tree root node.
 
 For parsing strings representing mathematical functions, Lex and Yacc
-are employed.  Scanner is creating symbol table records for constants
-and variables, while for functions it is only looking up existing
+are employed.  Scanner is creating symbol table records for variables,
+while for constants and functions it is only looking up existing
 symbol table records (before starting scanning, symbol table should be
-populated with records for functions recognized by scanner).  Parser
-is responsible for building function tree representation.
+populated with records for constants and functions recognized by
+scanner).  Parser is responsible for building function tree
+representation.
 
 Couple error reporting procedures, as well as replacements for
 standard memory allocation routines are also present.  These are
@@ -1528,7 +1543,7 @@ order) listed below:
 Extend scanner to recognize more mathematical functions, to recognize
 alternative names for existing functions (e.g. to recognize both
 @samp{tg} and @samp{tan} as names for tangent function) and to
-recognize constants (e.g. @samp{pi}, @samp{e} etc.)
+recognize more constants.
 
 @item
 Implement variable hash table length for symbol table.  As for now,
@@ -1539,7 +1554,7 @@ representing function.
 
 @item
 Add more simplifications to function tree representation.  Only basic
-simplifications, mostly related to constants subtrees consolidation and
+simplifications, mostly related to numbers subtrees consolidation and
 binary operations neutral elements are employed now.  More ambitious
 optimization, using commutative, associative and distributive rules
 for binary operations would be desirable.
@@ -1629,7 +1644,7 @@ employing simpler overall design and also using GNU auto-tools and
 what else was necessary according to GNU guidelines.  The benefit is
 that final product looks much better now (well, at least to me and at
 least at the very moment of this writing), the drawback is that code
-is not thoroughly tested again. But certainly author would be more
+is not thoroughly tested again.  But certainly author would be more
 than happy to further improve and maintain it.  Please see @ref{Bugs},
 for contact information.
 

@@ -25,34 +25,130 @@ AT_SETUP([Check constants.])
 
 AT_DATA([constant.scm],
 [[
-(define f (evaluator-create "42"))
+(define f (evaluator-create "e"))
 (display (evaluator-evaluate-x f 0))
 ]])
 
-AT_CHECK([matheval.sh constant.scm], [ignore], [42.0], [ignore])
+AT_CHECK([matheval.sh constant.scm], [ignore], [2.71828182845905], [ignore])
 
 AT_DATA([constant.scm],
 [[
-(define f (evaluator-create "-2"))
+(define f (evaluator-create "log2e"))
 (display (evaluator-evaluate-x f 0))
 ]])
 
-AT_CHECK([matheval.sh constant.scm], [ignore], [-2.0], [ignore])
+AT_CHECK([matheval.sh constant.scm], [ignore], [1.44269504088896], [ignore])
 
 AT_DATA([constant.scm],
 [[
-(define f (evaluator-create "2+2"))
+(define f (evaluator-create "log10e"))
 (display (evaluator-evaluate-x f 0))
 ]])
 
-AT_CHECK([matheval.sh constant.scm], [ignore], [4.0], [ignore])
+AT_CHECK([matheval.sh constant.scm], [ignore], [0.434294481903252], [ignore])
 
 AT_DATA([constant.scm],
 [[
-(define f (evaluator-create "3^(-0.4)"))
+(define f (evaluator-create "ln2"))
 (display (evaluator-evaluate-x f 0))
 ]])
 
-AT_CHECK([matheval.sh constant.scm], [ignore], [0.644394014977254], [ignore])
+AT_CHECK([matheval.sh constant.scm], [ignore], [0.693147180559945], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "ln10"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [2.30258509299405], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "pi"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [3.14159265358979], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "pi_2"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [1.5707963267949], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "pi_4"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [0.785398163397448], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "1_pi"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [0.318309886183791], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "2_pi"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [0.636619772367581], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "2_sqrtpi"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [1.12837916709551], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "sqrt2"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [1.4142135623731], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "sqrt1_2"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [0.707106781186548], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "e^ln10"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [10.0], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "pi*1_pi"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [1.0], [ignore])
+
+AT_DATA([constant.scm],
+[[
+(define f (evaluator-create "sqrt2/sqrt1_2"))
+(display (evaluator-evaluate-x f 0))
+]])
+
+AT_CHECK([matheval.sh constant.scm], [ignore], [2.0], [ignore])
 
 AT_CLEANUP

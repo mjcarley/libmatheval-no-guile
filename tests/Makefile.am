@@ -18,7 +18,7 @@
 # 02111-1307, USA.
 
 TESTSUITE_AT = testsuite.at basics.at bin_ops.at constants.at	\
-functions.at testsuite.at un_ops.at variables.at
+functions.at numbers.at testsuite.at un_ops.at variables.at
 TESTSUITE = $(srcdir)/testsuite
 
 EXTRA_DIST = $(TESTSUITE_AT) testsuite

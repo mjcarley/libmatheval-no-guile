@@ -29,11 +29,10 @@
 
 /* Data structure representing function tree node.  */
 typedef struct _Node {
-	char            type;	/* Node type ('c' for constant, 'v' for
-				 * variable, 'f' for function, 'u' for unary
-				 * operation, 'b' for binary operation).  */
+	char            type;	/* Node type ('n' for number, 'c' for constant, 'v' for variable, 'f' for function, 'u' for unary operation, 'b' for binary operation).  */
 	union {
-		double          constant;	/* Constant value.  */
+		double          number;	/* Number value.  */
+                Record         *constant;	/* Symbol table record for constant.  */
 		Record         *variable;	/* Symbol table record for
 						 * variable.  */
 		struct {

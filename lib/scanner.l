@@ -68,6 +68,7 @@ static int input_from_string (char *buffer, int max_size);
 whitespace [ \t]+
 digit [0-9]
 number ({digit}+|{digit}+\.{digit}*|{digit}*\.{digit}+)([Ee][+\-]?{digit}+)?
+constant "e"|"log2e"|"log10e"|"ln2"|"ln10"|"pi"|"pi_2"|"pi_4"|"1_pi"|"2_pi"|"2_sqrtpi"|"sqrt2"|"sqrt1_2"
 function "exp"|"log"|"sqrt"|"sin"|"cos"|"tan"|"cot"|"sec"|"csc"|"asin"|"acos"|"atan"|"acot"|"asec"|"acsc"|"sinh"|"cosh"|"tanh"|"coth"|"sech"|"csch"|"asinh"|"acosh"|"atanh"|"acoth"|"asech"|"acsch"|"abs"|"step"|"delta"|"nandelta"
 identifier [_a-zA-Z][[_a-zA-Z0-9]*
 
@@ -77,8 +78,17 @@ identifier [_a-zA-Z][[_a-zA-Z0-9]*
 
 {number} {
   /* Create node representing constant with appropriate value.  */
-  yylval.node = node_create ('c', atof (yytext));
+  yylval.node = node_create ('n', atof (yytext));
   return NUMBER;
+}
+
+{constant} {
+  Record *record; /* Symbol table record.  */
+
+  /* Find symbol table record corresponding to constant name.  */
+  record = symbol_table_lookup (symbol_table, yytext);
+  yylval.node = node_create ('c', record);
+  return CONSTANT;
 }
 
 {function} {

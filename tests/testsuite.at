@@ -24,6 +24,7 @@ m4_version_prereq([2.53])
 AT_INIT
 
 m4_include([basics.at])
+m4_include([numbers.at])
 m4_include([constants.at])
 m4_include([variables.at])
 m4_include([functions.at])

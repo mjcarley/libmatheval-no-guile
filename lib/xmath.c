@@ -155,7 +155,8 @@ math_acsch(double x)
         return math_asinh(1 / x);
 }
 
-double          math_step(double x)
+double
+math_step(double x)
 {
         /*
 	 * Calculate step function value.
@@ -163,7 +164,8 @@ double          math_step(double x)
         return (x < 0) ? 0 : 1;
 }
 
-double          math_delta(double x)
+double
+math_delta(double x)
 {
         /*
 	 * Calculate delta function value.
@@ -171,7 +173,8 @@ double          math_delta(double x)
         return (x == 0) ? MATH_INFINITY : 0;
 }
 
-double          math_nandelta(double x)
+double
+math_nandelta(double x)
 {
         /*
 	 * Calculate modified delta function value.

@@ -41,7 +41,9 @@ SymbolTable    *
 symbol_table_create(int length)
 {
 	SymbolTable    *symbol_table;	/* Pointer to symbol table.  */
-	static char    *names[] = {"exp", "log", "sqrt", "sin", "cos", "tan", "cot", "sec", "csc",
+        static char    *constants_names[] = { "e", "log2e", "log10e", "ln2", "ln10", "pi", "pi_2", "pi_4", "1_pi", "2_pi", "2_sqrtpi", "sqrt2", "sqrt1_2" };
+        static double constants[] = { 2.7182818284590452354, 1.4426950408889634074, 0.43429448190325182765, 0.69314718055994530942, 2.30258509299404568402, 3.14159265358979323846, 1.57079632679489661923, 0.78539816339744830962, 0.31830988618379067154, 0.63661977236758134308, 1.12837916709551257390, 1.41421356237309504880, 0.70710678118654752440 };
+	static char    *functions_names[] = {"exp", "log", "sqrt", "sin", "cos", "tan", "cot", "sec", "csc",
 		"asin", "acos", "atan", "acot", "asec", "acsc", "sinh", "cosh", "tanh",
 		"coth", "sech", "csch", "asinh", "acosh", "atanh", "acoth", "asech", "acsch",
 		"abs", "step", "delta", "nandelta"
@@ -61,11 +63,17 @@ symbol_table_create(int length)
 	symbol_table->length = length;
 	symbol_table->records = XCALLOC(Record, symbol_table->length);
 
+        /*
+	 * Insert predefined constants into symbol table.
+	 */
+	for (i = 0; i < sizeof(constants_names) / sizeof(constants_names[0]); i++)
+		symbol_table_insert(symbol_table, constants_names[i], 'c', constants[i]);
+
 	/*
 	 * Insert predefined functions into symbol table.
 	 */
-	for (i = 0; i < sizeof(names) / sizeof(names[0]); i++)
-		symbol_table_insert(symbol_table, names[i], 'f', functions[i]);
+	for (i = 0; i < sizeof(functions_names) / sizeof(functions_names[0]); i++)
+		symbol_table_insert(symbol_table, functions_names[i], 'f', functions[i]);
 
 	/*
 	 * Initialize symbol table reference count.
@@ -136,6 +144,10 @@ symbol_table_insert(SymbolTable * symbol_table, char *name, char type,...)
 	 */
 	va_start(ap, type);
 	switch (record->type) {
+        case 'c':
+                record->data.value = va_arg(ap, double);
+                break;
+
 	case 'v':
 		record->data.value = 0;
 		break;
