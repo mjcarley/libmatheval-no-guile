@@ -48,7 +48,7 @@ xrealloc(void *p, size_t num)
 	void           *new;
 
 	/*
-	 * If memory not alread allocated, fall back to xmalloc().
+	 * If memory not already allocated, fall back to xmalloc().
 	 */
 	if (!p)
 		return xmalloc(num);
