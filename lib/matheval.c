@@ -36,7 +36,7 @@ extern int      yyparse();
 
 /* Following variables are needed for parsing (parser is able to
  * communicate with program from which it is used through global variables 
- * * only). */
+ * * * * * * * * * only). */
 char           *input_string;	/* String representing function.  */
 Node           *root;		/* Root of tree representation of
 				 * function.  */
@@ -106,7 +106,7 @@ evaluator_destroy(void *evaluator)
 {
 	/* Destroy tree represention of function, symbol table, array of
 	 * pointers to evaluator variable names, as well as data structure 
-	 * * representing evaluator. */
+	 * * * * * * * * * representing evaluator. */
 	node_destroy(((Evaluator *) evaluator)->root);
 	symbol_table_destroy(((Evaluator *) evaluator)->symbol_table);
 	XFREE(((Evaluator *) evaluator)->string);
@@ -213,8 +213,9 @@ evaluator_derivative(void *evaluator, char *name)
 double
 evaluator_evaluate_x(void *evaluator, double x)
 {
-	char           *names[] = { "x" };	/* Array of variable
-						 * names.  */
+	char           *names[] = {
+		"x"
+	};			/* Array of variable names.  */
 	double          values[1];	/* Array of variable values.  */
 
 	/* Evaluate function for given values of variable "x". */
@@ -227,8 +228,9 @@ evaluator_evaluate_x(void *evaluator, double x)
 double
 evaluator_evaluate_x_y(void *evaluator, double x, double y)
 {
-	char           *names[] = { "x", "y" };	/* Array of variable
-						 * names.  */
+	char           *names[] = {
+		"x", "y"
+	};			/* Array of variable names.  */
 	double          values[2];	/* Array of variable values.  */
 
 	/* Evaluate function for given values of variable "x" and "y". */
@@ -241,9 +243,9 @@ evaluator_evaluate_x_y(void *evaluator, double x, double y)
 double
 evaluator_evaluate_x_y_z(void *evaluator, double x, double y, double z)
 {
-	char           *names[] = { "x", "y", "z" };	/* Array of
-							 * variable names. 
-							 */
+	char           *names[] = {
+		"x", "y", "z"
+	};			/* Array of variable names.  */
 	double          values[3];	/* Array of variable values.  */
 
 	/* Evaluate function for given values of variable "x", "y" and

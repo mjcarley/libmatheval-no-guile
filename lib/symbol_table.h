@@ -49,11 +49,12 @@ typedef struct {
 	Record         *records;	/* Hash table buckets.  */
 	int             reference_count;	/* Reference count for
 						 * symbol table (evaluator 
-						 * * for derivative uses
-						 * same symbol table as
+						 * * * * * * * * * for
+						 * derivative uses same
+						 * symbol table as
 						 * evaluator for
 						 * corresponding
-						 * function).  */
+						 * function). */
 } SymbolTable;
 
 /* Create symbol table using specified length of hash table.  */
@@ -83,8 +84,8 @@ int             symbol_table_get_flagged_count(SymbolTable * symbol_table);
 
 /* Fill given array with pointers to records from given symbol table that
  * have flag set.  Further arguments are array to store pointers and array 
- * * capacity.  Number of records that are actually put into array is
- * returned. */
+ * * * * * * * * * capacity.  Number of records that are actually put into
+ * array is returned. */
 int             symbol_table_get_flagged(SymbolTable * symbol_table,
 					 Record ** records, int length);
 

@@ -60,9 +60,9 @@ typedef struct _Node {
 							 * subtraction,
 							 * '*' for
 							 * multiplication, 
-							 * * '/' for
-							 * division and
-							 * '^' for
+							 * * * * * * * * *
+							 * '/' for division 
+							 * and '^' for
 							 * exponentiation). 
 							 */
 			struct _Node   *left,
@@ -94,8 +94,8 @@ double          node_evaluate(Node * node);
 
 /* Create derivative tree for subtree rooted at given node.  Second
  * argument is derivation variable, third argument is symbol table (needed 
- * * for functions derivatives).  Function returns root of corresponding
- * derivation tree. */
+ * * * * * * * * * for functions derivatives).  Function returns root of
+ * corresponding derivation tree. */
 Node           *node_derivative(Node * node, char *name,
 				SymbolTable * symbol_table);
 

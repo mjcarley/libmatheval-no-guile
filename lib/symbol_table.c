@@ -39,24 +39,29 @@ SymbolTable    *
 symbol_table_create(int length)
 {
 	SymbolTable    *symbol_table;	/* Pointer to symbol table.  */
-	static char    *constants_names[] = { "e", "log2e", "log10e", "ln2", "ln10", "pi", "pi_2", "pi_4", "1_pi", "2_pi", "2_sqrtpi", "sqrt2", "sqrt1_2" };	/* Symbol 
-																				 * table 
-																				 * predefined 
-																				 * constants 
-																				 * names. 
-																				 */
-	static double   constants[] = { 2.7182818284590452354, 1.4426950408889634074, 0.43429448190325182765, 0.69314718055994530942, 2.30258509299404568402, 3.14159265358979323846, 1.57079632679489661923, 0.78539816339744830962, 0.31830988618379067154, 0.63661977236758134308, 1.12837916709551257390, 1.41421356237309504880, 0.70710678118654752440 };	/* Symbol 
-																																												 * table 
-																																												 * predefined 
-																																												 * constants 
-																																												 * values. 
-																																												 */
-	static char    *functions_names[] = { "exp", "log", "sqrt", "sin", "cos", "tan", "cot", "sec", "csc", "asin", "acos", "atan", "acot", "asec", "acsc", "sinh", "cosh", "tanh", "coth", "sech", "csch", "asinh", "acosh", "atanh", "acoth", "asech", "acsch", "abs", "step", "delta", "nandelta" };	/* Symbol 
-																																						 * table 
-																																						 * predefined 
-																																						 * functions 
-																																						 * names. 
-																																						 */
+	static char    *constants_names[] = {
+		"e", "log2e", "log10e", "ln2", "ln10", "pi", "pi_2",
+		"pi_4", "1_pi", "2_pi", "2_sqrtpi", "sqrt2", "sqrt1_2"
+	};			/* Symbol table predefined constants
+				 * names. */
+	static double   constants[] = {
+		2.7182818284590452354, 1.4426950408889634074,
+		0.43429448190325182765, 0.69314718055994530942,
+		2.30258509299404568402, 3.14159265358979323846,
+		1.57079632679489661923, 0.78539816339744830962,
+		0.31830988618379067154, 0.63661977236758134308,
+		1.12837916709551257390, 1.41421356237309504880,
+		0.70710678118654752440
+	};			/* Symbol table predefined constants
+				 * values. */
+	static char    *functions_names[] = {
+		"exp", "log", "sqrt", "sin", "cos", "tan", "cot", "sec",
+		"csc", "asin", "acos", "atan", "acot", "asec", "acsc",
+		"sinh", "cosh", "tanh", "coth", "sech", "csch",
+		"asinh", "acosh", "atanh", "acoth", "asech", "acsch",
+		"abs", "step", "delta", "nandelta"
+	};			/* Symbol table predefined functions
+				 * names. */
 	static double   (*functions[]) (double) = {
 	exp, log, sqrt, sin, cos, tan, math_cot, math_sec, math_csc, asin, acos, atan, math_acot, math_asec, math_acsc, sinh, cosh, tanh, math_coth, math_sech, math_csch, math_asinh, math_acosh, math_atanh, math_acoth, math_asech, math_acsch, fabs, math_step, math_delta, math_nandelta};	/* Symbol 
 																																				 * table 
