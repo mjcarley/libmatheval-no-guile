@@ -83,7 +83,6 @@ evaluator_evaluate__(int64_t *evaluator, int *count, char *names, double *values
 	 * with each string containing single name.
 	 */
 	names_copy = XMALLOC(char *, *count);
-
 	for (i = j = 0; i < *count && j < length; i++, j += n) {
 		for (; names[j] == ' '; j++);
 		for (n = 1; j + n < length && !(names[j + n] == ' '); n++);
@@ -107,41 +106,88 @@ evaluator_evaluate__(int64_t *evaluator, int *count, char *names, double *values
 	return result;
 }
 
-/* Wrapper for evaluator_calculate_length() function.  */
+/* First in pair of wrappers for evaluator_get_string() function.  */
 int
-evaluator_calculate_length__(int64_t *evaluator)
+evaluator_get_string_length__(int64_t *evaluator)
 {
-	/*return evaluator_calculate_length((void *)*evaluator);*/
-        return 0;
+        /*
+         * Return length of evaluator textual respresentation.
+         */
+        return strlen(evaluator_get_string((void*) *evaluator));
 }
 
-/* Wrapper for evaluator_write() function.  */
+/* Second in pair of wrappers for evaluator_get_string() function.  */
 void
-evaluator_write__(int64_t *evaluator, char *string, int length)
+evaluator_get_string_chars__(int64_t *evaluator, char *string, int length)
 {
-	char           *stringz;/* Zero-terminated string for evaluator
-				 * textual representation. */
-
 	/*
-	 * Allocate string of appropriate length to write evaluator to.
-	 */
-	stringz = XMALLOC(char, length + 1);
-
-	/*
-	 * Call evaluator_write() function.
-	 */
-	/*evaluator_write((void *)*evaluator, stringz);*/
-
-	/*
-	 * Copy evaluator textual representation to string passed from
+	 * Copy evaluator textual respresentation to string passed from
 	 * Fortran code.
 	 */
-	memcpy(string, stringz, length * sizeof(char));
+	memcpy(string, evaluator_get_string((void *)*evaluator), length * sizeof(char));
+}
 
-	/*
-	 * Free string used for evaluator textual representation.
-	 */
-	XFREE(stringz);
+/* First in pair of wrappers for evaluator_get_variables() function.  */
+int
+evaluator_get_variables_length__(int64_t *evaluator)
+{
+        char          **names;  /* Array with variable names. */
+        int             count;  /* Number of elements in above array. */
+        int             length; /* Length of string with concatenated
+                                 * variable names */
+        int             i;      /* Loop counter. */
+
+        /*
+	 * Get array of strings with variable names.
+         */
+        evaluator_get_variables((void*) *evaluator, &names, &count);
+
+        /* 
+         * Calculate length of string with concatenated names from above
+         * array.
+         */
+        length = 0;
+        for (i = 0; i < count; i++) {
+                if (i != 0)
+                        length++;
+                length += strlen(names[i]);
+        }
+
+        return length;
+}
+
+/* Second in pair of wrappers for evaluator_get_variables() function.  */
+void
+evaluator_get_variables_chars__(int64_t *evaluator, char *string, int length)
+{
+        char          **names;  /* Array with variable names. */
+        int             count;  /* Number of elements in above array. */
+        int             n;      /* Number of characters to be copied
+                                 * from current variable name to string
+                                 * with concatenated variable names. */
+        int             i;      /* Loop counter. */
+
+        /*
+	 * Get array of strings with variable names.
+         */
+        evaluator_get_variables((void*) *evaluator, &names, &count);
+
+        /*
+         * Concatenate variable names from above array into string
+         * passed from Fortran code.
+         */
+        for (i = 0; i < count; i++) {
+                if (i != 0 && length > 0) {
+                        *(string++) = ' ';
+                        length--;
+                }
+                n = strlen(names[i]);
+                if (n > length)
+                        n = length;
+                memcpy(string, names[i], n * sizeof(char));
+                string += n;
+                length -= n;
+        }
 }
 
 /* Wrapper for evaluator_derivative() function.  */

@@ -56,7 +56,7 @@ extern          "C" {
 	 * supplied when creating evaluator.  String representing
 	 * function is allocated, remembered and later destroyed by
 	 * evaluator object, thus caller must not free returned pointer.
-	 * Returned information is valid until evaluator object not
+	 * Returned information is valid until evaluator object 
 	 * destroyed.
 	 */
 	extern char    *evaluator_get_string(void *evaluator);
@@ -71,7 +71,7 @@ extern          "C" {
 	 * Array is allocated, remembered and later destroyed by
 	 * evaluator object, thus caller must not free any of string nor
 	 * array itself.  Returned information is valid until evaluator
-	 * object not destroyed.
+	 * object destroyed.
          */
 	extern void     evaluator_get_variables(void *evaluator, char ***names, int *count);
 

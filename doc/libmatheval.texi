@@ -12,7 +12,7 @@
 @ifnottex
 This file documents GNU @code{libmatheval} library.
 
-Copyright @copyright{} 2002, 2003 Aleksandar B. Samard@v{z}i@'c
+Copyright @copyright{} 2002, 2003, 2004  Aleksandar B. Samard@v{z}i@'c
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -31,7 +31,7 @@ license is included in the section entitled ``Copying''.
 
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 2002, 2003 Aleksandar B. Samard@v{z}i@'c
+Copyright @copyright{} 2002, 2003, 2004  Aleksandar B. Samard@v{z}i@'c
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -147,8 +147,6 @@ names appearing in function:
   printf ("\n");
 @}
 @end example
-evaluator
-
 
 Procedure @code{evaluator_evaluate()} (see @ref{evaluator_evaluate})
 could be used to evaluate function for specific variable values.  Say
@@ -165,7 +163,7 @@ will evaluate and print function value for x = 0.1:
 @}
 @end example
 
-Or alternatively, since function if over variable with standard name
+Or alternatively, since function is over variable with standard name
 ``x'', convenience procedure @code{evaluator_evaluate_x()}
 (@ref{evaluator_evaluate_x}) could be used to accomplish same by
 following:
@@ -352,11 +350,11 @@ characters beginning with a non-digit that is not elementary function
 name.
 
 Supported elementary functions are (names that should be used are
-given in parenthesis): exponentintial (@code{exp}), logarithmic
+given in parenthesis): exponential (@code{exp}), logarithmic
 (@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
 (@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), secant
 (@code{sec}), cosecant (@code{csc}), inverse sine (@code{asin}),
-inverse cosine (@code{acos}), inverse tangent ((@code{atan}), inverse
+inverse cosine (@code{acos}), inverse tangent (@code{atan}), inverse
 cotangent (@code{acot}), inverse secant (@code{asec}), inverse
 cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
 (@code{cosh}), hyperbolic tangent (@code{tanh}), hyperbolic cotangent
@@ -385,7 +383,7 @@ newline characters must not appear in this string.
 
 @unnumberedsubsubsec Return value
 
-Pointer to evaluator object if operation successfull, null pointer
+Pointer to evaluator object if operation successful, null pointer
 otherwise.  Evaluator object is opaque, one should only use return
 pointer to pass it to other functions from library.
 
@@ -445,8 +443,8 @@ is given by @code{count} argument.
 @unnumberedsubsubsec Return value
 
 Function value for given variable values.  If some variable that
-appears in function is not mentionned in arguments, result is
-undeterminate.  If all variables that appear in function are given,
+appears in function is not mentioned in arguments, result is
+indeterminate.  If all variables that appear in function are given,
 presence of variable or variables that doesn't appear in function in
 arguments has no effect, i.e. result is still exact.
 
@@ -479,7 +477,7 @@ evaluator object pointed by @code{evaluator}.  For notation used, see
 String with textual representation of evaluator object.  This string
 is stored in evaluator object and caller must not free pointer
 returned by this function.  Returned string is valid until evaluator
-object not destroyed.
+object destroyed.
 
 @unnumberedsubsubsec See also
 
@@ -505,7 +503,7 @@ function in location pointed by second argument and number of array
 elements is stored in location pointed by third argument.  Array with
 function variable names is stored in evaluator object and caller must
 not free any of strings returned by this function nor array itself.
-Returned values are valid until evaluator object not destroyed.
+Returned values are valid until evaluator object destroyed.
 
 @unnumberedsubsubsec Return value
 
@@ -773,9 +771,7 @@ Evaluator object representing derivative of function over variable
 @cindex Fortran interface
 
 Fortran interface to GNU @code{libmatheval} library is very similar to
-C interface; actualy only type used to reference evaluator objects and
-type of third argument of @code{evaluator_evaluate()} procedure are
-different.  Still, complete documentation from @ref{Reference} is
+C interface; still, complete documentation from @ref{Reference} is
 reproduced here using Fortran terms in order to have Fortran
 programmer not to mess with C terms that he may not understand.
 Besides documentation for all library exported procedures, an example
@@ -783,14 +779,13 @@ Fortran program of structure similar to sequence of code fragments
 presented for C programmers in @ref{Introduction} section as well as
 notes on how to link library with Fortran programs are presented here.
 
-Since passing arguments between C and Fortran is not standardized,
-Fortran interface of library applies only to GNU Fortran 77 compiler.
-Author also have interface for Intel Fortran 90 compiler implemented
-(and successfully employed in another project); this inteface is not
-included with library but is available upon request (see section
-@ref{Bugs} for contact information).  Also, requests to adapt
-interface to other Fortran compilers are welcome under condition that
-access to corresponding compiler is provided.
+Since passing arguments between C and Fortran is not (yet)
+standardized, Fortran interface of library applies only to GNU Fortran
+77 compiler; but note that same interface is working fine for GNU
+Fortran 95 compiler.  Requests to adapt interface to other Fortran
+compilers are welcome (see section @ref{Bugs} for contact
+information), under condition that access to corresponding compiler is
+provided.
 
 @menu
 * Fortran main entry points::      Library main procedures
@@ -804,12 +799,14 @@ access to corresponding compiler is provided.
 @cindex Fortran, main entry points
 
 @menu
-* Fortran evaluator_create::        @code{evaluator_create()} procedure
-* Fortran evaluator_destroy::       @code{evaluator_destroy()} procedure
-* Fortran evaluator_evaluate::      @code{evaluator_evaluate()} procedure
-* Fortran evaluator_get_string::    @code{evaluator_get_string()} procedure
-* Fortran evaluator_get_variables:: @code{evaluator_get_variables()} procedure
-* Fortran evaluator_derivative::    @code{evaluator_derivative()} procedure
+* Fortran evaluator_create::               @code{evaluator_create()} procedure
+* Fortran evaluator_destroy::              @code{evaluator_destroy()} procedure
+* Fortran evaluator_evaluate::             @code{evaluator_evaluate()} procedure
+* Fortran evaluator_get_string_length::    @code{evaluator_get_string_length()} procedure
+* Fortran evaluator_get_string_chars::     @code{evaluator_get_string_chars()} procedure
+* Fortran evaluator_get_variables_length:: @code{evaluator_get_variables_length()} procedure
+* Fortran evaluator_get_variables_chars::  @code{evaluator_get_variables_chars()} procedure
+* Fortran evaluator_derivative::           @code{evaluator_derivative()} procedure
 @end menu
 
 @node Fortran evaluator_create, Fortran evaluator_destroy, Fortran main entry points, Fortran main entry points
@@ -840,11 +837,11 @@ characters beginning with a non-digit that is not elementary function
 name.
 
 Supported elementary functions are (names that should be used are
-given in parenthesis): exponentintial (@code{exp}), logarithmic
+given in parenthesis): exponential (@code{exp}), logarithmic
 (@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
 (@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), secant
 (@code{sec}), cosecant (@code{csc}), inverse sine (@code{asin}),
-inverse cosine (@code{acos}), inverse tangent ((@code{atan}), inverse
+inverse cosine (@code{acos}), inverse tangent (@code{atan}), inverse
 cotangent (@code{acot}), inverse secant (@code{asec}), inverse
 cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
 (@code{cosh}), hyperbolic tangent (@code{tanh}), hyperbolic cotangent
@@ -873,15 +870,17 @@ newline characters must not appear in this string.
 
 @unnumberedsubsubsec Return value
 
-Positive 64-bit integer representing evaluator object uniqe handle if
-operation successfull, 0 otherwise.  Return value should be used only
+Positive 64-bit integer representing evaluator object unique handle if
+operation successful, 0 otherwise.  Return value should be used only
 to pass it to other functions from library.
 
 @unnumberedsubsubsec See also
 
 @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_evaluate},
-@ref{Fortran evaluator_get_string}, @ref{Fortran
-evaluator_get_variables}, @ref{Fortran evaluator_derivative}
+@ref{Fortran evaluator_get_string_length}, @ref{Fortran
+evaluator_get_string_chars}, @ref{Fortran
+evaluator_get_variables_length}, @ref{Fortran
+evaluator_get_variables_chars}, @ref{Fortran evaluator_derivative}
 
 @node Fortran evaluator_destroy, Fortran evaluator_evaluate, Fortran evaluator_create, Fortran main entry points
 @subsection @code{evaluator_destroy()}
@@ -909,15 +908,14 @@ None.
 
 @ref{Fortran evaluator_create}
 
-@node Fortran evaluator_evaluate, Fortran evaluator_get_string, Fortran evaluator_destroy, Fortran main entry points
+@node Fortran evaluator_evaluate, Fortran evaluator_get_string_length, Fortran evaluator_destroy, Fortran main entry points
 @subsection @code{evaluator_evaluate()}
 @findex Fortran, @code{evaluator_evaluate()}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-double precision function evaluator_evaluate (evaluator, count, names, &
-     values)
+double precision function evaluator_evaluate (evaluator, count, names, values)
   integer*8 :: evaluator
   integer :: count
   character(len=*) :: names
@@ -939,8 +937,8 @@ characters.
 @unnumberedsubsubsec Return value
 
 Function value for given variable values.  If some variable that
-appears in function is not mentionned in arguments, result is
-undeterminate.  If all variables that appear in function are given,
+appears in function is not mentioned in arguments, result is
+indeterminate.  If all variables that appear in function are given,
 presence of variable or variables that doesn't appear in function in
 arguments has no effect, i.e. result is still exact.
 
@@ -950,24 +948,51 @@ arguments has no effect, i.e. result is still exact.
 @ref{Fortran evaluator_evaluate_x}, @ref{Fortran
 evaluator_evaluate_x_y}, @ref{Fortran evaluator_evaluate_x_y_z}
 
-@node Fortran evaluator_get_string, Fortran evaluator_get_variables, Fortran evaluator_evaluate, Fortran main entry points
-@subsection @code{evaluator_get_string()}
-@findex Fortran, @code{evaluator_get_string()}
+@node Fortran evaluator_get_string_length, Fortran evaluator_get_string_chars, Fortran evaluator_evaluate, Fortran main entry points
+@subsection @code{evaluator_get_string_length()}
+@findex Fortran, @code{evaluator_get_string_length()}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-subroutine evaluator_get_string (evaluator)
+integer function evaluator_get_string_length (evaluator)
+  integer*8 :: evaluator
+end function evaluator_get_string_length
+@end example
+
+@unnumberedsubsubsec Description
+
+Return length of textual representation (i.e. mathematical function)
+of evaluator object pointed by @code{evaluator}.
+
+@unnumberedsubsubsec Return value
+
+Evaluator textual representation string length.
+
+@unnumberedsubsubsec See also
+
+@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_string_chars}
+
+@node Fortran evaluator_get_string_chars, Fortran evaluator_get_variables_length, Fortran evaluator_get_string_length, Fortran main entry points
+@subsection @code{evaluator_get_string_chars()}
+@findex Fortran, @code{evaluator_get_string_chars()}
+
+@unnumberedsubsubsec Synopsis
+
+@example
+subroutine evaluator_get_string_chars (evaluator)
   integer*8 :: evaluator
   character(len=*) :: string
-end subroutine evaluator_get_string
+end subroutine evaluator_get_string_chars
 @end example
 
 @unnumberedsubsubsec Description
 
 Write textual representation (i.e. mathematical function) of evaluator
 object pointed by @code{evaluator} to string specified.  For notation
-used, see @ref{Fortran evaluator_create} documentation.
+used, see @ref{Fortran evaluator_create} documentation.  In order to
+declare string of appropriate length to be passed to this function,
+@ref{Fortran evaluator_get_string_length} function should be utilized.
 
 @unnumberedsubsubsec Return value
 
@@ -975,23 +1000,54 @@ None.
 
 @unnumberedsubsubsec See also
 
-@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_variables}
+@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_string_length}
 
-@node Fortran evaluator_get_variables, Fortran evaluator_derivative, Fortran evaluator_get_string, Fortran main entry points
-@subsection @code{evaluator_get_variables()}
-@findex Fortran, @code{evaluator_get_variables()}
+@node Fortran evaluator_get_variables_length, Fortran evaluator_get_variables_chars, Fortran evaluator_get_string_chars, Fortran main entry points
+@subsection @code{evaluator_get_variables_length()}
+@findex Fortran, @code{evaluator_get_variables_length()}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-subroutine evaluator_get_variables (evaluator)
+integer function evaluator_get_variables_length (evaluator)
   integer*8 :: evaluator
-end subroutine evaluator_get_string
+end function evaluator_get_variables_length
 @end example
 
 @unnumberedsubsubsec Description
 
-To do.
+Return length of string with names of all variables (separated by a
+blank character) appearing in evaluator object pointed by
+@code{evaluator}.
+
+@unnumberedsubsubsec Return value
+
+Variable names string length.
+
+@unnumberedsubsubsec See also
+
+@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_variables_chars}
+
+@node Fortran evaluator_get_variables_chars, Fortran evaluator_derivative, Fortran evaluator_get_variables_length, Fortran main entry points
+@subsection @code{evaluator_get_variables_chars()}
+@findex Fortran, @code{evaluator_get_variables_chars()}
+
+@unnumberedsubsubsec Synopsis
+
+@example
+subroutine evaluator_get_variables_chars (evaluator)
+  integer*8 :: evaluator
+  character(len=*) :: string
+end subroutine evaluator_get_variables_chars
+@end example
+
+@unnumberedsubsubsec Description
+
+Write names of all variables appearing in evaluator object pointed by
+@code{evaluator} into given string (separated by a blank character).
+In order to declare string of appropriate length to be passed to this
+function, @ref{Fortran evaluator_get_variables_length} function should
+be utilized.
 
 @unnumberedsubsubsec Return value
 
@@ -999,9 +1055,9 @@ None.
 
 @unnumberedsubsubsec See also
 
-@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_string}
+@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_variables_length}
 
-@node Fortran evaluator_derivative,  , Fortran evaluator_get_variables, Fortran main entry points
+@node Fortran evaluator_derivative,  , Fortran evaluator_get_variables_chars, Fortran main entry points
 @subsection @code{evaluator_derivative()}
 @findex Fortran, @code{evaluator_derivative()}
 
@@ -1120,8 +1176,7 @@ Value of function for given values of variables ``x'' and ``y''.
 @unnumberedsubsubsec Synopsis
 
 @example
-double precision function evaluator_evaluate_x_y_z (evaluator, x, y,
-z)
+double precision function evaluator_evaluate_x_y_z (evaluator, x, y, z)
   integer*8 :: evaluator
   double precision :: x, y, z
 end function evaluator_evaluate_x_y_z
@@ -1254,18 +1309,12 @@ Evaluator object representing derivative of function over variable
 Here follows sample program demonstrating use of library Fortran
 interface.  Hopefully, comments throughout code will be enough for
 Fortran programmer to get acquainted with library usage.  Basic
-functionning of program is equivalent to code presented for C
+functioning of program is equivalent to code presented for C
 programmer in @ref{Introduction} sequence, except that textual
 representation of function derivative is not printed to standard
 output and this is avoided simply because of Fortran 77 ugly string
-handling that will force us not only to anticipate length of string
-representing function but also length of string repesenting its
-derivative @footnote{Fortran 90 actually did not particulary improved
-regarding that matter, but once when free Fortran 90 compiler with
-@code{ISO_VARYING_STRING} module becomes available this segment of
-library interface will be upgraded and hopefully will find its proper
-use.}.  Following code is written in Fortran 77 with GNU Fortran 77
-compiler extension (most notably of which is certainly free form of
+handling.  Following code is written in Fortran 77 with GNU Fortran 77
+compiler extensions (most notable of these certainly is free form of
 source code).
 
 @example
@@ -1313,8 +1362,8 @@ program evaluator
   write (*,*) '  f'' (', x, ') = ', evaluator_evaluate_x (f_prim, x)
 
   ! Destroy evaluators.
-  call evaluator_destroy (f);
-  call evaluator_destroy (f_prim);
+  call evaluator_destroy (f)
+  call evaluator_destroy (f_prim)
 end program evaluator
 @end example
 
@@ -1374,9 +1423,9 @@ external procedure and this is node simplification; this operation is
 very important regarding overall efficiency of other operations and is
 employed each time when new tree created.
 
-Symbol table is implemented as hash table, where each bucket have
+Symbol table is implemented as hash table, where each bucket has
 linked list of records stored in it.  Records store information of
-symbola name and type (variable or function), as well as some unique
+symbol name and type (variable or function), as well as some unique
 information related to evaluation: variable records store temporary
 variable value and function records store pointer to procedure used to
 actually calculate function value during evaluation.  Hashing function
@@ -1386,11 +1435,11 @@ is used.  Symbol tables are reference counted objects, i.e. could be
 shared.
 
 Evaluator objects actually consists of function tree and reference to
-symbol table.  Most of operations on evaluator objects are simpy
+symbol table.  Most of operations on evaluator objects are simply
 delegated to function tree root node.
 
 For parsing strings representing mathematical functions, Lex and Yacc
-are employed.  Scanner is creating symbol table records for constant
+are employed.  Scanner is creating symbol table records for constants
 and variables, while for functions it is only looking up existing
 symbol table records (before starting scanning, symbol table should be
 populated with records for functions recognized by scanner).  Parser
@@ -1433,8 +1482,8 @@ mathematical functions are in @file{xmath.c} and @file{xmath.c}.
 Project specific files are: @file{node.h} and @file{node.c} files for
 tree representing mathematical function data structures and
 procedures, @file{symbol_table.c} and @file{symbol_table.h} for symbol
-table data structures and procedures and finally @file{evalutor.c} and
-@file{matheval.h} for evaulator object data structures and procedures
+table data structures and procedures and finally @file{evaluator.c} and
+@file{matheval.h} for evaluator object data structures and procedures
 (evaluator object data structure is moved to @file{.c} file because
 @file{matheval.h} is public header file and this data structure should
 be opaque).  Fortran interface is implemented in
@@ -1457,7 +1506,7 @@ extended Guile interpreter executes in order to conduct tests.  File
 testing instead of original program.  Most interesting aspect of code
 from @file{tests} subdirectory is certainly Guile interface for
 library that is implemented in @file{matheval.c} file; anyone
-intending to write more tests must before appoaching this task become
+intending to write more tests must before approaching this task become
 familiar with this interface.
 
 @node Intended improvements,  , Project structure, Hacking
@@ -1467,7 +1516,7 @@ familiar with this interface.
 As stated in @ref{Design notes} section, GNU @code{libmatheval} is
 designed with intention to be simple and understandable and to
 eventually have its usage to govern improvements.  Thus, further work
-will be primarly directed by user requests and of course, as usual
+will be primarily directed by user requests and of course, as usual
 with open source projects, with amount of spare time of primary
 developer (see @ref{Bugs} for contact information).  However, there
 exist several obvious improvements that I'm willing to work on
@@ -1490,7 +1539,7 @@ representing function.
 
 @item
 Add more simplifications to function tree representation.  Only basic
-simpifications, mostly related to constants subtrees consolidation and
+simplifications, mostly related to constants subtrees consolidation and
 binary operations neutral elements are employed now.  More ambitious
 optimization, using commutative, associative and distributive rules
 for binary operations would be desirable.
@@ -1502,7 +1551,7 @@ necessary to establish proper evaluation priority order only would
 give prettier output
 
 @item
-Add more tests.  Basic functionality of library is excercised through
+Add more tests.  Basic functionality of library is exercised through
 existing test suite, but present number of tests is certainly far from
 enough.
 
@@ -1535,7 +1584,7 @@ Clean up English used in documentation.
 
 If you encounter something that you think is a bug, please report it
 immediately.  Try to include a clear description of the undesired
-behaviour.  A test case that exhibits the bug or maybe even patch
+behavior.  A test case that exhibits the bug or maybe even patch
 fixing it, would too be of course very useful.
 
 Suggestions on improving library would be also more than
