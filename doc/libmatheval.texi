@@ -9,7 +9,7 @@
 @include version.texi
 @syncodeindex fn cp
 
-@ifinfo
+@ifnottex
 This file documents GNU @code{libmatheval} library.
 
 Copyright @copyright{} 2002, 2003 Aleksandar B. Samard@v{z}i@'c
@@ -20,7 +20,7 @@ any later version published by the Free Software Foundation; with the
 Invariant Sections being ``Rationale and history'', with no
 Front-Cover Texts, and with no Back-Cover Texts.  A copy of the
 license is included in the section entitled ``Copying''.
-@end ifinfo
+@end ifnottex
 
 @titlepage
 @title{GNU @code{libmatheval} manual}
@@ -40,7 +40,7 @@ Invariant Sections being ``Rationale and history'', with no
 Front-Cover Texts, and with no Back-Cover Texts.
 @end titlepage
 
-@ifinfo
+@ifnottex
 @node Top, License, (dir), (dir)
 @top GNU @code{libmatheval} manual
 
@@ -48,7 +48,7 @@ GNU @code{libmatheval} is small library of procedures for evaluating
 mathematical functions.  This manual documents how to use the library;
 this is manual edition @value{EDITION}, last updated @value{UPDATED},
 corresponding to library version @value{VERSION}.
-@end ifinfo
+@end ifnottex
 
 @menu
 * License::               Library license conditions.
@@ -1578,7 +1578,7 @@ The library source code was hosted on Savannah
 (@uref{http://savannah.gnu.org/}) since Septembar 2002.  In September
 2003, library officially became part of GNU project.
 
-@ifinfo
+@ifnottex
 @node Copying, Index, Rationale and history, Top
 @chapter GNU Free Documentation License
 @cindex copying
@@ -1964,7 +1964,7 @@ recommend releasing these examples in parallel under your choice of
 free software license, such as the GNU General Public License, to
 permit their use in free software.
 @end verbatim
-@end ifinfo
+@end ifnottex
 
 @node Index,  , Copying, Top
 @unnumbered Index
