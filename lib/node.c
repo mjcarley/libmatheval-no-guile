@@ -425,6 +425,16 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 */
 		else if (!strcmp(node->data.function.record->name, "cot"))
 			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sin"), node_copy(node->data.function.child)), node_create('c', 2.0))));
+                /*
+		 * Apply rule of secant function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "sec"))
+                        return node_create('b', '*', node_create('f', symbol_table_lookup(symbol_table, "sec"), node_copy(node->data.function.child)), node_create('f', symbol_table_lookup(symbol_table, "tan"), node_copy(node->data.function.child)));
+                /*
+		 * Apply rule of cosecant function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "csc"))
+                        return node_create('u', '-', node_create('b', '*', node_create('f', symbol_table_lookup(symbol_table, "cot"), node_copy(node->data.function.child)), node_create('f', symbol_table_lookup(symbol_table, "csc"), node_copy(node->data.function.child))));
 		/*
 		 * Apply rule of inverse sine function derivative.
 		 */
@@ -445,6 +455,16 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 */
 		else if (!strcmp(node->data.function.record->name, "acot"))
 			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '+', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))));
+                /*
+		 * Apply rule of inverse secant function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "asec"))
+			return node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_create('b', '/', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))))));
+                /*
+		 * Apply rule of inverse cosecant function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "acsc"))
+			return node_create('u', '-', node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_create('b', '/', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))))))));
 		/*
 		 * Apply rule of hyperbolic sine function derivative.
 		 */
@@ -465,6 +485,16 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 */
 		else if (!strcmp(node->data.function.record->name, "coth"))
 			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sinh"), node_copy(node->data.function.child)), node_create('c', 2.0))));
+                /*
+		 * Apply rule of hyperbolic secant function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "sech"))
+                        return node_create('u', '-', node_create('b', '*', node_create('f', symbol_table_lookup(symbol_table, "sech"), node_copy(node->data.function.child)), node_create('f', symbol_table_lookup(symbol_table, "tanh"), node_copy(node->data.function.child))));
+                /*
+		 * Apply rule of hyperbolic cosecant function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "csch"))
+                        return node_create('u', '-', node_create('b', '*', node_create('f', symbol_table_lookup(symbol_table, "coth"), node_copy(node->data.function.child)), node_create('f', symbol_table_lookup(symbol_table, "csch"), node_copy(node->data.function.child))));
 		/*
 		 * Apply rule of inverse hyperbolic sine function derivative.
 		 */
@@ -488,6 +518,18 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 */
 		else if (!strcmp(node->data.function.record->name, "acoth"))
 			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('c', 1.0)));
+                /*
+		 * Apply rule of inverse hyperbolic secant function
+		 * derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "asech"))
+			return node_create('u', '-', node_create('b', '*', node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_copy(node->data.function.child), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '-', node_create('c', 1.0), node_copy(node->data.function.child))))), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '/', node_create('c', 1.0), node_create('b', '+', node_create('c', 1.0), node_copy(node->data.function.child))))));
+                /*
+		 * Apply rule of inverse hyperbolic cosecant function
+		 * derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "acsch"))
+                        return node_create('u', '-', node_create('b', '/', node_create('c', 1.0), node_create('b', '*', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '+', node_create('c', 1.0), node_create('b', '/', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))))))));
 		/*
 		 * Apply rule of absolute value function derivative.
 		 */

@@ -34,11 +34,29 @@
 /* Calculate cotangent of value x.  */
 double          math_cot(double x);
 
+/* Calculate secant of value x.  */
+double          math_sec(double x);
+
+/* Calculate cosecant of value x.  */
+double          math_csc(double x);
+
 /* Calculate inverse cotangent of value x.  */
 double          math_acot(double x);
 
+/* Calculate inverse secant of value x.  */
+double          math_asec(double x);
+
+/* Calculate inverse cosecant of value x.  */
+double          math_acsc(double x);
+
 /* Calculate hyperbolical cotangent of value x.  */
 double          math_coth(double x);
+
+/* Calculate hyperbolical secant of value x.  */
+double          math_sech(double x);
+
+/* Calculate hyperbolical cosecant of value x.  */
+double          math_csch(double x);
 
 /* Calculate inverse hyperbolical sine of value x.  */
 double          math_asinh(double x);
@@ -51,5 +69,11 @@ double          math_atanh(double x);
 
 /* Calculate inverse hyperbolical cotangent of value x.  */
 double          math_acoth(double x);
+
+/* Calculate inverse hyperbolical secant of value x.  */
+double          math_asech(double x);
+
+/* Calculate inverse hyperbolical cosecant of value x.  */
+double          math_acsch(double x);
 
 #endif

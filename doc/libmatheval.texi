@@ -347,14 +347,18 @@ name.
 Supported elementary functions are (names that should be used are
 given in parenthesis): exponentintial (@code{exp}), logarithmic
 (@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
-(@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), inverse
-sine (@code{asin}), inverse cosine (@code{acos}), inverse tangent
-((@code{atan}), inverse cotangent (@code{acot}), hyperbolic sine
-(@code{sinh}), cosine (@code{cosh}), hyperbolic tangent (@code{tanh}),
-hyperbolic cotangent (@code{coth}), inverse sine (@code{asinh}),
-hyperbolic inverse cosine (@code{acosh}), hyperbolic inverse tangent
-(@code{atanh}), hyperbolic inverse cotangent (@code{acoth}) and
-absolute value (@code{fabs}).
+(@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), secant
+(@code{sec}), cosecant (@code{csc}), inverse sine (@code{asin}),
+inverse cosine (@code{acos}), inverse tangent ((@code{atan}), inverse
+cotangent (@code{acot}), inverse secant (@code{asec}), inverse
+cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
+(@code{cosh}), hyperbolic tangent (@code{tanh}), hyperbolic cotangent
+(@code{coth}), hyperbolic secant (@code{sech}), hyperbolic cosecant
+(@code{csch}), hyperbolic inverse sine (@code{asinh}), hyperbolic
+inverse cosine (@code{acosh}), hyperbolic inverse tangent
+(@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
+hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
+(@code{acsch}) and absolute value (@code{fabs}).
 
 Supported unary operation is unary minus (@code{'-'}).
 
@@ -825,14 +829,18 @@ name.
 Supported elementary functions are (names that should be used are
 given in parenthesis): exponentintial (@code{exp}), logarithmic
 (@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
-(@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), inverse
-sine (@code{asin}), inverse cosine (@code{acos}), inverse tangent
-((@code{atan}), inverse cotangent (@code{acot}), hyperbolic sine
-(@code{sinh}), cosine (@code{cosh}), hyperbolic tangent (@code{tanh}),
-hyperbolic cotangent (@code{coth}), inverse sine (@code{asinh}),
-hyperbolic inverse cosine (@code{acosh}), hyperbolic inverse tangent
-(@code{atanh}), hyperbolic inverse cotangent (@code{acoth}) and
-absolute value (@code{fabs}).
+(@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), secant
+(@code{sec}), cosecant (@code{csc}), inverse sine (@code{asin}),
+inverse cosine (@code{acos}), inverse tangent ((@code{atan}), inverse
+cotangent (@code{acot}), inverse secant (@code{asec}), inverse
+cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
+(@code{cosh}), hyperbolic tangent (@code{tanh}), hyperbolic cotangent
+(@code{coth}), hyperbolic secant (@code{sech}), hyperbolic cosecant
+(@code{csch}), hyperbolic inverse sine (@code{asinh}), hyperbolic
+inverse cosine (@code{acosh}), hyperbolic inverse tangent
+(@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
+hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
+(@code{acsch}) and absolute value (@code{fabs}).
 
 Supported unary operation is unary minus (@code{'-'}).
 

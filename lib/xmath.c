@@ -30,12 +30,48 @@ math_cot(double x)
 }
 
 double
+math_sec(double x)
+{
+	/*
+	 * Calculate secant value.
+	 */
+	return 1 / cos(x);
+}
+
+double
+math_csc(double x)
+{
+	/*
+	 * Calculate cosecant value.
+	 */
+	return 1 / sin(x);
+}
+
+double
 math_acot(double x)
 {
 	/*
 	 * Calculate inverse cotangent value.
 	 */
 	return atan(1 / x);
+}
+
+double
+math_asec(double x)
+{
+	/*
+	 * Calculate inverse secant value.
+	 */
+	return acos(1 / x);
+}
+
+double
+math_acsc(double x)
+{
+	/*
+	 * Calculate inverse cosecant value.
+	 */
+	return asin (1 / x);
 }
 
 double
@@ -48,11 +84,28 @@ math_coth(double x)
 }
 
 double
+math_sech(double x)
+{
+	/*
+	 * Calculate hyperbolic secant value.
+	 */
+	return 1 / cosh(x);
+}
+
+double
+math_csch(double x)
+{
+	/*
+	 * Calculate hyperbolic cosecant value.
+	 */
+	return 1 / sinh(x);
+}
+
+double
 math_asinh(double x)
 {
 	/*
-	 * Calculate inverse hyperbolic sine value using relation between
-	 * hyperbolic and exponential functions.
+	 * Calculate inverse hyperbolic sine value.
 	 */
 	return log(x + sqrt(x * x + 1));
 }
@@ -61,8 +114,7 @@ double
 math_acosh(double x)
 {
 	/*
-	 * Calculate inverse hyperbolic cosine value using relation between
-	 * hyperbolic and exponential functions.
+	 * Calculate inverse hyperbolic cosine value.
 	 */
 	return log(x + sqrt(x * x - 1));
 }
@@ -71,8 +123,7 @@ double
 math_atanh(double x)
 {
 	/*
-	 * Calculate inverse hyperbolic tangent value using relation between
-	 * hyperbolic and exponential functions.
+	 * Calculate inverse hyperbolic tangent value.
 	 */
 	return 0.5 * log((1 + x) / (1 - x));
 }
@@ -83,5 +134,23 @@ math_acoth(double x)
 	/*
 	 * Calculate inverse hyperbolic cotangent value.
 	 */
-	return atanh(1 / x);
+	return 0.5 * log((x + 1) / (x - 1));
+}
+
+double
+math_asech(double x)
+{
+	/*
+	 * Calculate inverse hyperbolic secant value.
+	 */
+	return math_acosh(1 / x);
+}
+
+double
+math_acsch(double x)
+{
+	/*
+	 * Calculate inverse hyperbolic cosecant value.
+	 */
+        return math_asinh(1 / x);
 }
