@@ -18,7 +18,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -64,17 +63,17 @@ inner_main(void *closure, int argc, char **argv)
 	/*
 	 * Register other procedures working on evaluator type.
 	 */
-	scm_make_gsubr("evaluator-create", 1, 0, 0, evaluator_create_scm);
-	scm_make_gsubr("evaluator-evaluate", 4, 0, 0, evaluator_evaluate_scm);
-	scm_make_gsubr("evaluator-calculate-length", 1, 0, 0, evaluator_calculate_length_scm);
-	scm_make_gsubr("evaluator-write", 2, 0, 0, evaluator_write_scm);
-	scm_make_gsubr("evaluator-derivative", 2, 0, 0, evaluator_derivative_scm);
-	scm_make_gsubr("evaluator-evaluate-x", 2, 0, 0, evaluator_evaluate_x_scm);
-	scm_make_gsubr("evaluator-evaluate-x-y", 3, 0, 0, evaluator_evaluate_x_y_scm);
-	scm_make_gsubr("evaluator-evaluate-x-y-z", 4, 0, 0, evaluator_evaluate_x_y_z_scm);
-	scm_make_gsubr("evaluator-derivative-x", 1, 0, 0, evaluator_derivative_x_scm);
-	scm_make_gsubr("evaluator-derivative-y", 1, 0, 0, evaluator_derivative_y_scm);
-	scm_make_gsubr("evaluator-derivative-z", 1, 0, 0, evaluator_derivative_z_scm);
+	scm_make_gsubr("evaluator-create", 1, 0, 0, (SCM (*)()) evaluator_create_scm);
+	scm_make_gsubr("evaluator-evaluate", 4, 0, 0, (SCM (*)()) evaluator_evaluate_scm);
+	scm_make_gsubr("evaluator-calculate-length", 1, 0, 0, (SCM (*)()) evaluator_calculate_length_scm);
+	scm_make_gsubr("evaluator-write", 2, 0, 0, (SCM (*)()) evaluator_write_scm);
+	scm_make_gsubr("evaluator-derivative", 2, 0, 0, (SCM (*)()) evaluator_derivative_scm);
+	scm_make_gsubr("evaluator-evaluate-x", 2, 0, 0, (SCM (*)()) evaluator_evaluate_x_scm);
+	scm_make_gsubr("evaluator-evaluate-x-y", 3, 0, 0, (SCM (*)()) evaluator_evaluate_x_y_scm);
+	scm_make_gsubr("evaluator-evaluate-x-y-z", 4, 0, 0, (SCM (*)()) evaluator_evaluate_x_y_z_scm);
+	scm_make_gsubr("evaluator-derivative-x", 1, 0, 0, (SCM (*)()) evaluator_derivative_x_scm);
+	scm_make_gsubr("evaluator-derivative-y", 1, 0, 0, (SCM (*)()) evaluator_derivative_y_scm);
+	scm_make_gsubr("evaluator-derivative-z", 1, 0, 0, (SCM (*)()) evaluator_derivative_z_scm);
 
 	/*
 	 * Check is there exactly one argument left in command line.

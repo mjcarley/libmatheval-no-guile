@@ -73,18 +73,18 @@ node_create(char type,...)
 
 	case 'u':
 		/*
-		 * Initialize operator type and operand.
+		 * Initialize operation type and operand.
 		 */
-		node->data.un_op.operator = (char)va_arg(ap, int);
+		node->data.un_op.operation = (char)va_arg(ap, int);
 
 		node->data.un_op.child = va_arg(ap, Node *);
 		break;
 
 	case 'b':
 		/*
-		 * Initialize operator type and operands.
+		 * Initialize operation type and operands.
 		 */
-		node->data.un_op.operator = (char)va_arg(ap, int);
+		node->data.un_op.operation = (char)va_arg(ap, int);
 
 		node->data.bin_op.left = va_arg(ap, Node *);
 		node->data.bin_op.right = va_arg(ap, Node *);
@@ -153,10 +153,10 @@ node_copy(Node * node)
 		return node_create('f', node->data.function.record, node_copy(node->data.function.child));
 
 	case 'u':
-		return node_create('u', node->data.un_op.operator, node_copy(node->data.un_op.child));
+		return node_create('u', node->data.un_op.operation, node_copy(node->data.un_op.child));
 
 	case 'b':
-		return node_create('b', node->data.bin_op.operator, node_copy(node->data.bin_op.left), node_copy(node->data.bin_op.right));
+		return node_create('b', node->data.bin_op.operation, node_copy(node->data.bin_op.left), node_copy(node->data.bin_op.right));
 	}
 }
 
@@ -187,11 +187,11 @@ node_simplify(Node * node)
 
 	case 'u':
 		/*
-		 * Simplify unary operator operand and if constant apply
-		 * operator and replace operator node with constant node.
+		 * Simplify unary operation operand and if constant apply
+		 * operation and replace operation node with constant node.
 		 */
 		node->data.un_op.child = node_simplify(node->data.un_op.child);
-		if (node->data.un_op.operator == '-' && node->data.un_op.child->type == 'c') {
+		if (node->data.un_op.operation == '-' && node->data.un_op.child->type == 'c') {
 			double          value = node_evaluate(node);
 
 			node_destroy(node);
@@ -201,13 +201,13 @@ node_simplify(Node * node)
 
 	case 'b':
 		/*
-		 * Simplify binary operator operands.
+		 * Simplify binary operation operands.
 		 */
 		node->data.bin_op.left = node_simplify(node->data.bin_op.left);
 		node->data.bin_op.right = node_simplify(node->data.bin_op.right);
 
 		/*
-		 * If operands constant apply operator and replace operator
+		 * If operands constant apply operation and replace operation
 		 * node with constant node.
 		 */
 		if (node->data.bin_op.left->type == 'c' && node->data.bin_op.right->type == 'c') {
@@ -219,7 +219,7 @@ node_simplify(Node * node)
 		/*
 		 * Eliminate 0 as neutral addition operand.
 		 */
-		else if (node->data.bin_op.operator == '+')
+		else if (node->data.bin_op.operation == '+')
 			if (node->data.bin_op.left->type == 'c' && node->data.bin_op.left->data.constant == 0) {
 				Node           *right;
 
@@ -239,7 +239,7 @@ node_simplify(Node * node)
 		/*
 		 * Eliminate 0 as neutral subtraction right operand.
 		 */
-		else if (node->data.bin_op.operator == '-')
+		else if (node->data.bin_op.operation == '-')
 			if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 0) {
 				Node           *left;
 
@@ -252,7 +252,7 @@ node_simplify(Node * node)
 		/*
 		 * Eliminate 1 as neutral multiplication operand.
 		 */
-		else if (node->data.bin_op.operator == '*')
+		else if (node->data.bin_op.operation == '*')
 			if (node->data.bin_op.left->type == 'c' && node->data.bin_op.left->data.constant == 1) {
 				Node           *right;
 
@@ -272,7 +272,7 @@ node_simplify(Node * node)
 		/*
 		 * Eliminate 1 as neutral division right operand.
 		 */
-		else if (node->data.bin_op.operator == '/')
+		else if (node->data.bin_op.operation == '/')
 			if (node->data.bin_op.right->type == 'c' && node->data.bin_op.right->data.constant == 1) {
 				Node           *left;
 
@@ -286,7 +286,7 @@ node_simplify(Node * node)
 		 * Eliminate 0 and 1 as both left and right exponentiation
 		 * operands.
 		 */
-		else if (node->data.bin_op.operator == '^')
+		else if (node->data.bin_op.operation == '^')
 			if (node->data.bin_op.left->type == 'c' && node->data.bin_op.left->data.constant == 0) {
 				node_destroy(node);
 				return node_create('c', 0.0);
@@ -334,20 +334,20 @@ node_evaluate(Node * node)
 
 	case 'u':
 		/*
-		 * Unary operator node is evaluated according to operator
+		 * Unary operation node is evaluated according to operation
 		 * type.
 		 */
-		switch (node->data.un_op.operator) {
+		switch (node->data.un_op.operation) {
 		case '-':
 			return -node_evaluate(node->data.un_op.child);
 		}
 
 	case 'b':
 		/*
-		 * Binary operator node is evaluated according to operator
+		 * Binary operation node is evaluated according to operation
 		 * type.
 		 */
-		switch (node->data.un_op.operator) {
+		switch (node->data.un_op.operation) {
 		case '+':
 			return node_evaluate(node->data.bin_op.left) + node_evaluate(node->data.bin_op.right);
 
@@ -495,7 +495,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 			return node_create('b', '/', node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_copy(node->data.function.child)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))));
 
 	case 'u':
-		switch (node->data.un_op.operator) {
+		switch (node->data.un_op.operation) {
 		case '-':
 			/*
 			 * Apply (-f)'=-f' derivative rule.
@@ -504,7 +504,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		}
 
 	case 'b':
-		switch (node->data.bin_op.operator) {
+		switch (node->data.bin_op.operation) {
 		case '+':
 			/*
 			 * Apply (f+g)'=f'+g' derivative rule.
@@ -556,7 +556,8 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 int
 node_calculate_length(Node * node)
 {
-	char           *string;	/* String representing constant node value. */
+        FILE           *file;	/* Temporary file. */
+        int             count;	/* Count of bytes written to above file. */
 	int             length;	/* Length of above string. */
 
 	/*
@@ -568,9 +569,14 @@ node_calculate_length(Node * node)
 		length = 0;
 		if (node->data.constant < 0)
 			length += 1;
-		if (asprintf(&string, "%g", node->data.constant) != -1)
-			length += strlen(string);
-		free(string);
+
+                file = tmpfile();
+                if (file != NULL) {
+                        if ((count = fprintf(file, "%g", node->data.constant)) >= 0)
+                                length += count;
+                        fclose(file);
+                }
+
 		if (node->data.constant < 0)
 			length += 1;
 		return length;
@@ -597,7 +603,7 @@ node_write(Node * node, char *string)
 {
 	/*
 	 * According to node type, write subtree rooted at node to node
-	 * string variable.  Always use parenthesis to resolve operator
+	 * string variable.  Always use parenthesis to resolve operation
 	 * precedence.
 	 */
 	switch (node->type) {
@@ -627,7 +633,7 @@ node_write(Node * node, char *string)
 	case 'u':
 		sprintf(string, "%c", '(');
 		string += strlen(string);
-		sprintf(string, "%c", node->data.un_op.operator);
+		sprintf(string, "%c", node->data.un_op.operation);
 		string += strlen(string);
 		node_write(node->data.un_op.child, string);
 		string += strlen(string);
@@ -639,7 +645,7 @@ node_write(Node * node, char *string)
 		string += strlen(string);
 		node_write(node->data.bin_op.left, string);
 		string += strlen(string);
-		sprintf(string, "%c", node->data.bin_op.operator);
+		sprintf(string, "%c", node->data.bin_op.operation);
 		string += strlen(string);
 		node_write(node->data.bin_op.right, string);
 		string += strlen(string);

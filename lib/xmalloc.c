@@ -35,32 +35,32 @@ xmalloc(size_t num)
 	/*
 	 * Call malloc() and check return value.
 	 */
-	void           *new = malloc(num);
+	void           *ptr_new = malloc(num);
 
-	if (!new)
+	if (!ptr_new)
 		error_fatal("unable to allocate memory");
-	return new;
+	return ptr_new;
 }
 
 void           *
-xrealloc(void *p, size_t num)
+xrealloc(void *ptr, size_t num)
 {
-	void           *new;
+	void           *ptr_new;
 
 	/*
 	 * If memory not already allocated, fall back to xmalloc().
 	 */
-	if (!p)
+	if (!ptr)
 		return xmalloc(num);
 
 	/*
 	 * Otherwise, call realloc() and check return value.
 	 */
-	new = realloc(p, num);
-	if (!new)
+	ptr_new = realloc(ptr, num);
+	if (!ptr_new)
 		error_fatal("unable to allocate memory");
 
-	return new;
+	return ptr_new;
 }
 
 void           *
@@ -69,8 +69,8 @@ xcalloc(size_t num, size_t size)
 	/*
 	 * Allocate memory and fill with zeroes.
 	 */
-	void           *new = xmalloc(num * size);
+	void           *ptr_new = xmalloc(num * size);
 
-	bzero(new, num * size);
-	return new;
+	bzero(ptr_new, num * size);
+	return ptr_new;
 }

@@ -338,7 +338,7 @@ function derivative over some variable.
 
 String representation of function is allowed to consist of decimal
 constants, variables, elementary functions, unary and binary
-operators.
+operations.
 
 Variable name is any combination of alphanumericals and @code{_}
 characters beginning with a non-digit that is not elementary function
@@ -356,13 +356,13 @@ hyperbolic inverse cosine (@code{acosh}), hyperbolic inverse tangent
 (@code{atanh}), hyperbolic inverse cotangent (@code{actanh}) and
 absolute value (@code{fabs}).
 
-Supported unary operator is unary minus (@code{'-'}).
+Supported unary operation is unary minus (@code{'-'}).
 
-Supported binary operators are addition (@code{'+'}), subtraction
+Supported binary operations are addition (@code{'+'}), subtraction
 (@code{'+'}), multiplication (@code{'*'}), division multiplication
 (@code{'/'}) and exponentiation (@code{'^'}).
 
-Usual mathematical rules regarding operator precedence
+Usual mathematical rules regarding operation precedence
 apply. Parenthesis (@code{'('} and @code{')'}) could be used to change
 priority order.
 
@@ -816,7 +816,7 @@ function derivative over some variable.
 
 String representation of function is allowed to consist of decimal
 constants, variables, elementary functions, unary and binary
-operators.
+operations.
 
 Variable name is any combination of alphanumericals and @code{_}
 characters beginning with a non-digit that is not elementary function
@@ -834,13 +834,13 @@ hyperbolic inverse cosine (@code{acosh}), hyperbolic inverse tangent
 (@code{atanh}), hyperbolic inverse cotangent (@code{actanh}) and
 absolute value (@code{fabs}).
 
-Supported unary operator is unary minus (@code{'-'}).
+Supported unary operation is unary minus (@code{'-'}).
 
-Supported binary operators are addition (@code{'+'}), subtraction
+Supported binary operations are addition (@code{'+'}), subtraction
 (@code{'+'}), multiplication (@code{'*'}), division multiplication
 (@code{'/'}) and exponentiation (@code{'^'}).
 
-Usual mathematical rules regarding operator precedence
+Usual mathematical rules regarding operation precedence
 apply. Parenthesis (@code{'('} and @code{')'}) could be used to change
 priority order.
 
@@ -1340,11 +1340,11 @@ explain project design. See @ref{Project structure} section for
 description of where each functionality is located in source code.
 
 Mathematical functions are represented as trees in computer memory.
-There are five different nodes in such a three: constants, variables,
-functions, unary operators and binary operators.  Single data
+There are five different nodes in such a tree: constants, variables,
+functions, unary operations and binary operations.  Single data
 structure is employed for tree nodes, while union is used over what is
 different among them.  Constant have unique value, unary and binary
-operators have unique pointer(s) to their operand(s) node(s).  To
+operations have unique pointer(s) to their operand(s) node(s).  To
 represent variables and functions, a symbol table is employed; thus
 variables and functions have unique pointers to corresponding symbol
 table records (functions also have unique pointer to their argument
@@ -1472,13 +1472,13 @@ representing function.
 @item
 Add more simplifications to function tree representation.  Only basic
 simpifications, mostly related to constants subtrees consolidation and
-binary operators neutral elements are employed now.  More ambitious
+binary operations neutral elements are employed now.  More ambitious
 optimization, using commutative, associative and distributive rules
-for binary operators would be desirable.
+for binary operations would be desirable.
 
 @item
 Improve output when evaluator object is printed.  Presently,
-parenthesis are always used around operators, while using them when
+parenthesis are always used around operations, while using them when
 necessary to establish proper evaluation priority order only would
 give prettier output
 

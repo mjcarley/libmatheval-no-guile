@@ -181,11 +181,12 @@ double
 evaluator_evaluate_x(void *evaluator, double x)
 {
 	char           *names[] = {"x"};	/* Array of variable names.  */
-	double          values[] = {x};	/* Array of variable values.  */
+	double          values[1];	        /* Array of variable values.  */
 
 	/*
 	 * Evaluate function for given values of variable "x".
 	 */
+        values[0] = x;
 	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]), names, values);
 }
 
@@ -193,11 +194,12 @@ double
 evaluator_evaluate_x_y(void *evaluator, double x, double y)
 {
 	char           *names[] = {"x", "y"};	/* Array of variable names.  */
-	double          values[] = {x, y};	/* Array of variable values.  */
+	double          values[2];	        /* Array of variable values.  */
 
 	/*
 	 * Evaluate function for given values of variable "x" and "y".
 	 */
+        values[0] = x, values[1] = y;
 	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]), names, values);
 }
 
@@ -206,11 +208,12 @@ evaluator_evaluate_x_y_z(void *evaluator, double x, double y, double z)
 {
 	char           *names[] = {"x", "y", "z"};	/* Array of variable
 							 * names.  */
-	double          values[] = {x, y, z};	/* Array of variable values.  */
+	double          values[3];	 	/* Array of variable values.  */
 
 	/*
 	 * Evaluate function for given values of variable "x", "y" and "z".
 	 */
+        values[0] = x, values[1] = y, values[2] = z;
 	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]), names, values);
 }
 

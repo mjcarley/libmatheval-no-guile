@@ -31,7 +31,7 @@
 typedef struct _Node {
 	char            type;	/* Node type ('c' for constant, 'v' for
 				 * variable, 'f' for function, 'u' for unary
-				 * operator, 'b' for binary operator).  */
+				 * operation, 'b' for binary operation).  */
 	union {
 		double          constant;	/* Constant value.  */
 		Record         *variable;	/* Symbol table record for
@@ -43,13 +43,13 @@ typedef struct _Node {
 		}               function;	/* Structure representing
 						 * function.  */
 		struct {
-			char            operator;	/* Operator type ('-'
+			char            operation;	/* Operation type ('-'
 							 * for unary minus).  */
 			struct _Node   *child;	/* Operand node.  */
 		}               un_op;	/* Structure representing unary
-					 * operator.  */
+					 * operation.  */
 		struct {
-			char            operator;	/* Operator type ('+'
+			char            operation;	/* Operation type ('+'
 							 * for adition, '-' for
 							 * subtraction, '*' for
 							 * multiplication, '/'
@@ -57,7 +57,7 @@ typedef struct _Node {
 							 * for exponentiation).  */
 			struct _Node   *left, *right;	/* Operands nodes.  */
 		}               bin_op;	/* Structure representing binary
-					 * operator.  */
+					 * operation.  */
 	}               data;
 }               Node;
 

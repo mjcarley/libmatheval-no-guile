@@ -63,7 +63,7 @@ void            symbol_table_destroy(SymbolTable * symbol_table);
 /*
  * Insert symbol into given symbol table.  Further arguments are symbol name
  * and its type, as well as additional arguments according to symbol type.
- * Return value is pointer to symobl table record created to represent
+ * Return value is pointer to symbol table record created to represent
  * symbol.  If symbol already in symbol table, pointer to its record is
  * returned immediately.
  */

@@ -45,6 +45,8 @@
 #  include "config.h"
 #endif
 
+#include <stdlib.h>
+#include <string.h>
 #include "node.h"
 #include "parser.h"
 #include "symbol_table.h"

@@ -20,7 +20,7 @@ REQUIREMENTS
 
 GNU autotools are employed for this project, so library should be
 compilable on any Unix variant.  Still, compilation is verified on
-FreeBSD 4.8 and Slackware GNU/Linux 9.0 only.  Library (actually, test
+NetBSD 1.6 and Slackware GNU/Linux 9.1 only.  Library (actually, test
 suite) requires Guile to be present.
 
 

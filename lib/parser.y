@@ -93,27 +93,27 @@ expression
 : NUMBER
 | VARIABLE
 | expression '+' expression {
-  /* Create addition binary operator node.  */
+  /* Create addition binary operation node.  */
   $$ = node_create ('b', '+', $1, $3);
 }
 | expression '-' expression {
-  /* Create subtraction binary operator node.  */
+  /* Create subtraction binary operation node.  */
   $$ = node_create ('b', '-', $1, $3);
 }
 | expression '*' expression {
-  /* Create multiplication binary operator node.  */
+  /* Create multiplication binary operation node.  */
   $$ = node_create ('b', '*', $1, $3);
 }
 | expression '/' expression {
-  /* Create division binary operator node.  */
+  /* Create division binary operation node.  */
   $$ = node_create ('b', '/', $1, $3);
 }
 | '-' expression %prec NEG {
-  /* Create minus unary operator node.  */
+  /* Create minus unary operation node.  */
   $$ = node_create ('u', '-', $2);
 }
 | expression '^' expression {
-  /* Create exponentiation unary operator node.  */
+  /* Create exponentiation unary operation node.  */
   $$ = node_create ('b', '^', $1, $3);
 }
 | FUNCTION '(' expression ')' {

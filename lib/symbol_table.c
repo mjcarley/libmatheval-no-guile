@@ -46,7 +46,7 @@ symbol_table_create(int length)
 		"actanh", "fabs"
 	};			/* Symbol table predefined functions names.  */
 	static double   (*functions[]) (double)= {
-	exp, log, sqrt, sin, cos, tan, ctan, asin, acos, atan, actan, sinh, cosh, tanh, ctanh, asinh, acosh, atanh, actanh, fabs};	/* Symbol table
+	exp, log, sqrt, sin, cos, tan, math_ctan, asin, acos, atan, math_actan, sinh, cosh, tanh, math_ctanh, math_asinh, math_acosh, math_atanh, math_actanh, fabs};	/* Symbol table
 																	 * predefined functions
 																	 * pointers to functions
 																	 * to calculate them.  */

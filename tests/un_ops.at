@@ -1,4 +1,4 @@
-# Checking the unary operators.                    -*- Autotest -*-
+# Checking the unary operations.                    -*- Autotest -*-
 
 # Copyright (C) 2002, 2003  Free Software Foundation, Inc.
 #
@@ -19,9 +19,9 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-AT_BANNER([[Checking evaluating unary operators.]])
+AT_BANNER([[Checking evaluating unary operations.]])
 
-AT_SETUP([Check unary operators.])
+AT_SETUP([Check unary operations.])
 
 AT_DATA([un_op.scm],
 [[

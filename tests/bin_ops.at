@@ -1,4 +1,4 @@
-# Checking the binary operators.                    -*- Autotest -*-
+# Checking the binary operations.                    -*- Autotest -*-
 
 # Copyright (C) 2002, 2003  Free Software Foundation, Inc.
 #
@@ -19,9 +19,9 @@
 # Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
 
-AT_BANNER([[Checking evaluating binary operators.]])
+AT_BANNER([[Checking evaluating binary operations.]])
 
-AT_SETUP([Check binary operators.])
+AT_SETUP([Check binary operations.])
 
 AT_DATA([function.scm],
 [[

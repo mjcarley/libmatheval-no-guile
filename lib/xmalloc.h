@@ -23,7 +23,7 @@
 
 /* Macro definitions to simplify corresponding function calls.  */
 #define XMALLOC(type, num) ((type *) xmalloc ((num) * sizeof(type)))
-#define XREALLOC(type, p, num) ((type *) xrealloc ((p), (num) * sizeof(type)))
+#define XREALLOC(type, ptr, num) ((type *) xrealloc ((ptr), (num) * sizeof(type)))
 #define XCALLOC(type, num) ((type *) xcalloc ((num), sizeof(type)))
 #define XFREE(stale) free (stale);
 
@@ -31,7 +31,7 @@
 void           *xmalloc(size_t size);
 
 /* Same as above from realloc().  */
-void           *xrealloc(void *p, size_t size);
+void           *xrealloc(void *ptr, size_t size);
 
 /* Same as above for calloc().  */
 void           *xcalloc(size_t num, size_t size);

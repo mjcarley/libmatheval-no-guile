@@ -34,10 +34,6 @@
 #include <strings.h>
 #endif
 
-#if !HAVE_ASPRINTF
-#error asprintf() function missing!
-#endif
-
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS  0
 #define EXIT_FAILURE  1
