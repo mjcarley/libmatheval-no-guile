@@ -49,6 +49,10 @@ int             ok;		/* Flag determining if parsing went OK.  */
 typedef struct {
 	Node           *root;	/* Root of tree representation of function.  */
 	SymbolTable    *symbol_table;	/* Evalutor symbol table.  */
+        char           *string; /* Evaluator textual representation. */
+        int             count;  /* Number of evaluator variables. */
+        char          **names;  /* Array of pointers to evaluator
+                                 * variable names. */
 }               Evaluator;
 
 void           *
@@ -104,6 +108,9 @@ evaluator_create(char *string)
 	evaluator = XMALLOC(Evaluator, 1);
 	evaluator->root = root;
 	evaluator->symbol_table = symbol_table;
+        evaluator->string = NULL;
+        evaluator->count = 0;
+        evaluator->names = NULL;
 
 	return evaluator;
 }
@@ -112,11 +119,14 @@ void
 evaluator_destroy(void *evaluator)
 {
 	/*
-	 * Destroy tree represention of function, symbol table, as well as
-	 * data structure representing evaluator.
+	 * Destroy tree represention of function, symbol table, array of
+	 * pointers to evaluator variable names, as well as data
+	 * structure representing evaluator.
 	 */
 	node_destroy(((Evaluator *) evaluator)->root);
 	symbol_table_destroy(((Evaluator *) evaluator)->symbol_table);
+        XFREE(((Evaluator *) evaluator)->string);
+        XFREE(((Evaluator *) evaluator)->names);
 	XFREE(evaluator);
 }
 
@@ -143,22 +153,54 @@ evaluator_evaluate(void *evaluator, int count, char **names, double *values)
 	return node_evaluate(((Evaluator *) evaluator)->root);
 }
 
-int
-evaluator_calculate_length(void *evaluator)
+char            *
+evaluator_get_string(void *evaluator)
 {
+        int             length; /* Length of evaluator textual
+                                 * representaion. */
+
 	/*
-	 * Calculate length of evaluator textual representation.
+	 * If not already, create and remember evaluator textual
+	 * representation.
 	 */
-	return node_calculate_length(((Evaluator *) evaluator)->root);
+        if (!((Evaluator *) evaluator)->string) {
+                length = node_get_length(((Evaluator *) evaluator)->root);
+                ((Evaluator *) evaluator)->string = XMALLOC(char, length + 1);
+                node_write(((Evaluator *) evaluator)->root, ((Evaluator *) evaluator)->string);
+                ((Evaluator *) evaluator)->string[length] = 0;
+        }
+
+        /* Return requsted information. */
+	return ((Evaluator *) evaluator)->string;
 }
 
 void
-evaluator_write(void *evaluator, char *string)
+evaluator_get_variables(void *evaluator, char ***names, int *count)
 {
-	/*
-	 * Write evaluator textual representation to given string.
-	 */
-	node_write(((Evaluator *) evaluator)->root, string);
+        Record        **records;/* Array of symbol table records
+                                 * containing evaluator variables. */
+	int             i;	/* Loop counter.  */
+
+        /*
+         * If not already, find and remember evaluator variable names.
+         */
+        if (!((Evaluator *) evaluator)->names) {
+                symbol_table_clear_flags(((Evaluator*) evaluator)->symbol_table);
+                node_flag_variables(((Evaluator*) evaluator)->root);
+                ((Evaluator*) evaluator)->count = symbol_table_get_flagged_count(symbol_table);
+                records = XMALLOC(Record*, ((Evaluator*) evaluator)->count);
+                symbol_table_get_flagged(symbol_table, records, ((Evaluator*) evaluator)->count);
+                ((Evaluator*) evaluator)->names = XMALLOC(char*, ((Evaluator*) evaluator)->count);
+                for (i = 0; i < ((Evaluator*) evaluator)->count; i++)
+                        ((Evaluator*) evaluator)->names[i] = records[i]->name;
+                XFREE(records);
+        }
+
+        /*
+         * Return requested information.
+         */
+        *count = ((Evaluator*) evaluator)->count;
+        *names = ((Evaluator*) evaluator)->names;
 }
 
 void           *
@@ -173,6 +215,9 @@ evaluator_derivative(void *evaluator, char *name)
 	derivative = XMALLOC(Evaluator, 1);
 	derivative->root = node_simplify(node_derivative(((Evaluator *) evaluator)->root, name, ((Evaluator *) evaluator)->symbol_table));
 	derivative->symbol_table = symbol_table_assign(((Evaluator *) evaluator)->symbol_table);
+        derivative->string = NULL;
+        derivative->count = 0;
+        derivative->names = NULL;
 
 	return derivative;
 }

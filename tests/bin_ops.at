@@ -35,9 +35,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "4+x"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [1], [ignore])
@@ -54,9 +52,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "4-x"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-1)], [ignore])
@@ -73,9 +69,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "4*x"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [((0*x)+4)], [ignore])
@@ -92,9 +86,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "4/x"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(((0*x)-4)/(x^2))], [ignore])
@@ -111,9 +103,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "4^x"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [((4^x)*(1.38629+(x*0)))], [ignore])
@@ -130,9 +120,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "x^4"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(4*(x^3))], [ignore])

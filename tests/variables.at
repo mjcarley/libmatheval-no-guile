@@ -26,9 +26,7 @@ AT_SETUP([Check variables.])
 AT_DATA([variable.scm],
 [[
 (define f (evaluator-create "1/x"))
-(define string (make-string (evaluator-calculate-length f)))
-(evaluator-write f string)
-(display string)
+(display (evaluator-get-string f))
 ]])
 
 AT_CHECK([matheval.sh variable.scm], [ignore], [(1/x)], [ignore])
@@ -51,11 +49,41 @@ AT_CHECK([matheval.sh variable.scm], [ignore], [32.0], [ignore])
 
 AT_DATA([variable.scm],
 [[
+(define f (evaluator-create "1"))
+(display (evaluator-get-variables f))
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [()], [ignore])
+
+AT_DATA([variable.scm],
+[[
+(define f (evaluator-create "x"))
+(display (evaluator-get-variables f))
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [(x)], [ignore])
+
+AT_DATA([variable.scm],
+[[
+(define f (evaluator-create "x+y"))
+(display (evaluator-get-variables f))
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [(x y)], [ignore])
+
+AT_DATA([variable.scm],
+[[
+(define f (evaluator-create "x*y*z"))
+(display (evaluator-get-variables f))
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [(x y z)], [ignore])
+
+AT_DATA([variable.scm],
+[[
 (define f (evaluator-create "asin(a141^3)*log(b12)"))
 (define f_prim (evaluator-derivative f "a141"))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh variable.scm], [ignore], [((((3*(a141^2))/sqrt((1-((a141^3)^2))))*log(b12))+(asin((a141^3))*(0/b12)))], [ignore])

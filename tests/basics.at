@@ -26,9 +26,7 @@ AT_SETUP([Check basics.])
 AT_DATA([basics.scm],
 [[
 (define f (evaluator-create "x+2"))
-(define string (make-string (evaluator-calculate-length f)))
-(evaluator-write f string)
-(display string)
+(display (evaluator-get-string f))
 ]])
 
 AT_CHECK([matheval.sh basics.scm], [ignore], [(x+2)], [ignore])
@@ -45,9 +43,7 @@ AT_DATA([basics.scm],
 [[
 (define f (evaluator-create "x+2"))
 (define f_prim (evaluator-derivative f "x"))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh basics.scm], [ignore], [1], [ignore])
@@ -80,9 +76,7 @@ AT_DATA([basics.scm],
 [[
 (define f (evaluator-create "tan(x)/cos(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh basics.scm], [ignore], [((((1/(cos(x)^2))*cos(x))-(tan(x)*(-sin(x))))/(cos(x)^2))], [ignore])
@@ -91,9 +85,7 @@ AT_DATA([basics.scm],
 [[
 (define f (evaluator-create "x+0.7*log(y)"))
 (define f_prim (evaluator-derivative-y f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh basics.scm], [ignore], [((0*log(y))+(0.7*(1/y)))], [ignore])
@@ -102,9 +94,7 @@ AT_DATA([basics.scm],
 [[
 (define f (evaluator-create "x*z+y^3/z^2"))
 (define f_prim (evaluator-derivative-z f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh basics.scm], [ignore], [(((0*z)+x)+((((0*(y^2))*(z^2))-((y^3)*(2*z)))/((z^2)^2)))], [ignore])

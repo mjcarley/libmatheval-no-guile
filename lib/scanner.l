@@ -90,7 +90,7 @@ identifier [_a-zA-Z][[_a-zA-Z0-9]*
 {identifier} {
   Record *record; /* Symbol table record.  */
 
-  /* Inserty variable into symbol table.  */
+  /* Insert variable into symbol table.  */
   record = symbol_table_insert (symbol_table, yytext, 'v');
   yylval.node = node_create ('v', record);
   return VARIABLE;

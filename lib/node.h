@@ -98,10 +98,16 @@ double          node_evaluate(Node * node);
 Node           *node_derivative(Node * node, char *name, SymbolTable * symbol_table);
 
 /*
+ * Flag each variable in symbol table that is used from subtree rooted
+ * at specified node.
+ */
+void            node_flag_variables(Node * node);
+
+/*
  * Calculate length of the string representing subtree rooted at specified
  * node.
  */
-int             node_calculate_length(Node * node);
+int             node_get_length(Node * node);
 
 /*
  * Write subtree rooted at specified node to given string variable.  No

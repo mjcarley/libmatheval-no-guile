@@ -91,8 +91,7 @@ makes possible to create in-memory tree representation of mathematical
 functions over single or multiple variables and later use this
 representation to evaluate function for specified variable values, to
 create corresponding tree for function derivative over specified
-variable or to print textual representation of in-memory tree to
-specified string.
+variable or to get back textual representation of in-memory tree.
 
 This section discuss use of programming interface exposed by library
 from C programs. Readers interested in Fortran interface should switch
@@ -127,16 +126,34 @@ for this procedure also for description of notation that should be
 used to describe mathematical functions):
 
 @example
-f = evaluator_create (buffer);
-assert (f);
+f = evaluator_create (buffer); assert (f);
 @end example
 
 Return value should be always checked, because above procedure will
 return null pointer if there exist syntax errors in notation.  After
-that, one could use @code{evaluator_evaluate()} procedure (see
-@ref{evaluator_evaluate}) to evaluate function for specific variable
-values.  Say that above function is over variable ``x'' only, then
-following code will evaluate and print function value for x = 0.1:
+that, one could utilize @code{evaluator_get_variables()} (see
+@ref{evaluator_get_variables}) procedure to obtain a list of variable
+names appearing in function:
+
+@example
+@{
+  char **variables;
+  int count;
+  int i;
+
+  evaluator_get_variables (f, &names, &count);
+  for (i = 0; i < count; i++)
+    printf ("%s ", names[i]);
+  printf ("\n");
+@}
+@end example
+evaluator
+
+
+Procedure @code{evaluator_evaluate()} (see @ref{evaluator_evaluate})
+could be used to evaluate function for specific variable values.  Say
+that above function is over variable ``x'' only, then following code
+will evaluate and print function value for x = 0.1:
 
 @example
 @{
@@ -184,26 +201,12 @@ f_prim = evaluator_derivative_x (f);
 
 Derivative evaluator object could be used to evaluate derivative
 values or say textual representation of derivative could be written to
-standard output through first writting it to specified string using
-@code{evaluator_write()} procedure (see @ref{evaluator_write}) where
-string length should be calculated beforehand using
-@code{evaluator_calculate_length()} procedure (see
-@ref{evaluator_calculate_length}).  Thus, after declaring string
-object:
+standard output through utilizing @code{evaluator_get_string()}
+procedure (see @ref{evaluator_get_string}) to get string representing
+given evaluator.  Following code would accomplish this:
 
 @example
-char *string;
-@end example
-
-following code would print derivative to standard output:
-
-@example
-string =
-    (char *) malloc ((evaluator_calculate_length (f_prim) + 1) *
-		     sizeof (char));
-evaluator_write (f_prim, string);
-printf ("  f'(x) = %s\n", string);
-free (string);
+printf ("  f'(x) = %s\n", evaluator_get_string (f_prim));
 @end example
 
 All evaluator objects must be destroyed after finished with using them
@@ -239,10 +242,12 @@ int
 main (int argc, char **argv)
 @{
   char buffer[BUFFER_SIZE];	/* Input buffer.  */
-  int length;                   /* Length of above buffer. */
+  int length;			/* Length of above buffer. */
   void *f, *f_prim;		/* Evaluators for function and function derivative.  */
-  char *string;			/* Textual representation of function derivative. */
+  char **names;			/* Function variables names. */
+  int count;			/* Number of function variables. */
   double x;			/* Variable x value.  */
+  int i;			/* Loop counter. */
 
   /* Read function.  Function has to be over variable x, or result may
      be undetermined.  Size of textual represenatation of function is
@@ -259,15 +264,17 @@ main (int argc, char **argv)
   f = evaluator_create (buffer);
   assert (f);
 
+  /* Print variable names appearing in function. */
+  evaluator_get_variables (f, &names, &count);
+  printf ("  ");
+  for (i = 0; i < count; i++)
+    printf ("%s ", names[i]);
+  printf ("\n");
+
   /* Create evaluator for function derivative and print textual
      representation of derivative.  */
   f_prim = evaluator_derivative_x (f);
-  string =
-    (char *) malloc ((evaluator_calculate_length (f_prim) + 1) *
-		     sizeof (char));
-  evaluator_write (f_prim, string);
-  printf ("  f'(x) = %s\n", string);
-  free (string);
+  printf ("  f'(x) = %s\n", evaluator_get_string (f_prim));
 
   /* Read variable x value.  */
   printf ("x = ");
@@ -309,12 +316,12 @@ prefix.
 @cindex main entry points
 
 @menu
-* evaluator_create::           @code{evaluator_create()} procedure
-* evaluator_destroy::          @code{evaluator_destroy()} procedure
-* evaluator_evaluate::         @code{evaluator_evaluate()} procedure
-* evaluator_calculate_length:: @code{evaluator_calculate_length()} procedure
-* evaluator_write::            @code{evaluator_write()} procedure
-* evaluator_derivative::       @code{evaluator_derivative()} procedure
+* evaluator_create::        @code{evaluator_create()} procedure
+* evaluator_destroy::       @code{evaluator_destroy()} procedure
+* evaluator_evaluate::      @code{evaluator_evaluate()} procedure
+* evaluator_get_string::    @code{evaluator_get_string()} procedure
+* evaluator_get_variables:: @code{evaluator_get_variables()} procedure
+* evaluator_derivative::    @code{evaluator_derivative()} procedure
 @end menu
 
 @node evaluator_create, evaluator_destroy, Main entry points, Main entry points
@@ -385,7 +392,7 @@ pointer to pass it to other functions from library.
 @unnumberedsubsubsec See also
 
 @ref{evaluator_destroy}, @ref{evaluator_evaluate},
-@ref{evaluator_calculate_length}, @ref{evaluator_write},
+@ref{evaluator_get_string}, @ref{evaluator_get_variables},
 @ref{evaluator_derivative}
 
 @node evaluator_destroy, evaluator_evaluate, evaluator_create, Main entry points
@@ -414,7 +421,7 @@ None.
 
 @ref{evaluator_create}
 
-@node evaluator_evaluate, evaluator_calculate_length, evaluator_destroy, Main entry points
+@node evaluator_evaluate, evaluator_get_string, evaluator_destroy, Main entry points
 @subsection @code{evaluator_evaluate()}
 @findex @code{evaluator_evaluate()}
 
@@ -449,53 +456,56 @@ arguments has no effect, i.e. result is still exact.
 @ref{evaluator_evaluate_x}, @ref{evaluator_evaluate_x_y},
 @ref{evaluator_evaluate_x_y_z}
 
-@node evaluator_calculate_length, evaluator_write, evaluator_evaluate, Main entry points
-@subsection @code{evaluator_calculate_length()}
-@findex @code{evaluator_calculate_length()}
+@node evaluator_get_string, evaluator_get_variables, evaluator_evaluate, Main entry points
+@subsection @code{evaluator_get_string()}
+@findex @code{evaluator_get_string()}
 
 @unnumberedsubsubsec Synopsis
 
 @example
 #include <matheval.h>
 
-int evaluator_calculate_length (void *evaluator);
+char *evaluator_get_string (void *evaluator);
 @end example
 
 @unnumberedsubsubsec Description
 
-Calculate length of textual representation of mathematical function
-given by @code{evaluator} object.  This procedure is intended to be
-used along with @ref{evaluator_write} procedure.
+Return textual representation (i.e. mathematical function) of
+evaluator object pointed by @code{evaluator}.  For notation used, see
+@ref{evaluator_create} documentation.
 
 @unnumberedsubsubsec Return value
 
-Length of string of characters representing evaluator (no termination
-zero included).
+String with textual representation of evaluator object.  This string
+is stored in evaluator object and caller must not free pointer
+returned by this function.  Returned string is valid until evaluator
+object not destroyed.
 
 @unnumberedsubsubsec See also
 
-@ref{evaluator_create}, @ref{evaluator_destroy}, @ref{evaluator_write}
+@ref{evaluator_create}, @ref{evaluator_destroy}, @ref{evaluator_get_variables}
 
-@node evaluator_write, evaluator_derivative, evaluator_calculate_length, Main entry points
-@subsection @code{evaluator_write()}
-@findex @code{evaluator_write()}
+@node evaluator_get_variables, evaluator_derivative, evaluator_get_string, Main entry points
+@subsection @code{evaluator_get_variables()}
+@findex @code{evaluator_get_variables()}
 
 @unnumberedsubsubsec Synopsis
 
 @example
 #include <matheval.h>
 
-void evaluator_write (void *evaluator, char* string);
+void evaluator_get_variables (void *evaluator, char ***names, int *count);
 @end example
 
 @unnumberedsubsubsec Description
 
-Write textual representation (i.e. mathematical function) of evaluator
-object pointed by @code{evaluator} to string specified.  For notation
-used, see @ref{evaluator_create} documentation.  String of sufficient
-length must be passed to this function; thus,
-@ref{evaluator_calculate_length} procedure should be utilized
-beforehand, when allocating memory to hold this string.
+Return array of strings with names of variables appearing in function
+represented by evaluator.  Address of array first element is stored by
+function in location pointed by second argument and number of array
+elements is stored in location pointed by third argument.  Array with
+function variable names is stored in evaluator object and caller must
+not free any of strings returned by this function nor array itself.
+Returned values are valid until evaluator object not destroyed.
 
 @unnumberedsubsubsec Return value
 
@@ -503,9 +513,9 @@ None.
 
 @unnumberedsubsubsec See also
 
-@ref{evaluator_create}, @ref{evaluator_destroy}, @ref{evaluator_calculate_length}
+@ref{evaluator_create}, @ref{evaluator_destroy}, @ref{evaluator_get_string}
 
-@node evaluator_derivative,  , evaluator_write, Main entry points
+@node evaluator_derivative,  , evaluator_get_variables, Main entry points
 @subsection @code{evaluator_derivative()}
 @findex @code{evaluator_derivative()}
 
@@ -794,12 +804,12 @@ access to corresponding compiler is provided.
 @cindex Fortran, main entry points
 
 @menu
-* Fortran evaluator_create::           @code{evaluator_create()} procedure
-* Fortran evaluator_destroy::          @code{evaluator_destroy()} procedure
-* Fortran evaluator_evaluate::         @code{evaluator_evaluate()} procedure
-* Fortran evaluator_calculate_length:: @code{evaluator_calculate_length()} procedure
-* Fortran evaluator_write::            @code{evaluator_write()} procedure
-* Fortran evaluator_derivative::       @code{evaluator_derivative()} procedure
+* Fortran evaluator_create::        @code{evaluator_create()} procedure
+* Fortran evaluator_destroy::       @code{evaluator_destroy()} procedure
+* Fortran evaluator_evaluate::      @code{evaluator_evaluate()} procedure
+* Fortran evaluator_get_string::    @code{evaluator_get_string()} procedure
+* Fortran evaluator_get_variables:: @code{evaluator_get_variables()} procedure
+* Fortran evaluator_derivative::    @code{evaluator_derivative()} procedure
 @end menu
 
 @node Fortran evaluator_create, Fortran evaluator_destroy, Fortran main entry points, Fortran main entry points
@@ -870,8 +880,8 @@ to pass it to other functions from library.
 @unnumberedsubsubsec See also
 
 @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_evaluate},
-@ref{Fortran evaluator_calculate_length}, @ref{Fortran
-evaluator_write}, @ref{Fortran evaluator_derivative}
+@ref{Fortran evaluator_get_string}, @ref{Fortran
+evaluator_get_variables}, @ref{Fortran evaluator_derivative}
 
 @node Fortran evaluator_destroy, Fortran evaluator_evaluate, Fortran evaluator_create, Fortran main entry points
 @subsection @code{evaluator_destroy()}
@@ -899,7 +909,7 @@ None.
 
 @ref{Fortran evaluator_create}
 
-@node Fortran evaluator_evaluate, Fortran evaluator_calculate_length, Fortran evaluator_destroy, Fortran main entry points
+@node Fortran evaluator_evaluate, Fortran evaluator_get_string, Fortran evaluator_destroy, Fortran main entry points
 @subsection @code{evaluator_evaluate()}
 @findex Fortran, @code{evaluator_evaluate()}
 
@@ -940,54 +950,24 @@ arguments has no effect, i.e. result is still exact.
 @ref{Fortran evaluator_evaluate_x}, @ref{Fortran
 evaluator_evaluate_x_y}, @ref{Fortran evaluator_evaluate_x_y_z}
 
-@node Fortran evaluator_calculate_length, Fortran evaluator_write, Fortran evaluator_evaluate, Fortran main entry points
-@subsection @code{evaluator_calculate_length()}
-@findex Fortran, @code{evaluator_calculate_length()}
+@node Fortran evaluator_get_string, Fortran evaluator_get_variables, Fortran evaluator_evaluate, Fortran main entry points
+@subsection @code{evaluator_get_string()}
+@findex Fortran, @code{evaluator_get_string()}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_calculate_length (evaluator)
-  integer*8 :: evaluator
-end function evaluator_calculate_length
-@end example
-
-@unnumberedsubsubsec Description
-
-Calculate length of textual representation of mathematical function
-given by @code{evaluator} object.  This procedure is intended to be
-used along with @ref{Fortran evaluator_write} procedure.
-
-@unnumberedsubsubsec Return value
-
-Length of string of characters representing evaluator.
-
-@unnumberedsubsubsec See also
-
-@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy},
-@ref{Fortran evaluator_write}
-
-@node Fortran evaluator_write, Fortran evaluator_derivative, Fortran evaluator_calculate_length, Fortran main entry points
-@subsection @code{evaluator_write()}
-@findex Fortran, @code{evaluator_write()}
-
-@unnumberedsubsubsec Synopsis
-
-@example
-subroutine evaluator_write (evaluator)
+subroutine evaluator_get_string (evaluator)
   integer*8 :: evaluator
   character(len=*) :: string
-end subroutine evaluator_write
+end subroutine evaluator_get_string
 @end example
 
 @unnumberedsubsubsec Description
 
 Write textual representation (i.e. mathematical function) of evaluator
 object pointed by @code{evaluator} to string specified.  For notation
-used, see @ref{Fortran evaluator_create} documentation.  String of
-sufficient length must be passed to this function; thus, @ref{Fortran
-evaluator_calculate_length} procedure should be utilized beforehand,
-when allocating memory to hold this string.
+used, see @ref{Fortran evaluator_create} documentation.
 
 @unnumberedsubsubsec Return value
 
@@ -995,10 +975,33 @@ None.
 
 @unnumberedsubsubsec See also
 
-@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy},
-@ref{Fortran evaluator_calculate_length}
+@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_variables}
 
-@node Fortran evaluator_derivative,  , Fortran evaluator_write, Fortran main entry points
+@node Fortran evaluator_get_variables, Fortran evaluator_derivative, Fortran evaluator_get_string, Fortran main entry points
+@subsection @code{evaluator_get_variables()}
+@findex Fortran, @code{evaluator_get_variables()}
+
+@unnumberedsubsubsec Synopsis
+
+@example
+subroutine evaluator_get_variables (evaluator)
+  integer*8 :: evaluator
+end subroutine evaluator_get_string
+@end example
+
+@unnumberedsubsubsec Description
+
+To do.
+
+@unnumberedsubsubsec Return value
+
+None.
+
+@unnumberedsubsubsec See also
+
+@ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_string}
+
+@node Fortran evaluator_derivative,  , Fortran evaluator_get_variables, Fortran main entry points
 @subsection @code{evaluator_derivative()}
 @findex Fortran, @code{evaluator_derivative()}
 
@@ -1510,15 +1513,6 @@ probably error handling of more error conditions should be added to
 library.
 
 @item
-Add more interfaces to library. Perl and Orbit are first candidates
-from my point of view, also native C++ interface (C++ code may use C
-interface, but it seems that it would be natural and convenient to
-represent evaluator object by class).  Further, it may be interesting
-to make Guile interface that is actually already implemented for
-purpose of library testing (see @ref{Project structure} section)
-explicitly visible.
-
-@item
 Add command line interface to library, i.e. write a program that will
 make possible to evaluate expression for given variable values where
 both specified in command line, as program arguments (for expressions
@@ -1583,12 +1577,12 @@ interesting for someone else to use this code and decided to make it
 publicly available.  So, having some spare time during June 2002, I
 re-wrote whole library in preparation for public release, now
 employing simpler overall design and also using GNU auto-tools and
-what else was necessary to bring it to look like regular GNU project.
-The benefit is that final product looks much better now (well, at
-least to me and at least at the very moment of this writing), the
-drawback is that code is not thoroughly tested again. But certainly
-author would be more than happy to further improve and maintain it.
-Please see @ref{Bugs}, for contact information.
+what else was necessary according to GNU guidelines.  The benefit is
+that final product looks much better now (well, at least to me and at
+least at the very moment of this writing), the drawback is that code
+is not thoroughly tested again. But certainly author would be more
+than happy to further improve and maintain it.  Please see @ref{Bugs},
+for contact information.
 
 The library source code was hosted on Savannah
 (@uref{http://savannah.gnu.org/}) since Septembar 2002.  In September

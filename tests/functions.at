@@ -35,9 +35,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "exp(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [exp(x)], [ignore])
@@ -54,9 +52,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "log(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/x)], [ignore])
@@ -73,9 +69,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "sqrt(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/(2*sqrt(x)))], [ignore])
@@ -92,9 +86,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "sin(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [cos(x)], [ignore])
@@ -111,9 +103,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "cos(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-sin(x))], [ignore])
@@ -130,9 +120,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "tan(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/(cos(x)^2))], [ignore])
@@ -149,9 +137,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "cot(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(1/(sin(x)^2)))], [ignore])
@@ -168,9 +154,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "sec(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(sec(x)*tan(x))], [ignore])
@@ -187,9 +171,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "csc(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(cot(x)*csc(x)))], [ignore])
@@ -206,12 +188,11 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "asin(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/sqrt((1-(x^2))))], [ignore])
+
 AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acos(x)"))
@@ -224,9 +205,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acos(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(1/sqrt((1-(x^2)))))], [ignore])
@@ -243,9 +222,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "atan(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/(1+(x^2)))], [ignore])
@@ -262,9 +239,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acot(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(1/(1+(x^2))))], [ignore])
@@ -281,9 +256,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "asec(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/((x^2)*sqrt((1-(1/(x^2))))))], [ignore])
@@ -300,9 +273,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acsc(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(1/((x^2)*sqrt((1-(1/(x^2)))))))], [ignore])
@@ -319,9 +290,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "sinh(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [cosh(x)], [ignore])
@@ -338,9 +307,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "cosh(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [sinh(x)], [ignore])
@@ -357,9 +324,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "tanh(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/(cosh(x)^2))], [ignore])
@@ -376,9 +341,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "coth(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(1/(sinh(x)^2)))], [ignore])
@@ -395,9 +358,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "sech(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(sech(x)*tanh(x)))], [ignore])
@@ -413,9 +374,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "csch(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(coth(x)*csch(x)))], [ignore])
@@ -432,9 +391,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "asinh(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/sqrt((1-(x^2))))], [ignore])
@@ -451,9 +408,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acosh(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/sqrt(((x^2)-1)))], [ignore])
@@ -470,9 +425,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "atanh(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/(1-(x^2)))], [ignore])
@@ -489,9 +442,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acoth(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(1/((x^2)-1))], [ignore])
@@ -508,9 +459,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "asech(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-((1/(x*sqrt((1-x))))*sqrt((1/(1+x)))))], [ignore])
@@ -527,9 +476,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acsch(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [(-(1/((x^2)*sqrt((1+(1/(x^2)))))))], [ignore])
@@ -546,9 +493,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "abs(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [((2*step(x))-1)], [ignore])
@@ -565,9 +510,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "step(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [delta(x)], [ignore])
@@ -584,9 +527,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "delta(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [nandelta(x)], [ignore])
@@ -603,9 +544,7 @@ AT_DATA([function.scm],
 [[
 (define f (evaluator-create "nandelta(x)"))
 (define f_prim (evaluator-derivative-x f))
-(define string (make-string (evaluator-calculate-length f_prim)))
-(evaluator-write f_prim string)
-(display string)
+(display (evaluator-get-string f_prim))
 ]])
 
 AT_CHECK([matheval.sh function.scm], [ignore], [nandelta(x)], [ignore])

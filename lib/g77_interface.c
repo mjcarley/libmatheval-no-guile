@@ -111,7 +111,8 @@ evaluator_evaluate__(int64_t *evaluator, int *count, char *names, double *values
 int
 evaluator_calculate_length__(int64_t *evaluator)
 {
-	return evaluator_calculate_length((void *)*evaluator);
+	/*return evaluator_calculate_length((void *)*evaluator);*/
+        return 0;
 }
 
 /* Wrapper for evaluator_write() function.  */
@@ -129,7 +130,7 @@ evaluator_write__(int64_t *evaluator, char *string, int length)
 	/*
 	 * Call evaluator_write() function.
 	 */
-	evaluator_write((void *)*evaluator, stringz);
+	/*evaluator_write((void *)*evaluator, stringz);*/
 
 	/*
 	 * Copy evaluator textual representation to string passed from

@@ -128,6 +128,7 @@ symbol_table_insert(SymbolTable * symbol_table, char *name, char type,...)
 	record->name = XMALLOC(char, strlen(name) + 1);
 	strcpy(record->name, name);
 	record->type = type;
+        record->flag = FALSE;
 
 	/*
 	 * Parse function variable argument list to complete record
@@ -176,6 +177,65 @@ symbol_table_lookup(SymbolTable * symbol_table, char *name)
 			return curr;
 
 	return NULL;
+}
+
+void
+symbol_table_clear_flags(SymbolTable * symbol_table)
+{
+	Record         *curr;   /* Pointer to current symbol table record 
+                                 * while traversing hash table bucket. */
+	int             i;	/* Loop counter.  */
+
+        /* 
+         * Clear flag for all records in symbol table.
+         */
+        for (i = 0; i < symbol_table->length; i++)
+		for (curr = symbol_table->records[i].next; curr; curr = curr->next)
+                        curr->flag = FALSE;
+}
+
+int
+symbol_table_get_flagged_count(SymbolTable * symbol_table)
+{
+        int             count;  /* Number of flagged symbol table records. */
+	Record         *curr;   /* Pointer to current symbol table record 
+                                 * while traversing hash table bucket. */
+	int             i;	/* Loop counter.  */
+
+        /* 
+         * Calculate number of records in symbol table with flag set.
+         */
+        count = 0;
+        for (i = 0; i < symbol_table->length; i++)
+		for (curr = symbol_table->records[i].next; curr; curr = curr->next)
+                        if (curr->flag)
+                                count++;
+        return count;
+}
+
+int
+symbol_table_get_flagged(SymbolTable * symbol_table, Record **records, int length)
+{
+        int             count;  /* Number of pointers to symbol table 
+                                   records put into given array. */
+	Record         *curr;   /* Pointers to current symbol table 
+                                   record while traversing hash table
+                                   * bucket.  */
+	int             i;	/* Loop counter.  */
+
+        /* 
+         * Put pointers to records in symbol table with flag set into
+         * given array.
+         */
+        count = 0;
+        for (i = 0; i < symbol_table->length; i++)
+		for (curr = symbol_table->records[i].next; curr; curr = curr->next)
+                        if (curr->flag) {
+                                records[count++] = curr;
+                                if (count == length)
+                                        return count;
+                        }
+        return count;
 }
 
 SymbolTable    *

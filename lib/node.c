@@ -551,7 +551,6 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		else if (!strcmp(node->data.function.record->name, "nandelta"))
 			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "nandelta"), node_copy(node->data.function.child)));
 
-
 	case 'u':
 		switch (node->data.un_op.operation) {
 		case '-':
@@ -595,7 +594,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 			if (node->data.bin_op.right->type == 'c')
 				return node_create('b', '*', node_create('b', '*', node_create('c', node->data.bin_op.right->data.constant), node_derivative(node->data.bin_op.left, name, symbol_table)), node_create('b', '^', node_copy(node->data.bin_op.left), node_create('c', node->data.bin_op.right->data.constant - 1.0)));
 			/*
-			 * Otherwise, apply logaritmhic derivative rule:
+			 * Otherwise, apply logarithmic derivative rule:
 			 * (log(f^g))'=(f^g)'/f^g =>
 			 * (f^g)'=f^g*(log(f^g))'=f^g*(g*log(f))'
 			 */
@@ -611,8 +610,35 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 	}
 }
 
+void
+node_flag_variables(Node * node)
+{
+        /*
+	 * According to node type, flag variable in symbol table or
+	 * proceed with calling function recursively on node children.
+	 */
+        switch (node->type) {
+        case 'v':
+                node->data.variable->flag = TRUE;
+                break;
+
+        case 'f':
+                node_flag_variables(node->data.function.child);
+                break;
+
+        case 'u':
+                node_flag_variables(node->data.un_op.child);
+                break;
+
+        case 'b':
+                node_flag_variables(node->data.bin_op.left);
+                node_flag_variables(node->data.bin_op.right);
+                break;
+        }
+}
+
 int
-node_calculate_length(Node * node)
+node_get_length(Node * node)
 {
         FILE           *file;	/* Temporary file. */
         int             count;	/* Count of bytes written to above file. */
@@ -629,7 +655,7 @@ node_calculate_length(Node * node)
 			length += 1;
 
                 file = tmpfile();
-                if (file != NULL) {
+                if (file) {
                         if ((count = fprintf(file, "%g", node->data.constant)) >= 0)
                                 length += count;
                         fclose(file);
@@ -643,14 +669,14 @@ node_calculate_length(Node * node)
 		return strlen(node->data.variable->name);
 
 	case 'f':
-		return strlen(node->data.function.record->name) + 1 + node_calculate_length(node->data.function.child) + 1;
+		return strlen(node->data.function.record->name) + 1 + node_get_length(node->data.function.child) + 1;
 		break;
 
 	case 'u':
-		return 1 + 1 + node_calculate_length(node->data.un_op.child) + 1;
+		return 1 + 1 + node_get_length(node->data.un_op.child) + 1;
 
 	case 'b':
-		return 1 + node_calculate_length(node->data.bin_op.left) + 1 + node_calculate_length(node->data.bin_op.right) + 1;
+		return 1 + node_get_length(node->data.bin_op.left) + 1 + node_get_length(node->data.bin_op.right) + 1;
 	}
 
 	return 0;

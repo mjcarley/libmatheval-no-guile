@@ -40,8 +40,8 @@ static scm_t_bits evaluator_tag;/* Unique identifier for Guile objects of
 static scm_sizet evaluator_destroy_scm(SCM evaluator_smob);
 static SCM      evaluator_create_scm(SCM string);
 static SCM      evaluator_evaluate_scm(SCM evaluator_smob, SCM count, SCM names, SCM values);
-static SCM      evaluator_calculate_length_scm(SCM evaluator_smob);
-static SCM      evaluator_write_scm(SCM evaluator_smob, SCM string);
+static SCM      evaluator_get_string_scm(SCM evaluator_smob);
+static SCM      evaluator_get_variables_scm(SCM evaluator_smob);
 static SCM      evaluator_derivative_scm(SCM evaluator_smob, SCM name);
 static SCM      evaluator_evaluate_x_scm(SCM evaluator_smob, SCM x);
 static SCM      evaluator_evaluate_x_y_scm(SCM evaluator_smob, SCM x, SCM y);
@@ -63,17 +63,17 @@ inner_main(void *closure, int argc, char **argv)
 	/*
 	 * Register other procedures working on evaluator type.
 	 */
-	scm_make_gsubr("evaluator-create", 1, 0, 0, (SCM (*)()) evaluator_create_scm);
-	scm_make_gsubr("evaluator-evaluate", 4, 0, 0, (SCM (*)()) evaluator_evaluate_scm);
-	scm_make_gsubr("evaluator-calculate-length", 1, 0, 0, (SCM (*)()) evaluator_calculate_length_scm);
-	scm_make_gsubr("evaluator-write", 2, 0, 0, (SCM (*)()) evaluator_write_scm);
-	scm_make_gsubr("evaluator-derivative", 2, 0, 0, (SCM (*)()) evaluator_derivative_scm);
-	scm_make_gsubr("evaluator-evaluate-x", 2, 0, 0, (SCM (*)()) evaluator_evaluate_x_scm);
-	scm_make_gsubr("evaluator-evaluate-x-y", 3, 0, 0, (SCM (*)()) evaluator_evaluate_x_y_scm);
-	scm_make_gsubr("evaluator-evaluate-x-y-z", 4, 0, 0, (SCM (*)()) evaluator_evaluate_x_y_z_scm);
-	scm_make_gsubr("evaluator-derivative-x", 1, 0, 0, (SCM (*)()) evaluator_derivative_x_scm);
-	scm_make_gsubr("evaluator-derivative-y", 1, 0, 0, (SCM (*)()) evaluator_derivative_y_scm);
-	scm_make_gsubr("evaluator-derivative-z", 1, 0, 0, (SCM (*)()) evaluator_derivative_z_scm);
+	scm_c_define_gsubr("evaluator-create", 1, 0, 0, (SCM (*)()) evaluator_create_scm);
+	scm_c_define_gsubr("evaluator-evaluate", 4, 0, 0, (SCM (*)()) evaluator_evaluate_scm);
+	scm_c_define_gsubr("evaluator-get-string", 1, 0, 0, (SCM (*)()) evaluator_get_string_scm);
+        scm_c_define_gsubr("evaluator-get-variables", 1, 0, 0, (SCM (*)()) evaluator_get_variables_scm);
+	scm_c_define_gsubr("evaluator-derivative", 2, 0, 0, (SCM (*)()) evaluator_derivative_scm);
+	scm_c_define_gsubr("evaluator-evaluate-x", 2, 0, 0, (SCM (*)()) evaluator_evaluate_x_scm);
+	scm_c_define_gsubr("evaluator-evaluate-x-y", 3, 0, 0, (SCM (*)()) evaluator_evaluate_x_y_scm);
+	scm_c_define_gsubr("evaluator-evaluate-x-y-z", 4, 0, 0, (SCM (*)()) evaluator_evaluate_x_y_z_scm);
+	scm_c_define_gsubr("evaluator-derivative-x", 1, 0, 0, (SCM (*)()) evaluator_derivative_x_scm);
+	scm_c_define_gsubr("evaluator-derivative-y", 1, 0, 0, (SCM (*)()) evaluator_derivative_y_scm);
+	scm_c_define_gsubr("evaluator-derivative-z", 1, 0, 0, (SCM (*)()) evaluator_derivative_z_scm);
 
 	/*
 	 * Check is there exactly one argument left in command line.
@@ -104,7 +104,6 @@ main(int argc, char **argv)
 
 	exit(EXIT_SUCCESS);
 }
-
 
 /*
  * Wrapper for evaluator_destroy() procedure from libmatheval library.
@@ -190,39 +189,38 @@ evaluator_evaluate_scm(SCM evaluator_smob, SCM count, SCM names, SCM values)
 }
 
 /*
- * Wrapper for evaluator_calculate_length() procedure from libmatheval
- * library.
+ * Wrapper for evaluator_get_string() procedure from libmatheval library.
  */
 static          SCM
-evaluator_calculate_length_scm(SCM evaluator_smob)
+evaluator_get_string_scm(SCM evaluator_smob)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-calculate-length");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-get-string");
 
-	return SCM_MAKINUM(evaluator_calculate_length((void *)SCM_CDR(evaluator_smob)));
+	return scm_makfrom0str(evaluator_get_string((void *)SCM_CDR(evaluator_smob)));
 }
 
 /*
- * Wrapper for evaluator_write() procedure from libmatheval library.
+ * Wrapper for evaluator_get_variables() procedure from libmatheval
+ * library.
  */
 static          SCM
-evaluator_write_scm(SCM evaluator_smob, SCM string)
+evaluator_get_variables_scm(SCM evaluator_smob)
 {
-	char           *stringz;
+        char          **names;
+        int             count;
+        SCM             list;
+        int             i;
 
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-write");
-	SCM_ASSERT(SCM_NIMP(string)
-	       && SCM_STRINGP(string), string, SCM_ARG2, "evaluator-write");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-get-string");
 
-	stringz = (char *)malloc((SCM_LENGTH(string) + 1) * sizeof(char));
+        evaluator_get_variables((void *)SCM_CDR(evaluator_smob), &names, &count);
+        list = SCM_EOL;
+        for (i = 0; i < count; i++)
+                list = scm_append_x(scm_listify(list, scm_listify(scm_makfrom0str(names[i]), SCM_UNDEFINED), SCM_UNDEFINED));
 
-	evaluator_write((void *)SCM_CDR(evaluator_smob), stringz);
-
-	memcpy(SCM_CHARS(string), stringz, SCM_LENGTH(string));
-	free(stringz);
-
-	return SCM_UNDEFINED;
+	return list;
 }
 
 /*
