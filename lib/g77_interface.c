@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2002, 2003, 2004  Free Software Foundation, Inc.
+ * Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
  * 
@@ -68,7 +68,7 @@ evaluator_evaluate__(int64_t * evaluator, int *count, char *names,
 	char          **names_copy;	/* Copy of variable names.  Names
 					 * are passed in single string
 					 * from Fortran code, delimited by 
-					 * * * * * * * * * blanks, while
+					 * blanks, while
 					 * evaluator_evaluate() function
 					 * expects array of strings.  */
 	double          result;	/* Calculated value of function.  */

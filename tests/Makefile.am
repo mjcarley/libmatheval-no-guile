@@ -1,4 +1,4 @@
-# Copyright (C) 2002, 2003, 2004  Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
 #
 # This file is part of GNU libmatheval
 #
@@ -75,5 +75,5 @@ matheval_LDFLAGS = $(GUILE_LDFLAGS)
 .PHONY: beauty
 
 beauty:
-	-for file in $$(ls *.c); do gindent -orig -i8 -l1000 $$file; done
+	-for file in $$(ls *.c); do gindent -orig -i8 -ncdb $$file; done
 	-rm -f *~

@@ -1,5 +1,6 @@
 /* 
- * Copyright (C) 1999, 2002, 2003, 2004  Free Software Foundation, Inc.
+ * Copyright (C) 1999, 2002, 2003, 2004, 2005 Free Software Foundation,
+ * Inc.
  * 
  * This file is part of GNU libmatheval
  * 
@@ -40,17 +41,17 @@ extern          "C" {
 	 * two arrays is given by second argument.  Function returns
 	 * evaluated function value.  In case that function contains
 	 * variables with names not given through third function argument, 
-	 * * * * * * * * * value of this variable is undeterminated. */
+	 * value of this variable is undeterminated. */
 	extern double   evaluator_evaluate(void *evaluator, int count,
 					   char **names, double *values);
 
 	/* Return textual representation of function given by evaluator.
 	 * Textual representation is built after evaluator simplification, 
-	 * * * * * * * * * so it may differ from original string supplied
-	 * when creating evaluator.  String representing function is
-	 * allocated, remembered and later destroyed by evaluator object,
-	 * thus caller * must not free returned pointer.  Returned
-	 * information is valid until evaluator object destroyed. */
+	 * so it may differ from original string supplied when creating
+	 * evaluator.  String representing function is allocated,
+	 * remembered and later destroyed by evaluator object, thus caller 
+	 * must not free returned pointer.  Returned information is valid
+	 * until evaluator object destroyed. */
 	extern char    *evaluator_get_string(void *evaluator);
 
 	/* Get array of strings with names of variables appearing in

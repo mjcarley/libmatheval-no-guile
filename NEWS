@@ -1,8 +1,15 @@
-Copyright (C) 1999, 2002, 2003, 2004  Aleksandar B. Samardzic
+Copyright (C) 1999, 2002, 2003, 2004, 2005 Aleksandar B. Samardzic
 
 Copying and distribution of this file, with or without modification, are
 permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
+
+
+Version 1.1.2
+
+* Added support for constants e, log2(e), log10(e), ln(2), ln(10), pi,
+  pi/2, pi/4, 1/pi, 2/pi, 2/sqrt(pi), sqrt(2) and sqrt(1/2).
+
 
 
 Version 1.1.1

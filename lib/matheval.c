@@ -1,5 +1,6 @@
 /* 
- * Copyright (C) 1999, 2002, 2003, 2004  Free Software Foundation, Inc.
+ * Copyright (C) 1999, 2002, 2003, 2004, 2005 Free Software Foundation,
+ * Inc.
  * 
  * This file is part of GNU libmatheval
  * 
@@ -36,7 +37,7 @@ extern int      yyparse();
 
 /* Following variables are needed for parsing (parser is able to
  * communicate with program from which it is used through global variables 
- * * * * * * * * * only). */
+ * only). */
 char           *input_string;	/* String representing function.  */
 Node           *root;		/* Root of tree representation of
 				 * function.  */
@@ -106,7 +107,7 @@ evaluator_destroy(void *evaluator)
 {
 	/* Destroy tree represention of function, symbol table, array of
 	 * pointers to evaluator variable names, as well as data structure 
-	 * * * * * * * * * representing evaluator. */
+	 * representing evaluator. */
 	node_destroy(((Evaluator *) evaluator)->root);
 	symbol_table_destroy(((Evaluator *) evaluator)->symbol_table);
 	XFREE(((Evaluator *) evaluator)->string);
