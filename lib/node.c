@@ -533,7 +533,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		/*
 		 * Apply rule of absolute value function derivative.
 		 */
-		else if (!strcmp(node->data.function.record->name, "fabs"))
+		else if (!strcmp(node->data.function.record->name, "abs"))
 			return node_create('b', '/', node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_copy(node->data.function.child)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))));
 
 	case 'u':

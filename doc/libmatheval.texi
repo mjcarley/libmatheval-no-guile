@@ -358,7 +358,7 @@ cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
 inverse cosine (@code{acosh}), hyperbolic inverse tangent
 (@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
 hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
-(@code{acsch}) and absolute value (@code{fabs}).
+(@code{acsch}) and absolute value (@code{abs}).
 
 Supported unary operation is unary minus (@code{'-'}).
 
@@ -840,7 +840,7 @@ cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
 inverse cosine (@code{acosh}), hyperbolic inverse tangent
 (@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
 hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
-(@code{acsch}) and absolute value (@code{fabs}).
+(@code{acsch}) and absolute value (@code{abs}).
 
 Supported unary operation is unary minus (@code{'-'}).
 
