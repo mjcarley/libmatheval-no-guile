@@ -35,7 +35,7 @@ include_HEADERS = matheval.h
 noinst_HEADERS = common.h error.h node.h symbol_table.h xmalloc.h	\
 xmath.h
 
-YFLAGS = -d
+AM_YFLAGS = -d
 
 .PHONY: beauty
 
