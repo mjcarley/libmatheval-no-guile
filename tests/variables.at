@@ -1,0 +1,63 @@
+# Checking the variables.                    -*- Autotest -*-
+
+# Copyright (C) 2002, 2003  Free Software Foundation, Inc.
+#
+# This file is part of GNU libmatheval
+#
+# GNU libmatheval is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2, or (at
+# your option) any later version.
+#
+# GNU libmatheval is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with program; see the file COPYING. If not, write to the Free
+# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+
+AT_BANNER([[Checking evaluating variables.]])
+
+AT_SETUP([Check variables.])
+
+AT_DATA([variable.scm],
+[[
+(define f (evaluator-create "1/x"))
+(define string (make-string (evaluator-calculate-length f)))
+(evaluator-write f string)
+(display string)
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [(1/x)], [ignore])
+
+AT_DATA([variable.scm],
+[[
+(define f (evaluator-create "_222+5"))
+(display (evaluator-evaluate f 1 '("_222") '(1)))
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [6.0], [ignore])
+
+AT_DATA([variable.scm],
+[[
+(define f (evaluator-create "a+2*aa+3*aaa^2"))
+(display (evaluator-evaluate f 3 '("a" "aa" "aaa") '(1 2 3)))
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [32.0], [ignore])
+
+AT_DATA([variable.scm],
+[[
+(define f (evaluator-create "arcsin(a141^3)*ln(b12)"))
+(define f_prim (evaluator-derivative f "a141"))
+(define string (make-string (evaluator-calculate-length f_prim)))
+(evaluator-write f_prim string)
+(display string)
+]])
+
+AT_CHECK([matheval.sh variable.scm], [ignore], [((((3*(a141^2))/sqrt((1-((a141^3)^2))))*ln(b12))+(arcsin((a141^3))*(0/b12)))], [ignore])
+
+AT_CLEANUP
