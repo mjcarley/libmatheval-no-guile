@@ -23,11 +23,26 @@
 #include <assert.h>
 #include <libguile.h>
 #include <matheval.h>
+#include "config.h"
 
-#ifndef SCM_NUM2DBL		/* For Guile 1.6 */
-#define SCM_NUM2DBL(x) scm_num2dbl((x), "SCM_NUM2DBL")
-#else				/* For Guile 1.4 */
+#ifndef HAVE_SCM_T_BITS
 typedef long    scm_t_bits;
+#endif
+
+#ifndef HAVE_SCM_NUM2DBL
+#ifdef SCM_NUM2DBL
+#define scm_num2dbl(x,s) SCM_NUM2DBL(x) 
+#else
+#error Neither scm_num2dbl() nor SCM_NUM2DBL available
+#endif
+#endif
+
+#ifndef HAVE_SCM_C_DEFINE_GSUBR
+#ifdef HAVE_SCM_MAKE_GSUBR
+#define scm_c_define_gsubr scm_make_gsubr
+#else
+#error Neither scm_c_define_gsubr() nor scm_make_gsubr() available
+#endif
 #endif
 
 static scm_t_bits evaluator_tag;/* Unique identifier for Guile objects of
@@ -175,7 +190,7 @@ evaluator_evaluate_scm(SCM evaluator_smob, SCM count, SCM names, SCM values)
 	for (i = 0, value = values; i < SCM_INUM(count); i++, value = SCM_CDR(value)) {
 		SCM_ASSERT(SCM_NIMP(value) && SCM_CONSP(value)
 			   && SCM_NUMBERP(SCM_CAR(value)), values, SCM_ARG4, "evaluator-evaluate");
-		values_copy[i] = SCM_NUM2DBL(SCM_CAR(value));
+		values_copy[i] = scm_num2dbl(SCM_CAR(value), "evaluator-evaluate");
 	}
 
 	result = evaluator_evaluate((void *)SCM_CDR(evaluator_smob), SCM_INUM(count), names_copy, values_copy);
@@ -245,7 +260,7 @@ evaluator_evaluate_x_scm(SCM evaluator_smob, SCM x)
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
 		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-evaluate-x");
 	SCM_ASSERT(SCM_NUMBERP(x), x, SCM_ARG2, "evaluator-evaluate-x");
-	return scm_make_real(evaluator_evaluate_x((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x)));
+	return scm_make_real(evaluator_evaluate_x((void *)SCM_CDR(evaluator_smob), scm_num2dbl(x, "evaluator-evaluate-x")));
 }
 
 /*
@@ -258,7 +273,7 @@ evaluator_evaluate_x_y_scm(SCM evaluator_smob, SCM x, SCM y)
 		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-evaluate-x-y");
 	SCM_ASSERT(SCM_NUMBERP(x), x, SCM_ARG2, "evaluator-evaluate-x-y");
 	SCM_ASSERT(SCM_NUMBERP(y), y, SCM_ARG3, "evaluator-evaluate-x-y");
-	return scm_make_real(evaluator_evaluate_x_y((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x), SCM_NUM2DBL(y)));
+	return scm_make_real(evaluator_evaluate_x_y((void *)SCM_CDR(evaluator_smob), scm_num2dbl(x, "evaluator-evaluate-x-y"), scm_num2dbl(y, "evaluator-evaluate-x-y")));
 }
 
 /*
@@ -273,7 +288,7 @@ evaluator_evaluate_x_y_z_scm(SCM evaluator_smob, SCM x, SCM y, SCM z)
 	SCM_ASSERT(SCM_NUMBERP(x), x, SCM_ARG2, "evaluator-evaluate-x-y-z");
 	SCM_ASSERT(SCM_NUMBERP(y), y, SCM_ARG3, "evaluator-evaluate-x-y-z");
 	SCM_ASSERT(SCM_NUMBERP(z), z, SCM_ARG4, "evaluator-evaluate-x-y-z");
-	return scm_make_real(evaluator_evaluate_x_y_z((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x), SCM_NUM2DBL(y), SCM_NUM2DBL(z)));
+	return scm_make_real(evaluator_evaluate_x_y_z((void *)SCM_CDR(evaluator_smob), scm_num2dbl(x, "evaluator-evaluate-x-y-z"), scm_num2dbl(y, "evaluator-evaluate-x-y-z"), scm_num2dbl(z, "evaluator-evaluate-x-y-z")));
 }
 
 /*
