@@ -69,7 +69,7 @@ noinst_PROGRAMS = matheval
 matheval_SOURCES = matheval.c
 
 matheval_CFLAGS = $(GUILE_CFLAGS)
-matheval_LDADD = -L$(top_builddir)/lib -lmatheval
+matheval_LDADD = $(top_builddir)/lib/libmatheval.la
 matheval_LDFLAGS = $(GUILE_LDFLAGS)
 
 .PHONY: beauty
