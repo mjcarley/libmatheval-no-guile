@@ -52,7 +52,7 @@
 #include "symbol_table.h"
 
 /* Redefine macro to redirect scanner input from string instead of
-   standard input.  */
+ * standard input.  */
 #define YY_INPUT( buffer, result, max_size ) \
 { result = input_from_string (buffer, max_size); }
 
@@ -77,87 +77,87 @@ identifier [_a-zA-Z][[_a-zA-Z0-9]*
 {whitespace}
 
 {number} {
-  /* Create node representing constant with appropriate value.  */
-  yylval.node = node_create ('n', atof (yytext));
-  return NUMBER;
+        /* Create node representing constant with appropriate value.  */
+        yylval.node = node_create ('n', atof (yytext));
+        return NUMBER;
 }
 
 {constant} {
-  Record *record; /* Symbol table record.  */
+        Record *record; /* Symbol table record.  */
 
-  /* Find symbol table record corresponding to constant name.  */
-  record = symbol_table_lookup (symbol_table, yytext);
-  yylval.node = node_create ('c', record);
-  return CONSTANT;
+        /* Find symbol table record corresponding to constant name.  */
+        record = symbol_table_lookup (symbol_table, yytext);
+        yylval.node = node_create ('c', record);
+        return CONSTANT;
 }
 
 {function} {
-  /* Find symbol table record corresponding to function name.  */
-  yylval.record = symbol_table_lookup (symbol_table, yytext);
-  return FUNCTION;
+        /* Find symbol table record corresponding to function name.  */
+        yylval.record = symbol_table_lookup (symbol_table, yytext);
+        return FUNCTION;
 }
 
 {identifier} {
-  Record *record; /* Symbol table record.  */
+        Record *record; /* Symbol table record.  */
 
-  /* Insert variable into symbol table.  */
-  record = symbol_table_insert (symbol_table, yytext, 'v');
-  yylval.node = node_create ('v', record);
-  return VARIABLE;
+        /* Insert variable into symbol table.  */
+        record = symbol_table_insert (symbol_table, yytext, 'v');
+        yylval.node = node_create ('v', record);
+        return VARIABLE;
 }
 
 "+" {
-  return '+';
+        return '+';
 }
 
 "-" {
-  return '-';
+        return '-';
 }
 
 "*" {
-  return '*';
+        return '*';
 }
 
 "/" {
-  return '/';
+        return '/';
 }
 
 "^" {
-  return '^';
+        return '^';
 }
 
 "(" {
-  return '(';
+        return '(';
 }
 
 ")" {
-  return ')';
+        return ')';
 }
 
 "\n" {
-  return '\n';
+        return '\n';
 }
 
 %%
 
 static int input_from_string (char *buffer, int max_size)
 {
-  int count; /* Count of characters to copy from input string to buffer.  */
+        int count; /* Count of characters to copy from input string to buffer.  */
 
-  /* Calculate count of characters to copy.  */
-  count = strlen (input_string);
-  if (count > max_size)
-    count = max_size;
+        /* Calculate count of characters to copy.  */
+        count = strlen (input_string);
+        if (count > max_size)
+                count = max_size;
 
-  /* Perform copy operation and update input string.  */
-  memcpy(buffer, input_string, count);
-  input_string += count;
+        /* Perform copy operation and update input string.  */
+        memcpy(buffer, input_string, count);
+        input_string += count;
 
-  return count;
+        return count;
 }
 
 void input_reset()
 {
-  /* Forget contents of input buffer.  */
-  YY_FLUSH_BUFFER;
+        /* Forget contents of input buffer.  */
+        YY_FLUSH_BUFFER;
 }

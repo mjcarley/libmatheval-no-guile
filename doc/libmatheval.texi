@@ -137,7 +137,7 @@ names appearing in function:
 
 @example
 @{
-  char **variables;
+  char **names;
   int count;
   int i;
 

@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 1999, 2002, 2003, 2004  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
@@ -29,90 +29,87 @@
 
 /* Data structure representing function tree node.  */
 typedef struct _Node {
-	char            type;	/* Node type ('n' for number, 'c' for constant, 'v' for variable, 'f' for function, 'u' for unary operation, 'b' for binary operation).  */
+	char            type;	/* Node type ('n' for number, 'c' for
+				 * constant, 'v' for variable, 'f' for
+				 * function, 'u' for unary operation, 'b'
+				 * for binary operation).  */
 	union {
 		double          number;	/* Number value.  */
-                Record         *constant;	/* Symbol table record for constant.  */
-		Record         *variable;	/* Symbol table record for
+		Record         *constant;	/* Symbol table record for 
+						 * constant.  */
+		Record         *variable;	/* Symbol table record for 
 						 * variable.  */
 		struct {
-			Record         *record;	/* Symbol table record for
+			Record         *record;	/* Symbol table record for 
 						 * function.  */
-			struct _Node   *child;	/* Function argument node.  */
-		}               function;	/* Structure representing
-						 * function.  */
+			struct _Node   *child;	/* Function argument node. 
+						 */
+		} function;	/* Structure representing function.  */
 		struct {
-			char            operation;	/* Operation type ('-'
-							 * for unary minus).  */
+			char            operation;	/* Operation type
+							 * ('-' for unary
+							 * minus).  */
 			struct _Node   *child;	/* Operand node.  */
-		}               un_op;	/* Structure representing unary
-					 * operation.  */
+		} un_op;	/* Structure representing unary operation. 
+				 */
 		struct {
-			char            operation;	/* Operation type ('+'
-							 * for adition, '-' for
-							 * subtraction, '*' for
-							 * multiplication, '/'
-							 * for division and '^'
-							 * for exponentiation).  */
-			struct _Node   *left, *right;	/* Operands nodes.  */
-		}               bin_op;	/* Structure representing binary
-					 * operation.  */
-	}               data;
-}               Node;
+			char            operation;	/* Operation type
+							 * ('+' for
+							 * adition, '-'
+							 * for
+							 * subtraction,
+							 * '*' for
+							 * multiplication, 
+							 * * '/' for
+							 * division and
+							 * '^' for
+							 * exponentiation). 
+							 */
+			struct _Node   *left,
+			               *right;	/* Operands nodes.  */
+		} bin_op;	/* Structure representing binary
+				 * operation.  */
+	} data;
+} Node;
 
-/*
- * Create node of given type and initialize it from optional arguments.
+/* Create node of given type and initialize it from optional arguments.
  * Function returns pointer to node object that should be passed as first
- * argument to all other node functions.
- */
-Node           *node_create(char type,...);
+ * argument to all other node functions. */
+Node           *node_create(char type, ...);
 
 /* Destroy subtree rooted at specified node.  */
 void            node_destroy(Node * node);
 
-/*
- * Make a copy of subtree rooted at given node.  Deep copy operation is
- * employed.
- */
+/* Make a copy of subtree rooted at given node.  Deep copy operation is
+ * employed. */
 Node           *node_copy(Node * node);
 
-/*
- * Simplify subtree rooted at given node.  Function returns root of
- * simplified subtree (that may or may not be original node).
- */
+/* Simplify subtree rooted at given node.  Function returns root of
+ * simplified subtree (that may or may not be original node). */
 Node           *node_simplify(Node * node);
 
-/*
- * Evaluate subtree rooted at given node.  For variables, values from symbol
- * table are used.
- */
+/* Evaluate subtree rooted at given node.  For variables, values from
+ * symbol table are used. */
 double          node_evaluate(Node * node);
 
-/*
- * Create derivative tree for subtree rooted at given node.  Second argument
- * is derivation variable, third argument is symbol table (needed for
- * functions derivatives).  Function returns root of corresponding derivation
- * tree.
- */
-Node           *node_derivative(Node * node, char *name, SymbolTable * symbol_table);
+/* Create derivative tree for subtree rooted at given node.  Second
+ * argument is derivation variable, third argument is symbol table (needed 
+ * * for functions derivatives).  Function returns root of corresponding
+ * derivation tree. */
+Node           *node_derivative(Node * node, char *name,
+				SymbolTable * symbol_table);
 
-/*
- * Flag each variable in symbol table that is used from subtree rooted
- * at specified node.
- */
+/* Flag each variable in symbol table that is used from subtree rooted at
+ * specified node. */
 void            node_flag_variables(Node * node);
 
-/*
- * Calculate length of the string representing subtree rooted at specified
- * node.
- */
+/* Calculate length of the string representing subtree rooted at specified 
+ * node. */
 int             node_get_length(Node * node);
 
-/*
- * Write subtree rooted at specified node to given string variable.  No
- * checking of string overflow is done by this procedure; it is expected that
- * string of appropriate length is passed as argument.
- */
+/* Write subtree rooted at specified node to given string variable.  No
+ * checking of string overflow is done by this procedure; it is expected
+ * that string of appropriate length is passed as argument. */
 void            node_write(Node * node, char *string);
 
 #endif

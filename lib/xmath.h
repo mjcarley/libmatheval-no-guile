@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 1999, 2002, 2003, 2004  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
@@ -98,10 +98,8 @@ double          math_step(double x);
 /* Calculate Dirac delta function value for given value x.  */
 double          math_delta(double x);
 
-/* 
- * Calculate variation of Dirac delta function (with not-a-number
- * instead of infinity value for x= 0) value for given value x.
- */
+/* Calculate variation of Dirac delta function (with not-a-number instead
+ * of infinity value for x= 0) value for given value x. */
 double          math_nandelta(double x);
 
 #endif

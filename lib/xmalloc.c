@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 1999, 2002, 2003, 2004  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
@@ -32,9 +32,7 @@
 void           *
 xmalloc(size_t num)
 {
-	/*
-	 * Call malloc() and check return value.
-	 */
+	/* Call malloc() and check return value. */
 	void           *ptr_new = malloc(num);
 
 	if (!ptr_new)
@@ -47,15 +45,11 @@ xrealloc(void *ptr, size_t num)
 {
 	void           *ptr_new;
 
-	/*
-	 * If memory not already allocated, fall back to xmalloc().
-	 */
+	/* If memory not already allocated, fall back to xmalloc(). */
 	if (!ptr)
 		return xmalloc(num);
 
-	/*
-	 * Otherwise, call realloc() and check return value.
-	 */
+	/* Otherwise, call realloc() and check return value. */
 	ptr_new = realloc(ptr, num);
 	if (!ptr_new)
 		error_fatal("unable to allocate memory");
@@ -66,9 +60,7 @@ xrealloc(void *ptr, size_t num)
 void           *
 xcalloc(size_t num, size_t size)
 {
-	/*
-	 * Allocate memory and fill with zeroes.
-	 */
+	/* Allocate memory and fill with zeroes. */
 	void           *ptr_new = xmalloc(num * size);
 
 	bzero(ptr_new, num * size);

@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 1999, 2002, 2003, 2004  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
@@ -25,47 +25,39 @@
 #include "common.h"
 #include "error.h"
 
-const char      lib_name[] = "libmatheval";	/* Library name to be printed
-						 * to standard error stream
-						 * in order to locate problem
+const char      lib_name[] = "libmatheval";	/* Library name to be
+						 * printed to standard
+						 * error stream in order
+						 * to locate problem
 						 * source.  */
 
-/*
- * Issue error message to standard error stream and, if status value not less
- * than zero, terminate calling program.  Argument mode is intended to
- * describe error severity.
- */
-static void     error_issue(int status, const char *mode, const char *message);
+/* Issue error message to standard error stream and, if status value not
+ * less than zero, terminate calling program.  Argument mode is intended
+ * to describe error severity. */
+static void     error_issue(int status, const char *mode,
+			    const char *message);
 
 void
 error_warning(const char *message)
 {
-	/*
-	 * Issue warning.
-	 */
+	/* Issue warning. */
 	error_issue(-1, "warning", message);
 }
 
 void
 error_fatal(const char *message)
 {
-	/*
-	 * Issue error.
-	 */
+	/* Issue error. */
 	error_issue(EXIT_FAILURE, "FATAL", message);
 }
 
 static void
 error_issue(int status, const char *mode, const char *message)
 {
-	/*
-	 * Print error message.
-	 */
+	/* Print error message. */
 	fprintf(stderr, "%s: %s: %s\n", lib_name, mode, message);
 
-	/*
-	 * Check status and eventually terminate calling program.
-	 */
+	/* Check status and eventually terminate calling program. */
 	if (status >= 0)
 		exit(status);
 }
