@@ -41,12 +41,12 @@ SymbolTable    *
 symbol_table_create(int length)
 {
 	SymbolTable    *symbol_table;	/* Pointer to symbol table.  */
-	static char    *names[] = {"exp", "log", "sqrt", "sin", "cos", "tan", "ctan", "asin", "acos",
-		"atan", "actan", "sinh", "cosh", "tanh", "ctanh", "asinh", "acosh", "atanh",
-		"actanh", "fabs"
+	static char    *names[] = {"exp", "log", "sqrt", "sin", "cos", "tan", "cot", "asin", "acos",
+		"atan", "acot", "sinh", "cosh", "tanh", "coth", "asinh", "acosh", "atanh",
+		"acoth", "fabs"
 	};			/* Symbol table predefined functions names.  */
 	static double   (*functions[]) (double)= {
-	exp, log, sqrt, sin, cos, tan, math_ctan, asin, acos, atan, math_actan, sinh, cosh, tanh, math_ctanh, math_asinh, math_acosh, math_atanh, math_actanh, fabs};	/* Symbol table
+	exp, log, sqrt, sin, cos, tan, math_cot, asin, acos, atan, math_acot, sinh, cosh, tanh, math_coth, math_asinh, math_acosh, math_atanh, math_acoth, fabs};	/* Symbol table
 																	 * predefined functions
 																	 * pointers to functions
 																	 * to calculate them.  */

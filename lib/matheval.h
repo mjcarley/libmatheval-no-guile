@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef EVALUATOR_H
-#define EVALUATOR_H 1
+#ifndef MATHEVAL_H
+#define MATHEVAL_H 1
 
 #ifdef __cplusplus
 extern          "C" {

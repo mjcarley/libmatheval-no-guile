@@ -32,13 +32,13 @@
 #endif
 
 /* Calculate cotangent of value x.  */
-double          math_ctan(double x);
+double          math_cot(double x);
 
 /* Calculate inverse cotangent of value x.  */
-double          math_actan(double x);
+double          math_acot(double x);
 
 /* Calculate hyperbolical cotangent of value x.  */
-double          math_ctanh(double x);
+double          math_coth(double x);
 
 /* Calculate inverse hyperbolical sine of value x.  */
 double          math_asinh(double x);
@@ -50,6 +50,6 @@ double          math_acosh(double x);
 double          math_atanh(double x);
 
 /* Calculate inverse hyperbolical cotangent of value x.  */
-double          math_actanh(double x);
+double          math_acoth(double x);
 
 #endif

@@ -423,7 +423,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		/*
 		 * Apply rule of cotangent function derivative.
 		 */
-		else if (!strcmp(node->data.function.record->name, "ctan"))
+		else if (!strcmp(node->data.function.record->name, "cot"))
 			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sin"), node_copy(node->data.function.child)), node_create('c', 2.0))));
 		/*
 		 * Apply rule of inverse sine function derivative.
@@ -443,7 +443,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		/*
 		 * Apply rule of inverse cotanget function derivative.
 		 */
-		else if (!strcmp(node->data.function.record->name, "actan"))
+		else if (!strcmp(node->data.function.record->name, "acot"))
 			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '+', node_create('c', 1.0), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)))));
 		/*
 		 * Apply rule of hyperbolic sine function derivative.
@@ -463,7 +463,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		/*
 		 * Apply rule of hyperbolic cotangent function derivative.
 		 */
-		else if (!strcmp(node->data.function.record->name, "ctanh"))
+		else if (!strcmp(node->data.function.record->name, "coth"))
 			return node_create('u', '-', node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '^', node_create('f', symbol_table_lookup(symbol_table, "sinh"), node_copy(node->data.function.child)), node_create('c', 2.0))));
 		/*
 		 * Apply rule of inverse hyperbolic sine function derivative.
@@ -486,7 +486,7 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 * Apply rule of inverse hyperbolic cotangent function
 		 * derivative.
 		 */
-		else if (!strcmp(node->data.function.record->name, "actanh"))
+		else if (!strcmp(node->data.function.record->name, "acoth"))
 			return node_create('b', '/', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0)), node_create('c', 1.0)));
 		/*
 		 * Apply rule of absolute value function derivative.

@@ -21,7 +21,7 @@
 #include "xmath.h"
 
 double
-math_ctan(double x)
+math_cot(double x)
 {
 	/*
 	 * Calculate cotangent value.
@@ -30,7 +30,7 @@ math_ctan(double x)
 }
 
 double
-math_actan(double x)
+math_acot(double x)
 {
 	/*
 	 * Calculate inverse cotangent value.
@@ -39,7 +39,7 @@ math_actan(double x)
 }
 
 double
-math_ctanh(double x)
+math_coth(double x)
 {
 	/*
 	 * Calculate hyperbolic cotangent value.
@@ -78,7 +78,7 @@ math_atanh(double x)
 }
 
 double
-math_actanh(double x)
+math_acoth(double x)
 {
 	/*
 	 * Calculate inverse hyperbolic cotangent value.

@@ -139,7 +139,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [(1/(cos(x)^2))], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "ctan(x)"))
+(define f (evaluator-create "cot(x)"))
 (display (evaluator-evaluate-x f 1))
 ]])
 
@@ -147,7 +147,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [0.642092615934331], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "ctan(x)"))
+(define f (evaluator-create "cot(x)"))
 (define f_prim (evaluator-derivative-x f))
 (define string (make-string (evaluator-calculate-length f_prim)))
 (evaluator-write f_prim string)
@@ -214,7 +214,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [(1/(1+(x^2)))], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "actan(x)"))
+(define f (evaluator-create "acot(x)"))
 (display (evaluator-evaluate-x f 1))
 ]])
 
@@ -222,7 +222,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [0.785398163397448], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "actan(x)"))
+(define f (evaluator-create "acot(x)"))
 (define f_prim (evaluator-derivative-x f))
 (define string (make-string (evaluator-calculate-length f_prim)))
 (evaluator-write f_prim string)
@@ -290,7 +290,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [(1/(cosh(x)^2))], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "ctanh(x)"))
+(define f (evaluator-create "coth(x)"))
 (display (evaluator-evaluate-x f 1))
 ]])
 
@@ -298,7 +298,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [1.31303528549933], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "ctanh(x)"))
+(define f (evaluator-create "coth(x)"))
 (define f_prim (evaluator-derivative-x f))
 (define string (make-string (evaluator-calculate-length f_prim)))
 (evaluator-write f_prim string)
@@ -366,7 +366,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [(1/(1-(x^2)))], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "actanh(x)"))
+(define f (evaluator-create "acoth(x)"))
 (display (evaluator-evaluate-x f 1))
 ]])
 
@@ -374,7 +374,7 @@ AT_CHECK([matheval.sh function.scm], [ignore], [+#.#], [ignore])
 
 AT_DATA([function.scm],
 [[
-(define f (evaluator-create "actanh(x)"))
+(define f (evaluator-create "acoth(x)"))
 (define f_prim (evaluator-derivative-x f))
 (define string (make-string (evaluator-calculate-length f_prim)))
 (evaluator-write f_prim string)

@@ -68,7 +68,7 @@ static int input_from_string (char *buffer, int max_size);
 whitespace [ \t]+
 digit [0-9]
 number ({digit}+|{digit}+\.{digit}*|{digit}*\.{digit}+)([Ee][+\-]?{digit}+)?
-function "exp"|"log"|"sqrt"|"sin"|"cos"|"tan"|"ctan"|"asin"|"acos"|"atan"|"actan"|"sinh"|"cosh"|"tanh"|"ctanh"|"asinh"|"acosh"|"atanh"|"actanh"|"fabs"
+function "exp"|"log"|"sqrt"|"sin"|"cos"|"tan"|"cot"|"asin"|"acos"|"atan"|"acot"|"sinh"|"cosh"|"tanh"|"coth"|"asinh"|"acosh"|"atanh"|"acoth"|"fabs"
 identifier [_a-zA-Z][[_a-zA-Z0-9]*
 
 %%
