@@ -145,3 +145,9 @@ static int input_from_string (char *buffer, int max_size)
 
   return count;
 }
+
+void input_reset()
+{
+  /* Forget contents of input buffer.  */
+  YY_FLUSH_BUFFER;
+}
