@@ -534,7 +534,23 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 		 * Apply rule of absolute value function derivative.
 		 */
 		else if (!strcmp(node->data.function.record->name, "abs"))
-			return node_create('b', '/', node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_copy(node->data.function.child)), node_create('f', symbol_table_lookup(symbol_table, "sqrt"), node_create('b', '^', node_copy(node->data.function.child), node_create('c', 2.0))));
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('b', '-', node_create('b', '*', node_create('c', 2.0), node_create('f', symbol_table_lookup(symbol_table, "step"), node_copy(node->data.function.child))), node_create('c', 1.0)));
+                /*
+		 * Apply rule of step function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "step"))
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "delta"), node_copy(node->data.function.child)));
+                /*
+		 * Apply rule of delta function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "delta"))
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "nandelta"), node_copy(node->data.function.child)));
+                /*
+		 * Apply rule of nandelta function derivative.
+		 */
+		else if (!strcmp(node->data.function.record->name, "nandelta"))
+			return node_create('b', '*', node_derivative(node->data.function.child, name, symbol_table), node_create('f', symbol_table_lookup(symbol_table, "nandelta"), node_copy(node->data.function.child)));
+
 
 	case 'u':
 		switch (node->data.un_op.operation) {

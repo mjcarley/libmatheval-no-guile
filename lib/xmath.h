@@ -31,6 +31,22 @@
 #error no <math.h> avaialable
 #endif
 
+#ifdef INFINITY
+#define MATH_INFINITY INFINITY
+#elif defined HUGE_VAL
+#define MATH_INFINITY HUGE_VAL
+#else
+#define MATH_INFINITY (1.0/0.0)
+#endif
+
+#ifdef NAN
+#define MATH_NAN NAN
+#elif defined INFINITY
+#define MATH_NAN (INFINITY/INFINITY)
+#else
+#define MATH_NAN (0.0/0.0)
+#endif
+
 /* Calculate cotangent of value x.  */
 double          math_cot(double x);
 
@@ -75,5 +91,17 @@ double          math_asech(double x);
 
 /* Calculate inverse hyperbolical cosecant of value x.  */
 double          math_acsch(double x);
+
+/* Calculate Heaviside step function value for given value x.  */
+double          math_step(double x);
+
+/* Calculate Dirac delta function value for given value x.  */
+double          math_delta(double x);
+
+/* 
+ * Calculate variation of Dirac delta function (with not-a-number
+ * instead of infinity value for x= 0) value for given value x.
+ */
+double          math_nandelta(double x);
 
 #endif

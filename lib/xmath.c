@@ -154,3 +154,27 @@ math_acsch(double x)
 	 */
         return math_asinh(1 / x);
 }
+
+double          math_step(double x)
+{
+        /*
+	 * Calculate step function value.
+	 */
+        return (x < 0) ? 0 : 1;
+}
+
+double          math_delta(double x)
+{
+        /*
+	 * Calculate delta function value.
+	 */
+        return (x == 0) ? MATH_INFINITY : 0;
+}
+
+double          math_nandelta(double x)
+{
+        /*
+	 * Calculate modified delta function value.
+	 */
+        return (x == 0) ? MATH_NAN : 0;
+}

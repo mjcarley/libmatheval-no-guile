@@ -358,7 +358,10 @@ cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
 inverse cosine (@code{acosh}), hyperbolic inverse tangent
 (@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
 hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
-(@code{acsch}) and absolute value (@code{abs}).
+(@code{acsch}), absolute value (@code{abs}), Heaviside step function
+(@code{step}) with value 1 defined for x = 0 and Dirac delta function
+with infinity (@code{delta}) and not-a-number (@code{nandelta}) values
+defined for x = 0.
 
 Supported unary operation is unary minus (@code{'-'}).
 
@@ -840,7 +843,10 @@ cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
 inverse cosine (@code{acosh}), hyperbolic inverse tangent
 (@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
 hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
-(@code{acsch}) and absolute value (@code{abs}).
+(@code{acsch}), absolute value (@code{abs}), Heaviside step function
+(@code{step}) with value 1 defined for x = 0 and Dirac delta function
+with infinity (@code{delta}) and not-a-number (@code{nandelta}) values
+defined for x = 0.
 
 Supported unary operation is unary minus (@code{'-'}).
 
