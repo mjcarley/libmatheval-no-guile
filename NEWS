@@ -5,6 +5,15 @@ permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
 
 
+Version 1.1.0
+
+* Added support for number of mathematical functions (secantes,
+  cosecantes, Heaviside step and Dirac delta functions).
+* Added method to get list of variables appearing in given expression.
+* Fixed issue with passing 32-bit, instead of 64-bit, pointers to
+  Fortran code.
+
+
 Version 1.0.2
 
 * Lots of small fixes in order to improve portability.
