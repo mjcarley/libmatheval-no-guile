@@ -22,15 +22,17 @@
 #include "config.h"
 #endif
 
+#include "_stdint.h"
 #include "common.h"
 #include "matheval.h"
 
 /*
- * Wrapper for evaluator_create() function.  Evaluator objects will be passed
- * between Fortran and C as integers instead of void pointers, thus equal
- * length of int and void* types is assumed throughout this interface.
+ * Wrapper for evaluator_create() function.  Evaluator objects will be
+ * passed between Fortran and C as 64-bit integers instead of void
+ * pointers, thus size of void* is assumed to be less or equal of 64
+ * bits throughout this interface.
  */
-int
+int64_t
 evaluator_create__(char *string, int length)
 {
 	char           *stringz;/* Zero-terminated string representing
@@ -54,19 +56,19 @@ evaluator_create__(char *string, int length)
 	 */
 	XFREE(stringz);
 
-	return evaluator;
+	return (int64_t) evaluator;
 }
 
 /* Wrapper for evaluator_destroy() function.  */
 void
-evaluator_destroy__(int *evaluator)
+evaluator_destroy__(int64_t *evaluator)
 {
 	evaluator_destroy((void *)*evaluator);
 }
 
 /* Wrapper for evaluator_evaluate() function.  */
 double
-evaluator_evaluate__(int *evaluator, int *count, char *names, double *values, int length)
+evaluator_evaluate__(int64_t *evaluator, int *count, char *names, double *values, int length)
 {
 	char          **names_copy;	/* Copy of variable names.  Names are
 					 * passed in single string from
@@ -107,14 +109,14 @@ evaluator_evaluate__(int *evaluator, int *count, char *names, double *values, in
 
 /* Wrapper for evaluator_calculate_length() function.  */
 int
-evaluator_calculate_length__(int *evaluator)
+evaluator_calculate_length__(int64_t *evaluator)
 {
 	return evaluator_calculate_length((void *)*evaluator);
 }
 
 /* Wrapper for evaluator_write() function.  */
 void
-evaluator_write__(int *evaluator, char *string, int length)
+evaluator_write__(int64_t *evaluator, char *string, int length)
 {
 	char           *stringz;/* Zero-terminated string for evaluator
 				 * textual representation. */
@@ -143,7 +145,7 @@ evaluator_write__(int *evaluator, char *string, int length)
 
 /* Wrapper for evaluator_derivative() function.  */
 int
-evaluator_derivative__(int *evaluator, char *name, int length)
+evaluator_derivative__(int64_t *evaluator, char *name, int length)
 {
 	char           *stringz;/* Zero terminated string containing
 				 * derivation variable name.  */
@@ -172,42 +174,42 @@ evaluator_derivative__(int *evaluator, char *name, int length)
 
 /* Wrapper for evaluator_evaluate_x() function.  */
 double
-evaluator_evaluate_x__(int *evaluator, double *x)
+evaluator_evaluate_x__(int64_t *evaluator, double *x)
 {
 	return evaluator_evaluate_x((void *)*evaluator, *x);
 }
 
 /* Wrapper for evaluator_evaluate_x_y() function.  */
 double
-evaluator_evaluate_x_y__(int *evaluator, double *x, double *y)
+evaluator_evaluate_x_y__(int64_t *evaluator, double *x, double *y)
 {
 	return evaluator_evaluate_x_y((void *)*evaluator, *x, *y);
 }
 
 /* Wrapper for evaluator_evaluate_x_y_z() function.  */
 double
-evaluator_evaluate_x_y_z__(int *evaluator, double *x, double *y, double *z)
+evaluator_evaluate_x_y_z__(int64_t *evaluator, double *x, double *y, double *z)
 {
 	return evaluator_evaluate_x_y_z((void *)*evaluator, *x, *y, *z);
 }
 
 /* Wrapper for evaluator_derivative_x() function.  */
 int
-evaluator_derivative_x__(int *evaluator)
+evaluator_derivative_x__(int64_t *evaluator)
 {
 	return (int)evaluator_derivative_x((void *)*evaluator);
 }
 
 /* Wrapper for evaluator_derivative_y() function.  */
 int
-evaluator_derivative_y__(int *evaluator)
+evaluator_derivative_y__(int64_t *evaluator)
 {
 	return (int)evaluator_derivative_y((void *)*evaluator);
 }
 
 /* Wrapper for evaluator_derivative_z() function.  */
 int
-evaluator_derivative_z__(int *evaluator)
+evaluator_derivative_z__(int64_t *evaluator)
 {
 	return (int)evaluator_derivative_z((void *)*evaluator);
 }

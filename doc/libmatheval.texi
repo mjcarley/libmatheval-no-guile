@@ -809,7 +809,7 @@ access to corresponding compiler is provided.
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_create (string)
+integer*8 function evaluator_create (string)
   character(len=*) :: string
 end function evaluator_create
 @end example
@@ -863,7 +863,7 @@ newline characters must not appear in this string.
 
 @unnumberedsubsubsec Return value
 
-Positive integer representing evaluator object uniqe handle if
+Positive 64-bit integer representing evaluator object uniqe handle if
 operation successfull, 0 otherwise.  Return value should be used only
 to pass it to other functions from library.
 
@@ -881,7 +881,7 @@ evaluator_write}, @ref{Fortran evaluator_derivative}
 
 @example
 subroutine evaluator_destroy (evaluator)
-  integer :: evaluator
+  integer*8 :: evaluator
 end subroutine evaluator_destroy
 @end example
 
@@ -908,7 +908,7 @@ None.
 @example
 double precision function evaluator_evaluate (evaluator, count, names, &
      values)
-  integer :: evaluator
+  integer*8 :: evaluator
   integer :: count
   character(len=*) :: names
   double precision :: values
@@ -948,7 +948,7 @@ evaluator_evaluate_x_y}, @ref{Fortran evaluator_evaluate_x_y_z}
 
 @example
 integer function evaluator_calculate_length (evaluator)
-  integer :: evaluator
+  integer*8 :: evaluator
 end function evaluator_calculate_length
 @end example
 
@@ -975,7 +975,7 @@ Length of string of characters representing evaluator.
 
 @example
 subroutine evaluator_write (evaluator)
-  integer :: evaluator
+  integer*8 :: evaluator
   character(len=*) :: string
 end subroutine evaluator_write
 @end example
@@ -1005,8 +1005,8 @@ None.
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_derivative (evaluator, name)
-  integer :: evaluator
+integer*8 function evaluator_derivative (evaluator, name)
+  integer*8 :: evaluator
   character(len=*) ::  name
 end function evaluator_derivative
 @end example
@@ -1022,8 +1022,8 @@ by evaluator.
 
 @unnumberedsubsubsec Return value
 
-Integer uniquely identifying evaluator object representing derivative
-of given function.
+64-bit integer uniquely identifying evaluator object representing
+derivative of given function.
 
 @unnumberedsubsubsec See also
 
@@ -1052,7 +1052,7 @@ evaluator_derivative_y}, @ref{Fortran evaluator_derivative_z}
 
 @example
 double precision function evaluator_evaluate_x (evaluator, x)
-  integer :: evaluator
+  integer*8 :: evaluator
   double precision ::  x
 end function evaluator_evaluate_x
 @end example
@@ -1085,7 +1085,7 @@ Value of function for given value of variable ``x''.
 
 @example
 double precision function evaluator_evaluate_x_y (evaluator, x, y)
-   integer :: evaluator
+   integer*8 :: evaluator
    double precision ::  x, y
 end function evaluator_evaluate_x_y
 @end example
@@ -1118,8 +1118,10 @@ Value of function for given values of variables ``x'' and ``y''.
 
 @example
 double precision function evaluator_evaluate_x_y_z (evaluator, x, y,
-z) integer :: evaluator double precision :: x,
-y, z end function evaluator_evaluate_x_y_z
+z)
+  integer*8 :: evaluator
+  double precision :: x, y, z
+end function evaluator_evaluate_x_y_z
 @end example
 
 @unnumberedsubsubsec Description
@@ -1150,8 +1152,8 @@ Value of function for given values of variables ``x'', ``y'' and
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_derivative_x (evaluator)
-  integer :: evaluator
+integer*8 function evaluator_derivative_x (evaluator)
+  integer*8 :: evaluator
 end function evaluator_derivative_x
 @end example
 
@@ -1183,8 +1185,8 @@ Evaluator object representing derivative of function over variable
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_derivative_y (evaluator)
-  integer :: evaluator
+integer*8 function evaluator_derivative_y (evaluator)
+  integer*8 :: evaluator
 end function evaluator_derivative_y
 @end example
 
@@ -1216,8 +1218,8 @@ Evaluator object representing derivative of function over variable
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_derivative_z (evaluator)
-  integer :: evaluator
+integer*8 function evaluator_derivative_z (evaluator)
+  integer*8 :: evaluator
 end function evaluator_derivative_z
 @end example
 
@@ -1270,8 +1272,8 @@ program evaluator
   implicit none
 
   ! Declarations of GNU libmatheval procedures used.
-  integer evaluator_create
-  integer evaluator_derivative_x
+  integer*8 evaluator_create
+  integer*8 evaluator_derivative_x
   double precision evaluator_evaluate_x
   external evaluator_destroy
 
@@ -1280,7 +1282,7 @@ program evaluator
   parameter(BUFFER_SIZE = 256)
 
   character(len = BUFFER_SIZE) :: buffer ! Input buffer.
-  integer :: f, f_prim ! Evaluators for function and function derivative.
+  integer*8 :: f, f_prim ! Evaluators for function and function derivative.
   double precision :: x ! Variable x value.
 
   ! Read function.  Function has to be over variable x, or result may
