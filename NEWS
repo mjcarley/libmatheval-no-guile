@@ -5,6 +5,11 @@ permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
 
 
+Version 1.0.2
+
+* Lots of small fixes in order to improve portability.
+
+
 Version 1.0.1
 
 * Acceptable mathematical functions names changed to math.h like names.
