@@ -2,21 +2,20 @@
  * Copyright (C) 2002, 2003  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
- *
- * GNU libmatheval is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
+ * 
+ * GNU libmatheval is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2, or (at your option) any later
+ * version.
+ * 
  * GNU libmatheval is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with program; see the file COPYING. If not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
- * USA.
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * program; see the file COPYING. If not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #if HAVE_CONFIG_H
@@ -38,15 +37,21 @@ evaluator_create__(char *string, int length)
 				 * function.  */
 	int             evaluator;	/* Evaluator created for function.  */
 
-	/* Copy string passed from Fortran code and terminate it with zero.  */
+	/*
+	 * Copy string passed from Fortran code and terminate it with zero.
+	 */
 	stringz = XMALLOC(char, length + 1);
 	memcpy(stringz, string, length * sizeof(char));
 	stringz[length] = '\0';
 
-	/* Call evaluator_create() function.  */
+	/*
+	 * Call evaluator_create() function.
+	 */
 	evaluator = (int)evaluator_create(stringz);
 
-	/* Free string used to create evaluator.  */
+	/*
+	 * Free string used to create evaluator.
+	 */
 	XFREE(stringz);
 
 	return evaluator;
@@ -61,8 +66,7 @@ evaluator_destroy__(int *evaluator)
 
 /* Wrapper for evaluator_evaluate() function.  */
 double
-evaluator_evaluate__(int *evaluator, int *count, char *names,
-		     double *values, int length)
+evaluator_evaluate__(int *evaluator, int *count, char *names, double *values, int length)
 {
 	char          **names_copy;	/* Copy of variable names.  Names are
 					 * passed in single string from
@@ -77,6 +81,7 @@ evaluator_evaluate__(int *evaluator, int *count, char *names,
 	 * with each string containing single name.
 	 */
 	names_copy = XMALLOC(char *, *count);
+
 	for (i = j = 0; i < *count && j < length; i++, j += n) {
 		for (; names[j] == ' '; j++);
 		for (n = 1; j + n < length && !(names[j + n] == ' '); n++);
@@ -85,11 +90,14 @@ evaluator_evaluate__(int *evaluator, int *count, char *names,
 		names_copy[i][n] = '\0';
 	}
 
-	/* Call evaluator_evaluate() function.  */
-	result =
-		evaluator_evaluate((void *)*evaluator, *count, names_copy, values);
+	/*
+	 * Call evaluator_evaluate() function.
+	 */
+	result = evaluator_evaluate((void *)*evaluator, *count, names_copy, values);
 
-	/* Free memory used.  */
+	/*
+	 * Free memory used.
+	 */
 	for (i = 0; i < *count; i++)
 		XFREE(names_copy[i]);
 	XFREE(names_copy);
@@ -111,10 +119,14 @@ evaluator_write__(int *evaluator, char *string, int length)
 	char           *stringz;/* Zero-terminated string for evaluator
 				 * textual representation. */
 
-	/* Allocate string of appropriate length to write evaluator to. */
+	/*
+	 * Allocate string of appropriate length to write evaluator to.
+	 */
 	stringz = XMALLOC(char, length + 1);
 
-	/* Call evaluator_write() function.  */
+	/*
+	 * Call evaluator_write() function.
+	 */
 	evaluator_write((void *)*evaluator, stringz);
 
 	/*
@@ -123,7 +135,9 @@ evaluator_write__(int *evaluator, char *string, int length)
 	 */
 	memcpy(string, stringz, length * sizeof(char));
 
-	/* Free string used for evaluator textual representation.  */
+	/*
+	 * Free string used for evaluator textual representation.
+	 */
 	XFREE(stringz);
 }
 
@@ -143,10 +157,14 @@ evaluator_derivative__(int *evaluator, char *name, int length)
 	memcpy(stringz, name, length * sizeof(char));
 	stringz[length] = '\0';
 
-	/* Call evaluator_derivative() function.  */
+	/*
+	 * Call evaluator_derivative() function.
+	 */
 	derivative = (int)evaluator_derivative((void *)*evaluator, stringz);
 
-	/* Free string containing derivation variable name.  */
+	/*
+	 * Free string containing derivation variable name.
+	 */
 	XFREE(stringz);
 
 	return derivative;

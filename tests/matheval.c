@@ -2,21 +2,20 @@
  * Copyright (C) 2002, 2003  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
- *
- * GNU libmatheval is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
+ * 
+ * GNU libmatheval is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2, or (at your option) any later
+ * version.
+ * 
  * GNU libmatheval is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with program; see the file COPYING. If not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
- * USA.
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * program; see the file COPYING. If not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #include <stdio.h>
@@ -41,15 +40,13 @@ static scm_t_bits evaluator_tag;/* Unique identifier for Guile objects of
  */
 static scm_sizet evaluator_destroy_scm(SCM evaluator_smob);
 static SCM      evaluator_create_scm(SCM string);
-static          SCM
-                evaluator_evaluate_scm(SCM evaluator_smob, SCM count, SCM names, SCM values);
+static SCM      evaluator_evaluate_scm(SCM evaluator_smob, SCM count, SCM names, SCM values);
 static SCM      evaluator_calculate_length_scm(SCM evaluator_smob);
 static SCM      evaluator_write_scm(SCM evaluator_smob, SCM string);
 static SCM      evaluator_derivative_scm(SCM evaluator_smob, SCM name);
 static SCM      evaluator_evaluate_x_scm(SCM evaluator_smob, SCM x);
 static SCM      evaluator_evaluate_x_y_scm(SCM evaluator_smob, SCM x, SCM y);
-static          SCM
-                evaluator_evaluate_x_y_z_scm(SCM evaluator_smob, SCM x, SCM y, SCM z);
+static SCM      evaluator_evaluate_x_y_z_scm(SCM evaluator_smob, SCM x, SCM y, SCM z);
 static SCM      evaluator_derivative_x_scm(SCM evaluator_smob);
 static SCM      evaluator_derivative_y_scm(SCM evaluator_smob);
 static SCM      evaluator_derivative_z_scm(SCM evaluator_smob);
@@ -69,23 +66,15 @@ inner_main(void *closure, int argc, char **argv)
 	 */
 	scm_make_gsubr("evaluator-create", 1, 0, 0, evaluator_create_scm);
 	scm_make_gsubr("evaluator-evaluate", 4, 0, 0, evaluator_evaluate_scm);
-	scm_make_gsubr("evaluator-calculate-length", 1, 0, 0,
-		       evaluator_calculate_length_scm);
+	scm_make_gsubr("evaluator-calculate-length", 1, 0, 0, evaluator_calculate_length_scm);
 	scm_make_gsubr("evaluator-write", 2, 0, 0, evaluator_write_scm);
-	scm_make_gsubr("evaluator-derivative", 2, 0, 0,
-		       evaluator_derivative_scm);
-	scm_make_gsubr("evaluator-evaluate-x", 2, 0, 0,
-		       evaluator_evaluate_x_scm);
-	scm_make_gsubr("evaluator-evaluate-x-y", 3, 0, 0,
-		       evaluator_evaluate_x_y_scm);
-	scm_make_gsubr("evaluator-evaluate-x-y-z", 4, 0, 0,
-		       evaluator_evaluate_x_y_z_scm);
-	scm_make_gsubr("evaluator-derivative-x", 1, 0, 0,
-		       evaluator_derivative_x_scm);
-	scm_make_gsubr("evaluator-derivative-y", 1, 0, 0,
-		       evaluator_derivative_y_scm);
-	scm_make_gsubr("evaluator-derivative-z", 1, 0, 0,
-		       evaluator_derivative_z_scm);
+	scm_make_gsubr("evaluator-derivative", 2, 0, 0, evaluator_derivative_scm);
+	scm_make_gsubr("evaluator-evaluate-x", 2, 0, 0, evaluator_evaluate_x_scm);
+	scm_make_gsubr("evaluator-evaluate-x-y", 3, 0, 0, evaluator_evaluate_x_y_scm);
+	scm_make_gsubr("evaluator-evaluate-x-y-z", 4, 0, 0, evaluator_evaluate_x_y_z_scm);
+	scm_make_gsubr("evaluator-derivative-x", 1, 0, 0, evaluator_derivative_x_scm);
+	scm_make_gsubr("evaluator-derivative-y", 1, 0, 0, evaluator_derivative_y_scm);
+	scm_make_gsubr("evaluator-derivative-z", 1, 0, 0, evaluator_derivative_z_scm);
 
 	/*
 	 * Check is there exactly one argument left in command line.
@@ -93,7 +82,7 @@ inner_main(void *closure, int argc, char **argv)
 	assert(argc == 2);
 
 	/*
-	 * Interpret Guilde code from file with name given through above
+	 * Interpret Guile code from file with name given through above
 	 * argument.
 	 */
 	scm_primitive_load(scm_makfrom0str(argv[1]));
@@ -125,8 +114,7 @@ static          scm_sizet
 evaluator_destroy_scm(SCM evaluator_smob)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-destroy");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-destroy");
 
 	evaluator_destroy((void *)SCM_CDR(evaluator_smob));
 
@@ -173,36 +161,26 @@ evaluator_evaluate_scm(SCM evaluator_smob, SCM count, SCM names, SCM values)
 	int             i;
 
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-evaluate");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-evaluate");
 	SCM_ASSERT(SCM_INUMP(count), count, SCM_ARG2, "evaluator-evaluate");
 
 	names_copy = (char **)malloc(SCM_INUM(count) * sizeof(char *));
-	for (i = 0, name = names; i < SCM_INUM(count);
-	     i++, name = SCM_CDR(name)) {
+	for (i = 0, name = names; i < SCM_INUM(count); i++, name = SCM_CDR(name)) {
 		SCM_ASSERT(SCM_NIMP(name) && SCM_CONSP(name)
-			   && SCM_STRINGP(SCM_CAR(name)), names, SCM_ARG3,
-			   "evaluator-evaluate");
-		names_copy[i] =
-			(char *)malloc((SCM_LENGTH(SCM_CAR(name)) +
-					1) * sizeof(char));
-		memcpy(names_copy[i], SCM_CHARS(SCM_CAR(name)),
-		       SCM_LENGTH(SCM_CAR(name)));
+			   && SCM_STRINGP(SCM_CAR(name)), names, SCM_ARG3, "evaluator-evaluate");
+		names_copy[i] = (char *)malloc((SCM_LENGTH(SCM_CAR(name)) + 1) * sizeof(char));
+		memcpy(names_copy[i], SCM_CHARS(SCM_CAR(name)), SCM_LENGTH(SCM_CAR(name)));
 		names_copy[i][SCM_LENGTH(SCM_CAR(name))] = 0;
 	}
 
 	values_copy = (double *)malloc(SCM_INUM(count) * sizeof(double));
-	for (i = 0, value = values; i < SCM_INUM(count);
-	     i++, value = SCM_CDR(value)) {
+	for (i = 0, value = values; i < SCM_INUM(count); i++, value = SCM_CDR(value)) {
 		SCM_ASSERT(SCM_NIMP(value) && SCM_CONSP(value)
-			   && SCM_NUMBERP(SCM_CAR(value)), values, SCM_ARG4,
-			   "evaluator-evaluate");
+			   && SCM_NUMBERP(SCM_CAR(value)), values, SCM_ARG4, "evaluator-evaluate");
 		values_copy[i] = SCM_NUM2DBL(SCM_CAR(value));
 	}
 
-	result = evaluator_evaluate
-		((void *)SCM_CDR(evaluator_smob), SCM_INUM(count), names_copy,
-		 values_copy);
+	result = evaluator_evaluate((void *)SCM_CDR(evaluator_smob), SCM_INUM(count), names_copy, values_copy);
 
 	for (i = 0; i < SCM_INUM(count); i++)
 		free(names_copy[i]);
@@ -220,12 +198,9 @@ static          SCM
 evaluator_calculate_length_scm(SCM evaluator_smob)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-calculate-length");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-calculate-length");
 
-	return
-		SCM_MAKINUM(evaluator_calculate_length
-			    ((void *)SCM_CDR(evaluator_smob)));
+	return SCM_MAKINUM(evaluator_calculate_length((void *)SCM_CDR(evaluator_smob)));
 }
 
 /*
@@ -237,8 +212,7 @@ evaluator_write_scm(SCM evaluator_smob, SCM string)
 	char           *stringz;
 
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-write");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-write");
 	SCM_ASSERT(SCM_NIMP(string)
 	       && SCM_STRINGP(string), string, SCM_ARG2, "evaluator-write");
 
@@ -259,13 +233,10 @@ static          SCM
 evaluator_derivative_scm(SCM evaluator_smob, SCM name)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-derivative");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-derivative");
 	SCM_ASSERT(SCM_NIMP(name)
 	      && SCM_STRINGP(name), name, SCM_ARG2, "evaluator-derivative");
-	SCM_RETURN_NEWSMOB(evaluator_tag,
-		       evaluator_derivative((void *)SCM_CDR(evaluator_smob),
-					    SCM_CHARS(name)));
+	SCM_RETURN_NEWSMOB(evaluator_tag, evaluator_derivative((void *)SCM_CDR(evaluator_smob), SCM_CHARS(name)));
 }
 
 /*
@@ -275,12 +246,9 @@ static          SCM
 evaluator_evaluate_x_scm(SCM evaluator_smob, SCM x)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-evaluate-x");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-evaluate-x");
 	SCM_ASSERT(SCM_NUMBERP(x), x, SCM_ARG2, "evaluator-evaluate-x");
-	return
-		scm_make_real(evaluator_evaluate_x
-			 ((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x)));
+	return scm_make_real(evaluator_evaluate_x((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x)));
 }
 
 /*
@@ -290,13 +258,10 @@ static          SCM
 evaluator_evaluate_x_y_scm(SCM evaluator_smob, SCM x, SCM y)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-evaluate-x-y");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-evaluate-x-y");
 	SCM_ASSERT(SCM_NUMBERP(x), x, SCM_ARG2, "evaluator-evaluate-x-y");
 	SCM_ASSERT(SCM_NUMBERP(y), y, SCM_ARG3, "evaluator-evaluate-x-y");
-	return
-		scm_make_real(evaluator_evaluate_x_y
-	 ((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x), SCM_NUM2DBL(y)));
+	return scm_make_real(evaluator_evaluate_x_y((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x), SCM_NUM2DBL(y)));
 }
 
 /*
@@ -307,15 +272,11 @@ static          SCM
 evaluator_evaluate_x_y_z_scm(SCM evaluator_smob, SCM x, SCM y, SCM z)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-evaluate-x-y-z");
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-evaluate-x-y-z");
 	SCM_ASSERT(SCM_NUMBERP(x), x, SCM_ARG2, "evaluator-evaluate-x-y-z");
 	SCM_ASSERT(SCM_NUMBERP(y), y, SCM_ARG3, "evaluator-evaluate-x-y-z");
 	SCM_ASSERT(SCM_NUMBERP(z), z, SCM_ARG4, "evaluator-evaluate-x-y-z");
-	return
-		scm_make_real(evaluator_evaluate_x_y_z
-			   ((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x),
-			    SCM_NUM2DBL(y), SCM_NUM2DBL(z)));
+	return scm_make_real(evaluator_evaluate_x_y_z((void *)SCM_CDR(evaluator_smob), SCM_NUM2DBL(x), SCM_NUM2DBL(y), SCM_NUM2DBL(z)));
 }
 
 /*
@@ -325,10 +286,8 @@ static          SCM
 evaluator_derivative_x_scm(SCM evaluator_smob)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-derivative-x");
-	SCM_RETURN_NEWSMOB(evaluator_tag,
-		evaluator_derivative((void *)SCM_CDR(evaluator_smob), "x"));
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-derivative-x");
+	SCM_RETURN_NEWSMOB(evaluator_tag, evaluator_derivative((void *)SCM_CDR(evaluator_smob), "x"));
 }
 
 /*
@@ -338,10 +297,8 @@ static          SCM
 evaluator_derivative_y_scm(SCM evaluator_smob)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-derivative-y");
-	SCM_RETURN_NEWSMOB(evaluator_tag,
-		evaluator_derivative((void *)SCM_CDR(evaluator_smob), "y"));
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-derivative-y");
+	SCM_RETURN_NEWSMOB(evaluator_tag, evaluator_derivative((void *)SCM_CDR(evaluator_smob), "y"));
 }
 
 /*
@@ -351,8 +308,6 @@ static          SCM
 evaluator_derivative_z_scm(SCM evaluator_smob)
 {
 	SCM_ASSERT((SCM_NIMP(evaluator_smob)
-		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)),
-		   evaluator_smob, SCM_ARG1, "evaluator-derivative-z");
-	SCM_RETURN_NEWSMOB(evaluator_tag,
-		evaluator_derivative((void *)SCM_CDR(evaluator_smob), "z"));
+		    && SCM_SMOB_PREDICATE(evaluator_tag, evaluator_smob)), evaluator_smob, SCM_ARG1, "evaluator-derivative-z");
+	SCM_RETURN_NEWSMOB(evaluator_tag, evaluator_derivative((void *)SCM_CDR(evaluator_smob), "z"));
 }

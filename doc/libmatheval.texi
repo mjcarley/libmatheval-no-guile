@@ -346,15 +346,15 @@ name.
 
 Supported elementary functions are (names that should be used are
 given in parenthesis): exponentintial (@code{exp}), logarithmic
-(@code{ln}), square root (@code{sqrt}), sine (@code{sin}), cosine
-(@code{cos}), tangent (@code{tg}), cotangent (@code{ctg}), inverse
-sine (@code{arcsin}), inverse cosine (@code{arccos}), inverse tangent
-((@code{arctg}), inverse cotangent (@code{arcctg}), hyperbolic sine
-(@code{sh}), cosine (@code{ch}), hyperbolic tangent (@code{th}),
-hyperbolic cotangent (@code{cth}), inverse sine (@code{arsh}),
-hyperbolic inverse cosine (@code{arch}), hyperbolic inverse tangent
-(@code{arth}), hyperbolic inverse cotangent (@code{arcth}) and
-absolute value (@code{abs}).
+(@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
+(@code{cos}), tangent (@code{tan}), cotangent (@code{ctan}), inverse
+sine (@code{asin}), inverse cosine (@code{acos}), inverse tangent
+((@code{atan}), inverse cotangent (@code{actan}), hyperbolic sine
+(@code{sinh}), cosine (@code{cosh}), hyperbolic tangent (@code{tanh}),
+hyperbolic cotangent (@code{ctanh}), inverse sine (@code{asinh}),
+hyperbolic inverse cosine (@code{acosh}), hyperbolic inverse tangent
+(@code{atanh}), hyperbolic inverse cotangent (@code{actanh}) and
+absolute value (@code{fabs}).
 
 Supported unary operator is unary minus (@code{'-'}).
 
@@ -824,15 +824,15 @@ name.
 
 Supported elementary functions are (names that should be used are
 given in parenthesis): exponentintial (@code{exp}), logarithmic
-(@code{ln}), square root (@code{sqrt}), sine (@code{sin}), cosine
-(@code{cos}), tangent (@code{tg}), cotangent (@code{ctg}), inverse
-sine (@code{arcsin}), inverse cosine (@code{arccos}), inverse tangent
-((@code{arctg}), inverse cotangent (@code{arcctg}), hyperbolic sine
-(@code{sh}), cosine (@code{ch}), hyperbolic tangent (@code{th}),
-hyperbolic cotangent (@code{cth}), inverse sine (@code{arsh}),
-hyperbolic inverse cosine (@code{arch}), hyperbolic inverse tangent
-(@code{arth}), hyperbolic inverse cotangent (@code{arcth}) and
-absolute value (@code{abs}).
+(@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
+(@code{cos}), tangent (@code{tan}), cotangent (@code{ctan}), inverse
+sine (@code{asin}), inverse cosine (@code{acos}), inverse tangent
+((@code{atan}), inverse cotangent (@code{actan}), hyperbolic sine
+(@code{sinh}), cosine (@code{cosh}), hyperbolic tangent (@code{tanh}),
+hyperbolic cotangent (@code{ctanh}), inverse sine (@code{asinh}),
+hyperbolic inverse cosine (@code{acosh}), hyperbolic inverse tangent
+(@code{atanh}), hyperbolic inverse cotangent (@code{actanh}) and
+absolute value (@code{fabs}).
 
 Supported unary operator is unary minus (@code{'-'}).
 

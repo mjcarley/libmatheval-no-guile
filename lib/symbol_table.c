@@ -2,21 +2,20 @@
  * Copyright (C) 1999, 2002, 2003  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
- *
- * GNU libmatheval is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
+ * 
+ * GNU libmatheval is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2, or (at your option) any later
+ * version.
+ * 
  * GNU libmatheval is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with program; see the file COPYING. If not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
- * USA.
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * program; see the file COPYING. If not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #if HAVE_CONFIG_H
@@ -42,13 +41,11 @@ SymbolTable    *
 symbol_table_create(int length)
 {
 	SymbolTable    *symbol_table;	/* Pointer to symbol table.  */
-	static char    *names[] =
-	{"exp", "ln", "sqrt", "sin", "cos", "tg", "ctg", "arcsin", "arccos",
-		"arctg", "arcctg", "sh", "ch", "th", "cth", "arsh", "arch", "arth",
-		"arcth", "abs"
+	static char    *names[] = {"exp", "log", "sqrt", "sin", "cos", "tan", "ctan", "asin", "acos",
+		"atan", "actan", "sinh", "cosh", "tanh", "ctanh", "asinh", "acosh", "atanh",
+		"actanh", "fabs"
 	};			/* Symbol table predefined functions names.  */
-	static double   (*functions[]) (double)=
-	{
+	static double   (*functions[]) (double)= {
 	exp, log, sqrt, sin, cos, tan, ctan, asin, acos, atan, actan, sinh, cosh, tanh, ctanh, asinh, acosh, atanh, actanh, fabs};	/* Symbol table
 																	 * predefined functions
 																	 * pointers to functions
@@ -63,11 +60,15 @@ symbol_table_create(int length)
 	symbol_table->length = length;
 	symbol_table->records = XCALLOC(Record, symbol_table->length);
 
-	/* Insert predefined functions into symbol table.  */
+	/*
+	 * Insert predefined functions into symbol table.
+	 */
 	for (i = 0; i < sizeof(names) / sizeof(names[0]); i++)
 		symbol_table_insert(symbol_table, names[i], 'f', functions[i]);
 
-	/* Initialize symbol table reference count.  */
+	/*
+	 * Initialize symbol table reference count.
+	 */
 	symbol_table->reference_count = 1;
 
 	return symbol_table;
@@ -99,7 +100,7 @@ symbol_table_destroy(SymbolTable * symbol_table)
 			XFREE(curr);
 			curr = next;
 		}
-        XFREE(symbol_table->records);
+	XFREE(symbol_table->records);
 	XFREE(symbol_table);
 }
 
@@ -119,7 +120,9 @@ symbol_table_insert(SymbolTable * symbol_table, char *name, char type,...)
 		assert(record->type == type);
 		return record;
 	}
-	/* Allocate memory for and initialize new record.  */
+	/*
+	 * Allocate memory for and initialize new record.
+	 */
 	record = XMALLOC(Record, 1);
 	record->name = XMALLOC(char, strlen(name) + 1);
 	strcpy(record->name, name);
@@ -137,7 +140,7 @@ symbol_table_insert(SymbolTable * symbol_table, char *name, char type,...)
 
 	case 'f':
 		record->data.function = va_arg(ap, function_type);
-                break;
+		break;
 	}
 	va_end(ap);
 
@@ -158,7 +161,9 @@ symbol_table_lookup(SymbolTable * symbol_table, char *name)
 	int             i;	/* Hash value. */
 	Record         *curr;	/* Pointer to current symbol table record.  */
 
-	/* Calcuate hash value for name given.  */
+	/*
+	 * Calcuate hash value for name given.
+	 */
 	i = hash(name, symbol_table->length);
 
 	/*

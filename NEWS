@@ -4,3 +4,7 @@ Copying and distribution of this file, with or without modification, are
 permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
 
+
+Version 1.0.1
+
+* Acceptable mathematical functions names changed to math.h like names.

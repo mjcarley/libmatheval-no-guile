@@ -2,21 +2,20 @@
  * Copyright (C) 1999, 2002, 2003  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
- *
- * GNU libmatheval is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
+ * 
+ * GNU libmatheval is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2, or (at your option) any later
+ * version.
+ * 
  * GNU libmatheval is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with program; see the file COPYING. If not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
- * USA.
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * program; see the file COPYING. If not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #if HAVE_CONFIG_H
@@ -50,8 +49,7 @@ int             ok;		/* Flag determining if parsing went OK.  */
 typedef struct {
 	Node           *root;	/* Root of tree representation of function.  */
 	SymbolTable    *symbol_table;	/* Evalutor symbol table.  */
-}
-                Evaluator;
+}               Evaluator;
 
 void           *
 evaluator_create(char *string)
@@ -67,29 +65,42 @@ evaluator_create(char *string)
 	 * terminate its input).
 	 */
 	stringn = XMALLOC(char, strlen(string) + 2);
+
 	strcpy(stringn, string);
 	strcat(stringn, "\n");
 
-	/* Initialize global variables used by parser.  */
+	/*
+	 * Initialize global variables used by parser.
+	 */
 	input_string = stringn;
 	root = NULL;
 	symbol_table = symbol_table_create(MIN_TABLE_LENGTH);
 	ok = 1;
 
-	/* Do parsing.  */
+	/*
+	 * Do parsing.
+	 */
 	yyparse();
 
-	/* Free copy of string representing function.  */
+	/*
+	 * Free copy of string representing function.
+	 */
 	XFREE(stringn);
 
-	/* Return null pointer as error indicator if parsing error occured.  */
+	/*
+	 * Return null pointer as error indicator if parsing error occured.
+	 */
 	if (!ok)
 		return NULL;
 
-	/* Simplify tree represention of function.  */
+	/*
+	 * Simplify tree represention of function.
+	 */
 	root = node_simplify(root);
 
-	/* Allocate memory for and initialize evaluator data structure.  */
+	/*
+	 * Allocate memory for and initialize evaluator data structure.
+	 */
 	evaluator = XMALLOC(Evaluator, 1);
 	evaluator->root = root;
 	evaluator->symbol_table = symbol_table;
@@ -121,28 +132,32 @@ evaluator_evaluate(void *evaluator, int count, char **names, double *values)
 	 * names.
 	 */
 	for (i = 0; i < count; i++) {
-		record =
-			symbol_table_lookup(((Evaluator *) evaluator)->symbol_table,
-					    names[i]);
+		record = symbol_table_lookup(((Evaluator *) evaluator)->symbol_table, names[i]);
 		if (record && record->type == 'v')
 			record->data.value = values[i];
 	}
 
-	/* Evaluate function value using tree represention of function.  */
+	/*
+	 * Evaluate function value using tree represention of function.
+	 */
 	return node_evaluate(((Evaluator *) evaluator)->root);
 }
 
 int
 evaluator_calculate_length(void *evaluator)
 {
-	/* Calculate length of evaluator textual representation. */
+	/*
+	 * Calculate length of evaluator textual representation.
+	 */
 	return node_calculate_length(((Evaluator *) evaluator)->root);
 }
 
 void
 evaluator_write(void *evaluator, char *string)
 {
-	/* Write evaluator textual representation to given string. */
+	/*
+	 * Write evaluator textual representation to given string.
+	 */
 	node_write(((Evaluator *) evaluator)->root, string);
 }
 
@@ -156,12 +171,8 @@ evaluator_derivative(void *evaluator, char *name)
 	 * representing derivative of function given by evaluator.
 	 */
 	derivative = XMALLOC(Evaluator, 1);
-	derivative->root = node_simplify(node_derivative
-				     (((Evaluator *) evaluator)->root, name,
-				      ((Evaluator *) evaluator)->
-				      symbol_table));
-	derivative->symbol_table =
-		symbol_table_assign(((Evaluator *) evaluator)->symbol_table);
+	derivative->root = node_simplify(node_derivative(((Evaluator *) evaluator)->root, name, ((Evaluator *) evaluator)->symbol_table));
+	derivative->symbol_table = symbol_table_assign(((Evaluator *) evaluator)->symbol_table);
 
 	return derivative;
 }
@@ -172,9 +183,10 @@ evaluator_evaluate_x(void *evaluator, double x)
 	char           *names[] = {"x"};	/* Array of variable names.  */
 	double          values[] = {x};	/* Array of variable values.  */
 
-	/* Evaluate function for given values of variable "x".  */
-	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]),
-				  names, values);
+	/*
+	 * Evaluate function for given values of variable "x".
+	 */
+	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]), names, values);
 }
 
 double
@@ -183,9 +195,10 @@ evaluator_evaluate_x_y(void *evaluator, double x, double y)
 	char           *names[] = {"x", "y"};	/* Array of variable names.  */
 	double          values[] = {x, y};	/* Array of variable values.  */
 
-	/* Evaluate function for given values of variable "x" and "y".  */
-	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]),
-				  names, values);
+	/*
+	 * Evaluate function for given values of variable "x" and "y".
+	 */
+	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]), names, values);
 }
 
 double
@@ -198,27 +211,32 @@ evaluator_evaluate_x_y_z(void *evaluator, double x, double y, double z)
 	/*
 	 * Evaluate function for given values of variable "x", "y" and "z".
 	 */
-	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]),
-				  names, values);
+	return evaluator_evaluate(evaluator, sizeof(names) / sizeof(names[0]), names, values);
 }
 
 void           *
 evaluator_derivative_x(void *evaluator)
 {
-	/* Differentiate function using derivation variable "x".  */
+	/*
+	 * Differentiate function using derivation variable "x".
+	 */
 	return evaluator_derivative(evaluator, "x");
 }
 
 void           *
 evaluator_derivative_y(void *evaluator)
 {
-	/* Differentiate function using derivation variable "y".  */
+	/*
+	 * Differentiate function using derivation variable "y".
+	 */
 	return evaluator_derivative(evaluator, "y");
 }
 
 void           *
 evaluator_derivative_z(void *evaluator)
 {
-	/* Differentiate function using derivation variable "z".  */
+	/*
+	 * Differentiate function using derivation variable "z".
+	 */
 	return evaluator_derivative(evaluator, "z");
 }

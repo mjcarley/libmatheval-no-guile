@@ -2,29 +2,27 @@
  * Copyright (C) 1999, 2002, 2003  Free Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
- *
- * GNU libmatheval is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
+ * 
+ * GNU libmatheval is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2, or (at your option) any later
+ * version.
+ * 
  * GNU libmatheval is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with program; see the file COPYING. If not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
- * USA.
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * program; see the file COPYING. If not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #ifndef EVALUATOR_H
 #define EVALUATOR_H 1
 
 #ifdef __cplusplus
-extern          "C"
-{
+extern          "C" {
 #endif
 
 	/*
@@ -35,7 +33,9 @@ extern          "C"
 	 */
 	extern void    *evaluator_create(char *string);
 
-	/* Destroy evaluator specified.  */
+	/*
+	 * Destroy evaluator specified.
+	 */
 	extern void     evaluator_destroy(void *evaluator);
 
 	/*
@@ -47,8 +47,7 @@ extern          "C"
 	 * given through third function argument, value of this variable is
 	 * undeterminated.
 	 */
-	extern double   evaluator_evaluate(void *evaluator, int count, char **names,
-					                   double *values);
+	extern double   evaluator_evaluate(void *evaluator, int count, char **names, double *values);
 
 	/*
 	 * Calculate length of textual representation of evaluator. This
@@ -79,8 +78,7 @@ extern          "C"
 	 */
 	extern double   evaluator_evaluate_x(void *evaluator, double x);
 	extern double   evaluator_evaluate_x_y(void *evaluator, double x, double y);
-	extern double   evaluator_evaluate_x_y_z(void *evaluator, double x, double y,
-						                 double z);
+	extern double   evaluator_evaluate_x_y_z(void *evaluator, double x, double y, double z);
 
 	/*
 	 * Helper functions to simplify differentiation when variable names
@@ -93,5 +91,4 @@ extern          "C"
 #ifdef __cplusplus
 }
 #endif
-
 #endif
