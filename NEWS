@@ -5,6 +5,12 @@ permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
 
 
+Version 1.1.1
+
+* Fixed bug with not forgetting input string after encountering parsing
+  error.
+
+
 Version 1.1.0
 
 * Added support for number of mathematical functions (secantes,
