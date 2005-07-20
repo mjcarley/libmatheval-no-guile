@@ -15,8 +15,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with program; see the file COPYING. If not, write to the Free
-# Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-# 02111-1307, USA.
+# Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
 
 AUX_DIST = $(ac_aux_dir)/compile $(ac_aux_dir)/config.guess		\
 $(ac_aux_dir)/config.sub $(ac_aux_dir)/depcomp $(ac_aux_dir)/install-sh	\
