@@ -172,10 +172,13 @@ evaluator_get_variables(void *evaluator, char ***names, int *count)
 					 symbol_table);
 		node_flag_variables(((Evaluator *) evaluator)->root);
 		((Evaluator *) evaluator)->count =
-		    symbol_table_get_flagged_count(symbol_table);
+		    symbol_table_get_flagged_count(((Evaluator *)
+						    evaluator)->
+						   symbol_table);
 		records =
 		    XMALLOC(Record *, ((Evaluator *) evaluator)->count);
-		symbol_table_get_flagged(symbol_table, records,
+		symbol_table_get_flagged(((Evaluator *) evaluator)->
+					 symbol_table, records,
 					 ((Evaluator *) evaluator)->count);
 		((Evaluator *) evaluator)->names =
 		    XMALLOC(char *, ((Evaluator *) evaluator)->count);
