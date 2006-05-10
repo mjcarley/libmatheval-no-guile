@@ -122,7 +122,7 @@ void *f;
 
 Then, given that textual representation of function is stored into
 string @code{buffer}, evaluator object corresponding to given
-mathematical function could be created using @code{evaluator_create()}
+mathematical function could be created using @code{evaluator_create}
 procedure (see @ref{evaluator_create}) as follows (see documentation
 for this procedure also for description of notation that should be
 used to describe mathematical functions):
@@ -133,7 +133,7 @@ f = evaluator_create (buffer); assert (f);
 
 Return value should be always checked, because above procedure will
 return null pointer if there exist syntax errors in notation.  After
-that, one could utilize @code{evaluator_get_variables()} (see
+that, one could utilize @code{evaluator_get_variables} (see
 @ref{evaluator_get_variables}) procedure to obtain a list of variable
 names appearing in function:
 
@@ -150,7 +150,7 @@ names appearing in function:
 @}
 @end example
 
-Procedure @code{evaluator_evaluate()} (see @ref{evaluator_evaluate})
+Procedure @code{evaluator_evaluate} (see @ref{evaluator_evaluate})
 could be used to evaluate function for specific variable values.  Say
 that above function is over variable ``x'' only, then following code
 will evaluate and print function value for x = 0.1:
@@ -166,7 +166,7 @@ will evaluate and print function value for x = 0.1:
 @end example
 
 Or alternatively, since function is over variable with standard name
-``x'', convenience procedure @code{evaluator_evaluate_x()}
+``x'', convenience procedure @code{evaluator_evaluate_x}
 (@ref{evaluator_evaluate_x}) could be used to accomplish same by
 following:
 
@@ -185,14 +185,14 @@ void *f_prim;
 
 After that (supposing that ``x'' is used as derivation variable),
 derivative evaluator object could be created using
-@code{evaluator_derivative()} procedure (see
+@code{evaluator_derivative} procedure (see
 @ref{evaluator_derivative}):
 
 @example
 f_prim = evaluator_derivative (f, "x");
 @end example
 
-or alternatively using @code{evaluator_derivative_x()} convenience
+or alternatively using @code{evaluator_derivative_x} convenience
 procedure (see @ref{evaluator_derivative_x}):
 
 @example
@@ -201,7 +201,7 @@ f_prim = evaluator_derivative_x (f);
 
 Derivative evaluator object could be used to evaluate derivative
 values or say textual representation of derivative could be written to
-standard output through utilizing @code{evaluator_get_string()}
+standard output through utilizing @code{evaluator_get_string}
 procedure (see @ref{evaluator_get_string}) to get string representing
 given evaluator.  Following code would accomplish this:
 
@@ -210,7 +210,7 @@ printf ("  f'(x) = %s\n", evaluator_get_string (f_prim));
 @end example
 
 All evaluator objects must be destroyed after finished with using them
-and @code{evaluator_destroy()} procedure (see @ref{evaluator_destroy})
+and @code{evaluator_destroy} procedure (see @ref{evaluator_destroy})
 is intended for this:
 
 @example
@@ -316,17 +316,17 @@ prefix.
 @cindex main entry points
 
 @menu
-* evaluator_create::        @code{evaluator_create()} procedure
-* evaluator_destroy::       @code{evaluator_destroy()} procedure
-* evaluator_evaluate::      @code{evaluator_evaluate()} procedure
-* evaluator_get_string::    @code{evaluator_get_string()} procedure
-* evaluator_get_variables:: @code{evaluator_get_variables()} procedure
-* evaluator_derivative::    @code{evaluator_derivative()} procedure
+* evaluator_create::        @code{evaluator_create} procedure
+* evaluator_destroy::       @code{evaluator_destroy} procedure
+* evaluator_evaluate::      @code{evaluator_evaluate} procedure
+* evaluator_get_string::    @code{evaluator_get_string} procedure
+* evaluator_get_variables:: @code{evaluator_get_variables} procedure
+* evaluator_derivative::    @code{evaluator_derivative} procedure
 @end menu
 
 @node evaluator_create, evaluator_destroy, Main entry points, Main entry points
-@subsection @code{evaluator_create()}
-@findex @code{evaluator_create()}
+@subsection @code{evaluator_create}
+@findex @code{evaluator_create}
 
 @unnumberedsubsubsec Synopsis
 
@@ -403,8 +403,8 @@ pointer to pass it to other functions from library.
 @ref{evaluator_derivative}
 
 @node evaluator_destroy, evaluator_evaluate, evaluator_create, Main entry points
-@subsection @code{evaluator_destroy()}
-@findex @code{evaluator_destroy()}
+@subsection @code{evaluator_destroy}
+@findex @code{evaluator_destroy}
 
 @unnumberedsubsubsec Synopsis
 
@@ -429,8 +429,8 @@ None.
 @ref{evaluator_create}
 
 @node evaluator_evaluate, evaluator_get_string, evaluator_destroy, Main entry points
-@subsection @code{evaluator_evaluate()}
-@findex @code{evaluator_evaluate()}
+@subsection @code{evaluator_evaluate}
+@findex @code{evaluator_evaluate}
 
 @unnumberedsubsubsec Synopsis
 
@@ -464,8 +464,8 @@ arguments has no effect, i.e. result is still exact.
 @ref{evaluator_evaluate_x_y_z}
 
 @node evaluator_get_string, evaluator_get_variables, evaluator_evaluate, Main entry points
-@subsection @code{evaluator_get_string()}
-@findex @code{evaluator_get_string()}
+@subsection @code{evaluator_get_string}
+@findex @code{evaluator_get_string}
 
 @unnumberedsubsubsec Synopsis
 
@@ -493,8 +493,8 @@ object destroyed.
 @ref{evaluator_create}, @ref{evaluator_destroy}, @ref{evaluator_get_variables}
 
 @node evaluator_get_variables, evaluator_derivative, evaluator_get_string, Main entry points
-@subsection @code{evaluator_get_variables()}
-@findex @code{evaluator_get_variables()}
+@subsection @code{evaluator_get_variables}
+@findex @code{evaluator_get_variables}
 
 @unnumberedsubsubsec Synopsis
 
@@ -523,8 +523,8 @@ None.
 @ref{evaluator_create}, @ref{evaluator_destroy}, @ref{evaluator_get_string}
 
 @node evaluator_derivative,  , evaluator_get_variables, Main entry points
-@subsection @code{evaluator_derivative()}
-@findex @code{evaluator_derivative()}
+@subsection @code{evaluator_derivative}
+@findex @code{evaluator_derivative}
 
 @unnumberedsubsubsec Synopsis
 
@@ -558,17 +558,17 @@ Pointer to evaluator object representing derivative of given function.
 @cindex convenience procedures
 
 @menu
-* evaluator_evaluate_x::     @code{evaluator_evaluate_x()} procedure
-* evaluator_evaluate_x_y::   @code{evaluator_evaluate_x_y()} procedure
-* evaluator_evaluate_x_y_z:: @code{evaluator_evaluate_x_y_z()} procedure
-* evaluator_derivative_x::   @code{evaluator_derivative_x()} procedure
-* evaluator_derivative_y::   @code{evaluator_derivative_y()} procedure
-* evaluator_derivative_z::   @code{evaluator_derivative_z()} procedure
+* evaluator_evaluate_x::     @code{evaluator_evaluate_x} procedure
+* evaluator_evaluate_x_y::   @code{evaluator_evaluate_x_y} procedure
+* evaluator_evaluate_x_y_z:: @code{evaluator_evaluate_x_y_z} procedure
+* evaluator_derivative_x::   @code{evaluator_derivative_x} procedure
+* evaluator_derivative_y::   @code{evaluator_derivative_y} procedure
+* evaluator_derivative_z::   @code{evaluator_derivative_z} procedure
 @end menu
 
 @node evaluator_evaluate_x, evaluator_evaluate_x_y, Convenience procedures, Convenience procedures
-@subsection @code{evaluator_evaluate_x()}
-@findex @code{evaluator_evaluate_x()}
+@subsection @code{evaluator_evaluate_x}
+@findex @code{evaluator_evaluate_x}
 
 @unnumberedsubsubsec Synopsis
 
@@ -603,8 +603,8 @@ Value of function for given value of variable ``x''.
 @ref{evaluator_evaluate}
 
 @node evaluator_evaluate_x_y, evaluator_evaluate_x_y_z, evaluator_evaluate_x, Convenience procedures
-@subsection @code{evaluator_evaluate_x_y()}
-@findex @code{evaluator_evaluate_x_y()}
+@subsection @code{evaluator_evaluate_x_y}
+@findex @code{evaluator_evaluate_x_y}
 
 @unnumberedsubsubsec Synopsis
 
@@ -639,8 +639,8 @@ Value of function for given values of variables ``x'' and ``y''.
 @ref{evaluator_evaluate}
 
 @node evaluator_evaluate_x_y_z, evaluator_derivative_x, evaluator_evaluate_x_y, Convenience procedures
-@subsection @code{evaluator_evaluate_x_y_z()}
-@findex @code{evaluator_evaluate_x_y_z()}
+@subsection @code{evaluator_evaluate_x_y_z}
+@findex @code{evaluator_evaluate_x_y_z}
 
 @unnumberedsubsubsec Synopsis
 
@@ -677,8 +677,8 @@ Value of function for given values of variables ``x'', ``y'' and
 @ref{evaluator_evaluate}
 
 @node evaluator_derivative_x, evaluator_derivative_y, evaluator_evaluate_x_y_z, Convenience procedures
-@subsection @code{evaluator_derivative_x()}
-@findex @code{evaluator_derivative_x()}
+@subsection @code{evaluator_derivative_x}
+@findex @code{evaluator_derivative_x}
 
 @unnumberedsubsubsec Synopsis
 
@@ -710,8 +710,8 @@ Evaluator object representing derivative of function over variable
 @ref{evaluator_derivative}
 
 @node evaluator_derivative_y, evaluator_derivative_z, evaluator_derivative_x, Convenience procedures
-@subsection @code{evaluator_derivative_y()}
-@findex @code{evaluator_derivative_y()}
+@subsection @code{evaluator_derivative_y}
+@findex @code{evaluator_derivative_y}
 
 @unnumberedsubsubsec Synopsis
 
@@ -743,8 +743,8 @@ Evaluator object representing derivative of function over variable
 @ref{evaluator_derivative}
 
 @node evaluator_derivative_z,  , evaluator_derivative_y, Convenience procedures
-@subsection @code{evaluator_derivative_z()}
-@findex @code{evaluator_derivative_z()}
+@subsection @code{evaluator_derivative_z}
+@findex @code{evaluator_derivative_z}
 
 @unnumberedsubsubsec Synopsis
 
@@ -808,26 +808,25 @@ provided.
 @cindex Fortran, main entry points
 
 @menu
-* Fortran evaluator_create::               @code{evaluator_create()} procedure
-* Fortran evaluator_destroy::              @code{evaluator_destroy()} procedure
+* Fortran evaluator_create::               @code{evaluator_create} procedure
+* Fortran evaluator_destroy::              @code{evaluator_destroy} procedure
 * Fortran evaluator_evaluate::             @code{evaluator_evaluate()} procedure
-* Fortran evaluator_get_string_length::    @code{evaluator_get_string_length()} procedure
-* Fortran evaluator_get_string_chars::     @code{evaluator_get_string_chars()} procedure
-* Fortran evaluator_get_variables_length:: @code{evaluator_get_variables_length()} procedure
-* Fortran evaluator_get_variables_chars::  @code{evaluator_get_variables_chars()} procedure
-* Fortran evaluator_derivative::           @code{evaluator_derivative()} procedure
+* Fortran evaluator_get_string_length::    @code{evaluator_get_string_length} procedure
+* Fortran evaluator_get_string_chars::     @code{evaluator_get_string_chars} procedure
+* Fortran evaluator_get_variables_length:: @code{evaluator_get_variables_length} procedure
+* Fortran evaluator_get_variables_chars::  @code{evaluator_get_variables_chars} procedure
+* Fortran evaluator_derivative::           @code{evaluator_derivative} procedure
 @end menu
 
 @node Fortran evaluator_create, Fortran evaluator_destroy, Fortran main entry points, Fortran main entry points
-@subsection @code{evaluator_create()}
-@findex Fortran, @code{evaluator_create()}
+@subsection @code{evaluator_create}
+@findex Fortran, @code{evaluator_create}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer*8 function evaluator_create (string)
-  character(len=*) :: string
-end function evaluator_create
+integer*8 function evaluator_create (string) character(len=*) ::
+string end function evaluator_create
 @end example
 
 @unnumberedsubsubsec Description
@@ -899,15 +898,14 @@ evaluator_get_variables_length}, @ref{Fortran
 evaluator_get_variables_chars}, @ref{Fortran evaluator_derivative}
 
 @node Fortran evaluator_destroy, Fortran evaluator_evaluate, Fortran evaluator_create, Fortran main entry points
-@subsection @code{evaluator_destroy()}
-@findex Fortran, @code{evaluator_destroy()}
+@subsection @code{evaluator_destroy}
+@findex Fortran, @code{evaluator_destroy}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-subroutine evaluator_destroy (evaluator)
-  integer*8 :: evaluator
-end subroutine evaluator_destroy
+subroutine evaluator_destroy (evaluator) integer*8 :: evaluator end
+subroutine evaluator_destroy
 @end example
 
 @unnumberedsubsubsec Description
@@ -925,19 +923,16 @@ None.
 @ref{Fortran evaluator_create}
 
 @node Fortran evaluator_evaluate, Fortran evaluator_get_string_length, Fortran evaluator_destroy, Fortran main entry points
-@subsection @code{evaluator_evaluate()}
-@findex Fortran, @code{evaluator_evaluate()}
+@subsection @code{evaluator_evaluate}
+@findex Fortran, @code{evaluator_evaluate}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-double precision function evaluator_evaluate (evaluator, count, names, values)
-  integer*8 :: evaluator
-  integer :: count
-  character(len=*) :: names
-  double precision :: values
-  dimension values(*)
-end function evaluator_evaluate
+double precision function evaluator_evaluate (evaluator, count, names,
+values) integer*8 :: evaluator integer :: count character(len=*) ::
+names double precision :: values dimension values(*) end function
+evaluator_evaluate
 @end example
 
 @unnumberedsubsubsec Description
@@ -965,15 +960,14 @@ arguments has no effect, i.e. result is still exact.
 evaluator_evaluate_x_y}, @ref{Fortran evaluator_evaluate_x_y_z}
 
 @node Fortran evaluator_get_string_length, Fortran evaluator_get_string_chars, Fortran evaluator_evaluate, Fortran main entry points
-@subsection @code{evaluator_get_string_length()}
-@findex Fortran, @code{evaluator_get_string_length()}
+@subsection @code{evaluator_get_string_length}
+@findex Fortran, @code{evaluator_get_string_length}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_get_string_length (evaluator)
-  integer*8 :: evaluator
-end function evaluator_get_string_length
+integer function evaluator_get_string_length (evaluator) integer*8 ::
+evaluator end function evaluator_get_string_length
 @end example
 
 @unnumberedsubsubsec Description
@@ -990,16 +984,15 @@ Evaluator textual representation string length.
 @ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_string_chars}
 
 @node Fortran evaluator_get_string_chars, Fortran evaluator_get_variables_length, Fortran evaluator_get_string_length, Fortran main entry points
-@subsection @code{evaluator_get_string_chars()}
-@findex Fortran, @code{evaluator_get_string_chars()}
+@subsection @code{evaluator_get_string_chars}
+@findex Fortran, @code{evaluator_get_string_chars}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-subroutine evaluator_get_string_chars (evaluator)
-  integer*8 :: evaluator
-  character(len=*) :: string
-end subroutine evaluator_get_string_chars
+subroutine evaluator_get_string_chars (evaluator) integer*8 ::
+evaluator character(len=*) :: string end subroutine
+evaluator_get_string_chars
 @end example
 
 @unnumberedsubsubsec Description
@@ -1019,15 +1012,14 @@ None.
 @ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_string_length}
 
 @node Fortran evaluator_get_variables_length, Fortran evaluator_get_variables_chars, Fortran evaluator_get_string_chars, Fortran main entry points
-@subsection @code{evaluator_get_variables_length()}
-@findex Fortran, @code{evaluator_get_variables_length()}
+@subsection @code{evaluator_get_variables_length}
+@findex Fortran, @code{evaluator_get_variables_length}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer function evaluator_get_variables_length (evaluator)
-  integer*8 :: evaluator
-end function evaluator_get_variables_length
+integer function evaluator_get_variables_length (evaluator) integer*8
+:: evaluator end function evaluator_get_variables_length
 @end example
 
 @unnumberedsubsubsec Description
@@ -1045,16 +1037,15 @@ Variable names string length.
 @ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_variables_chars}
 
 @node Fortran evaluator_get_variables_chars, Fortran evaluator_derivative, Fortran evaluator_get_variables_length, Fortran main entry points
-@subsection @code{evaluator_get_variables_chars()}
-@findex Fortran, @code{evaluator_get_variables_chars()}
+@subsection @code{evaluator_get_variables_chars}
+@findex Fortran, @code{evaluator_get_variables_chars}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-subroutine evaluator_get_variables_chars (evaluator)
-  integer*8 :: evaluator
-  character(len=*) :: string
-end subroutine evaluator_get_variables_chars
+subroutine evaluator_get_variables_chars (evaluator) integer*8 ::
+evaluator character(len=*) :: string end subroutine
+evaluator_get_variables_chars
 @end example
 
 @unnumberedsubsubsec Description
@@ -1074,16 +1065,14 @@ None.
 @ref{Fortran evaluator_create}, @ref{Fortran evaluator_destroy}, @ref{Fortran evaluator_get_variables_length}
 
 @node Fortran evaluator_derivative,  , Fortran evaluator_get_variables_chars, Fortran main entry points
-@subsection @code{evaluator_derivative()}
-@findex Fortran, @code{evaluator_derivative()}
+@subsection @code{evaluator_derivative}
+@findex Fortran, @code{evaluator_derivative}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer*8 function evaluator_derivative (evaluator, name)
-  integer*8 :: evaluator
-  character(len=*) ::  name
-end function evaluator_derivative
+integer*8 function evaluator_derivative (evaluator, name) integer*8 ::
+evaluator character(len=*) ::  name end function evaluator_derivative
 @end example
 
 @unnumberedsubsubsec Description
@@ -1111,25 +1100,24 @@ evaluator_derivative_y}, @ref{Fortran evaluator_derivative_z}
 @cindex Fortran, convenience procedures
 
 @menu
-* Fortran evaluator_evaluate_x::     @code{evaluator_evaluate_x()} procedure
-* Fortran evaluator_evaluate_x_y::   @code{evaluator_evaluate_x_y()} procedure
-* Fortran evaluator_evaluate_x_y_z:: @code{evaluator_evaluate_x_y_z()} procedure
-* Fortran evaluator_derivative_x::   @code{evaluator_derivative_x()} procedure
-* Fortran evaluator_derivative_y::   @code{evaluator_derivative_y()} procedure
-* Fortran evaluator_derivative_z::   @code{evaluator_derivative_z()} procedure
+* Fortran evaluator_evaluate_x::     @code{evaluator_evaluate_x} procedure
+* Fortran evaluator_evaluate_x_y::   @code{evaluator_evaluate_x_y} procedure
+* Fortran evaluator_evaluate_x_y_z:: @code{evaluator_evaluate_x_y_z} procedure
+* Fortran evaluator_derivative_x::   @code{evaluator_derivative_x} procedure
+* Fortran evaluator_derivative_y::   @code{evaluator_derivative_y} procedure
+* Fortran evaluator_derivative_z::   @code{evaluator_derivative_z} procedure
 @end menu
 
 @node Fortran evaluator_evaluate_x, Fortran evaluator_evaluate_x_y, Fortran convenience procedures, Fortran convenience procedures
-@subsection @code{evaluator_evaluate_x()}
-@findex Fortran, @code{evaluator_evaluate_x()}
+@subsection @code{evaluator_evaluate_x}
+@findex Fortran, @code{evaluator_evaluate_x}
 
 @unnumberedsubsubsec Synopsis
 
 @example
 double precision function evaluator_evaluate_x (evaluator, x)
-  integer*8 :: evaluator
-  double precision ::  x
-end function evaluator_evaluate_x
+integer*8 :: evaluator double precision ::  x end function
+evaluator_evaluate_x
 @end example
 
 @unnumberedsubsubsec Description
@@ -1153,16 +1141,15 @@ Value of function for given value of variable ``x''.
 @ref{Fortran evaluator_evaluate}
 
 @node Fortran evaluator_evaluate_x_y, Fortran evaluator_evaluate_x_y_z, Fortran evaluator_evaluate_x, Fortran convenience procedures
-@subsection @code{evaluator_evaluate_x_y()}
-@findex Fortran, @code{evaluator_evaluate_x_y()}
+@subsection @code{evaluator_evaluate_x_y}
+@findex Fortran, @code{evaluator_evaluate_x_y}
 
 @unnumberedsubsubsec Synopsis
 
 @example
 double precision function evaluator_evaluate_x_y (evaluator, x, y)
-   integer*8 :: evaluator
-   double precision ::  x, y
-end function evaluator_evaluate_x_y
+integer*8 :: evaluator double precision ::  x, y end function
+evaluator_evaluate_x_y
 @end example
 
 @unnumberedsubsubsec Description
@@ -1186,16 +1173,15 @@ Value of function for given values of variables ``x'' and ``y''.
 @ref{Fortran evaluator_evaluate}
 
 @node Fortran evaluator_evaluate_x_y_z, Fortran evaluator_derivative_x, Fortran evaluator_evaluate_x_y, Fortran convenience procedures
-@subsection @code{evaluator_evaluate_x_y_z()}
-@findex Fortran, @code{evaluator_evaluate_x_y_z()}
+@subsection @code{evaluator_evaluate_x_y_z}
+@findex Fortran, @code{evaluator_evaluate_x_y_z}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-double precision function evaluator_evaluate_x_y_z (evaluator, x, y, z)
-  integer*8 :: evaluator
-  double precision :: x, y, z
-end function evaluator_evaluate_x_y_z
+double precision function evaluator_evaluate_x_y_z (evaluator, x, y,
+z) integer*8 :: evaluator double precision :: x, y, z end function
+evaluator_evaluate_x_y_z
 @end example
 
 @unnumberedsubsubsec Description
@@ -1220,15 +1206,14 @@ Value of function for given values of variables ``x'', ``y'' and
 @ref{Fortran evaluator_evaluate}
 
 @node Fortran evaluator_derivative_x, Fortran evaluator_derivative_y, Fortran evaluator_evaluate_x_y_z, Fortran convenience procedures
-@subsection @code{evaluator_derivative_x()}
-@findex Fortran, @code{evaluator_derivative_x()}
+@subsection @code{evaluator_derivative_x}
+@findex Fortran, @code{evaluator_derivative_x}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer*8 function evaluator_derivative_x (evaluator)
-  integer*8 :: evaluator
-end function evaluator_derivative_x
+integer*8 function evaluator_derivative_x (evaluator) integer*8 ::
+evaluator end function evaluator_derivative_x
 @end example
 
 @unnumberedsubsubsec Description
@@ -1253,15 +1238,14 @@ Evaluator object representing derivative of function over variable
 @ref{Fortran evaluator_derivative}
 
 @node Fortran evaluator_derivative_y, Fortran evaluator_derivative_z, Fortran evaluator_derivative_x, Fortran convenience procedures
-@subsection @code{evaluator_derivative_y()}
-@findex Fortran, @code{evaluator_derivative_y()}
+@subsection @code{evaluator_derivative_y}
+@findex Fortran, @code{evaluator_derivative_y}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer*8 function evaluator_derivative_y (evaluator)
-  integer*8 :: evaluator
-end function evaluator_derivative_y
+integer*8 function evaluator_derivative_y (evaluator) integer*8 ::
+evaluator end function evaluator_derivative_y
 @end example
 
 @unnumberedsubsubsec Description
@@ -1286,15 +1270,14 @@ Evaluator object representing derivative of function over variable
 @ref{Fortran evaluator_derivative}
 
 @node Fortran evaluator_derivative_z,  , Fortran evaluator_derivative_y, Fortran convenience procedures
-@subsection @code{evaluator_derivative_z()}
-@findex Fortran, @code{evaluator_derivative_z()}
+@subsection @code{evaluator_derivative_z}
+@findex Fortran, @code{evaluator_derivative_z}
 
 @unnumberedsubsubsec Synopsis
 
 @example
-integer*8 function evaluator_derivative_z (evaluator)
-  integer*8 :: evaluator
-end function evaluator_derivative_z
+integer*8 function evaluator_derivative_z (evaluator) integer*8 ::
+evaluator end function evaluator_derivative_z
 @end example
 
 @unnumberedsubsubsec Description
@@ -1573,7 +1556,7 @@ existing test suite, but present number of tests is certainly far from
 enough.
 
 @item
-Extend and improve error handling.  There are couple @code{assert()}s
+Extend and improve error handling.  There are couple @code{assert}s
 left in code that may be replaced with some other mechanism, also
 probably error handling of more error conditions should be added to
 library.
