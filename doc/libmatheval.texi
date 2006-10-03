@@ -9,6 +9,11 @@
 @include version.texi
 @syncodeindex fn cp
 
+@dircategory GNU libraries
+@direntry
+* libmatheval: (libmatheval).   library for evaluating symbolic expressions
+@end direntry
+
 @ifnottex
 This file documents GNU @code{libmatheval} library.
 

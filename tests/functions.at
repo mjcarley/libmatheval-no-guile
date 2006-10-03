@@ -417,10 +417,10 @@ AT_CHECK([matheval.sh function.scm], [ignore], [(1/sqrt(((x^2)-1)))], [ignore])
 AT_DATA([function.scm],
 [[
 (define f (evaluator-create "atanh(x)"))
-(display (evaluator-evaluate-x f 1))
+(display (evaluator-evaluate-x f 0.5))
 ]])
 
-AT_CHECK([matheval.sh function.scm], [ignore], [+#.#], [ignore])
+AT_CHECK([matheval.sh function.scm], [ignore], [0.549306144334055], [ignore])
 
 AT_DATA([function.scm],
 [[
@@ -434,10 +434,10 @@ AT_CHECK([matheval.sh function.scm], [ignore], [(1/(1-(x^2)))], [ignore])
 AT_DATA([function.scm],
 [[
 (define f (evaluator-create "acoth(x)"))
-(display (evaluator-evaluate-x f 1))
+(display (evaluator-evaluate-x f 2))
 ]])
 
-AT_CHECK([matheval.sh function.scm], [ignore], [+#.#], [ignore])
+AT_CHECK([matheval.sh function.scm], [ignore], [0.549306144334055], [ignore])
 
 AT_DATA([function.scm],
 [[
