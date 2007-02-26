@@ -116,6 +116,14 @@ installed using default prefix @code{/usr/local/lib}):
 gcc example.c -I/usr/local/include -L/usr/local/lib -lmatheval -o example
 @end example
 
+Alternatively, @code{pkg-config} metadata file for @code{libmatheval}
+is installed along with the library too, thus on system with
+@code{pkg-config} installed following command could be used instead:
+
+@example
+gcc example.c $(pkg-config --cflags --libs) -o example
+@end example
+
 First step in actually utilizing library after including appropriate
 header file would be to declare variable of @code{void *} type to
 point to evaluator object that will represent given mathematical

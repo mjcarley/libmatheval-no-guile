@@ -28,6 +28,9 @@ config.h.in config.log config.status stamp-h.in $(AUX_DIST)
 
 SUBDIRS = doc lib tests
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libmatheval.pc
+
 .PHONY: beauty dist-hook
 
 beauty:

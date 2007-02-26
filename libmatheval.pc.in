@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libmatheval
+Description: Library of functions for evaluating mathematical expressions
+Version: 1.1.3
+Libs: -L${libdir} -lmatheval
+Cflags: -I${includedir}
