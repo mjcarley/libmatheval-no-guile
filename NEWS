@@ -1,8 +1,16 @@
-Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006 Aleksandar B. Samardzic
+Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007 Aleksandar
+B. Samardzic
 
 Copying and distribution of this file, with or without modification, are
 permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
+
+
+Version 1.1.4
+
+* Fixed test scripts to accomodate Guile 1.8 branch.
+* Added support for pkg-config.
+* Added some missing texinfo entries.
 
 
 Version 1.1.3
