@@ -8,7 +8,7 @@ and this notice are preserved.
 
 Version 1.1.4
 
-* Fixed test scripts to accomodate Guile 1.8 branch.
+* Fixed test scripts to accommodate Guile 1.8 branch.
 * Added support for pkg-config.
 * Added some missing texinfo entries.
 
