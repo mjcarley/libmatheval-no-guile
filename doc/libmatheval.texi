@@ -141,7 +141,8 @@ for this procedure also for description of notation that should be
 used to describe mathematical functions):
 
 @example
-f = evaluator_create (buffer); assert (f);
+f = evaluator_create (buffer);
+assert (f);
 @end example
 
 Return value should be always checked, because above procedure will
