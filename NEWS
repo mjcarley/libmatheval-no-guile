@@ -6,6 +6,11 @@ permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
 
 
+Version 1.1.5
+
+* Re-licensed under GNU Public License version 3.
+
+
 Version 1.1.4
 
 * Fixed test scripts to accommodate Guile 1.8 branch.
