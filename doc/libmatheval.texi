@@ -18,7 +18,7 @@
 This file documents GNU @code{libmatheval} library.
 
 Copyright @copyright{} 2002, 2003, 2004, 2005, 2006, 2007 Aleksandar
-B. Samard@v{z}i@'c
+Samard@v{z}i@'c
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -33,12 +33,12 @@ license is included in the section entitled ``Copying''.
 @subtitle{Manual edition @value{EDITION}}
 @subtitle{For GNU @code{libmatheval} version @value{VERSION}}
 @subtitle{Last updated @value{UPDATED}}
-@author{Aleksandar B. Samard@v{z}i@'c}
+@author{Aleksandar Samard@v{z}i@'c}
 
 @page
 @vskip 0pt plus 1filll
 Copyright @copyright{} 2002, 2003, 2004, 2005, 2006, 2007 Aleksandar
-B. Samard@v{z}i@'c
+Samard@v{z}i@'c
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
