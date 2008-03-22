@@ -1606,7 +1606,7 @@ Please direct bug reports and eventual patches to
 @email{bug-libmatheval@@gnu.org} mailing list.  For suggestions
 regarding improvements and other @code{libmatheval} related
 conversation use author e-mail address
-@email{asamardzic@@matf.bg.ac.yu}.
+@email{asamardzic@@gnu.org}.
 
 @node Rationale and history, Copying, Bugs, Top
 @chapter Rationale and history
