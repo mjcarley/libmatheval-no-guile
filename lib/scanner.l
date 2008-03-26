@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
- * Foundation, Inc.
+ * Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free
+ * Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
  *
@@ -21,8 +21,8 @@
 
 %{
 /*
- * Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
- * Foundation, Inc.
+ * Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free
+ * Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
  *
@@ -69,7 +69,7 @@ whitespace [ \t]+
 digit [0-9]
 number ({digit}+|{digit}+\.{digit}*|{digit}*\.{digit}+)([Ee][+\-]?{digit}+)?
 constant "e"|"log2e"|"log10e"|"ln2"|"ln10"|"pi"|"pi_2"|"pi_4"|"1_pi"|"2_pi"|"2_sqrtpi"|"sqrt2"|"sqrt1_2"
-function "exp"|"log"|"sqrt"|"sin"|"cos"|"tan"|"cot"|"sec"|"csc"|"asin"|"acos"|"atan"|"acot"|"asec"|"acsc"|"sinh"|"cosh"|"tanh"|"coth"|"sech"|"csch"|"asinh"|"acosh"|"atanh"|"acoth"|"asech"|"acsch"|"abs"|"step"|"delta"|"nandelta"
+function "exp"|"log"|"sqrt"|"sin"|"cos"|"tan"|"cot"|"sec"|"csc"|"asin"|"acos"|"atan"|"acot"|"asec"|"acsc"|"sinh"|"cosh"|"tanh"|"coth"|"sech"|"csch"|"asinh"|"acosh"|"atanh"|"acoth"|"asech"|"acsch"|"abs"|"step"|"delta"|"nandelta"|"erf"
 identifier [_a-zA-Z][[_a-zA-Z0-9]*
 
 %%

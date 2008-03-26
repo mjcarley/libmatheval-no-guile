@@ -1,4 +1,4 @@
-# Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 Free Software
+# Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
 # Foundation, Inc.
 #
 # This file is part of GNU libmatheval
@@ -24,6 +24,6 @@ includedir=@includedir@
 
 Name: libmatheval
 Description: Library of functions for evaluating mathematical expressions
-Version: 1.1.5
+Version: 1.1.6
 Libs: -L${libdir} -lmatheval
 Cflags: -I${includedir}

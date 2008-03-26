@@ -17,8 +17,8 @@
 @ifnottex
 This file documents GNU @code{libmatheval} library.
 
-Copyright @copyright{} 2002, 2003, 2004, 2005, 2006, 2007 Aleksandar
-Samard@v{z}i@'c
+Copyright @copyright{} 2002, 2003, 2004, 2005, 2006, 2007, 2008
+Aleksandar Samardzic
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -33,12 +33,12 @@ license is included in the section entitled ``Copying''.
 @subtitle{Manual edition @value{EDITION}}
 @subtitle{For GNU @code{libmatheval} version @value{VERSION}}
 @subtitle{Last updated @value{UPDATED}}
-@author{Aleksandar Samard@v{z}i@'c}
+@author{Aleksandar Samardzic}
 
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} 2002, 2003, 2004, 2005, 2006, 2007 Aleksandar
-Samard@v{z}i@'c
+Copyright @copyright{} 2002, 2003, 2004, 2005, 2006, 2007, 2008
+Aleksandar Samardzic
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -370,24 +370,24 @@ Variable name is any combination of alphanumericals and @code{_}
 characters beginning with a non-digit that is not elementary function
 name.
 
-Supported elementary functions are (names that should be used are
-given in parenthesis): exponential (@code{exp}), logarithmic
-(@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
-(@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), secant
-(@code{sec}), cosecant (@code{csc}), inverse sine (@code{asin}),
-inverse cosine (@code{acos}), inverse tangent (@code{atan}), inverse
-cotangent (@code{acot}), inverse secant (@code{asec}), inverse
-cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
-(@code{cosh}), hyperbolic tangent (@code{tanh}), hyperbolic cotangent
-(@code{coth}), hyperbolic secant (@code{sech}), hyperbolic cosecant
-(@code{csch}), hyperbolic inverse sine (@code{asinh}), hyperbolic
-inverse cosine (@code{acosh}), hyperbolic inverse tangent
-(@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
-hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
-(@code{acsch}), absolute value (@code{abs}), Heaviside step function
-(@code{step}) with value 1 defined for x = 0 and Dirac delta function
-with infinity (@code{delta}) and not-a-number (@code{nandelta}) values
-defined for x = 0.
+Supported elementary functions are (names that should be used are given
+in parenthesis): exponential (@code{exp}), logarithmic (@code{log}),
+square root (@code{sqrt}), sine (@code{sin}), cosine (@code{cos}),
+tangent (@code{tan}), cotangent (@code{cot}), secant (@code{sec}),
+cosecant (@code{csc}), inverse sine (@code{asin}), inverse cosine
+(@code{acos}), inverse tangent (@code{atan}), inverse cotangent
+(@code{acot}), inverse secant (@code{asec}), inverse cosecant
+(@code{acsc}), hyperbolic sine (@code{sinh}), cosine (@code{cosh}),
+hyperbolic tangent (@code{tanh}), hyperbolic cotangent (@code{coth}),
+hyperbolic secant (@code{sech}), hyperbolic cosecant (@code{csch}),
+hyperbolic inverse sine (@code{asinh}), hyperbolic inverse cosine
+(@code{acosh}), hyperbolic inverse tangent (@code{atanh}), hyperbolic
+inverse cotangent (@code{acoth}), hyperbolic inverse secant
+(@code{asech}), hyperbolic inverse cosecant (@code{acsch}), absolute
+value (@code{abs}), Heaviside step function (@code{step}) with value 1
+defined for x = 0, Dirac delta function with infinity (@code{delta}) and
+not-a-number (@code{nandelta}) values defined for x = 0, and error
+function (@code{erf}).
 
 Supported unary operation is unary minus (@code{'-'}).
 
@@ -863,24 +863,24 @@ Variable name is any combination of alphanumericals and @code{_}
 characters beginning with a non-digit that is not elementary function
 name.
 
-Supported elementary functions are (names that should be used are
-given in parenthesis): exponential (@code{exp}), logarithmic
-(@code{log}), square root (@code{sqrt}), sine (@code{sin}), cosine
-(@code{cos}), tangent (@code{tan}), cotangent (@code{cot}), secant
-(@code{sec}), cosecant (@code{csc}), inverse sine (@code{asin}),
-inverse cosine (@code{acos}), inverse tangent (@code{atan}), inverse
-cotangent (@code{acot}), inverse secant (@code{asec}), inverse
-cosecant (@code{acsc}), hyperbolic sine (@code{sinh}), cosine
-(@code{cosh}), hyperbolic tangent (@code{tanh}), hyperbolic cotangent
-(@code{coth}), hyperbolic secant (@code{sech}), hyperbolic cosecant
-(@code{csch}), hyperbolic inverse sine (@code{asinh}), hyperbolic
-inverse cosine (@code{acosh}), hyperbolic inverse tangent
-(@code{atanh}), hyperbolic inverse cotangent (@code{acoth}),
-hyperbolic inverse secant (@code{asech}), hyperbolic inverse cosecant
-(@code{acsch}), absolute value (@code{abs}), Heaviside step function
-(@code{step}) with value 1 defined for x = 0 and Dirac delta function
-with infinity (@code{delta}) and not-a-number (@code{nandelta}) values
-defined for x = 0.
+Supported elementary functions are (names that should be used are given
+in parenthesis): exponential (@code{exp}), logarithmic (@code{log}),
+square root (@code{sqrt}), sine (@code{sin}), cosine (@code{cos}),
+tangent (@code{tan}), cotangent (@code{cot}), secant (@code{sec}),
+cosecant (@code{csc}), inverse sine (@code{asin}), inverse cosine
+(@code{acos}), inverse tangent (@code{atan}), inverse cotangent
+(@code{acot}), inverse secant (@code{asec}), inverse cosecant
+(@code{acsc}), hyperbolic sine (@code{sinh}), cosine (@code{cosh}),
+hyperbolic tangent (@code{tanh}), hyperbolic cotangent (@code{coth}),
+hyperbolic secant (@code{sech}), hyperbolic cosecant (@code{csch}),
+hyperbolic inverse sine (@code{asinh}), hyperbolic inverse cosine
+(@code{acosh}), hyperbolic inverse tangent (@code{atanh}), hyperbolic
+inverse cotangent (@code{acoth}), hyperbolic inverse secant
+(@code{asech}), hyperbolic inverse cosecant (@code{acsch}), absolute
+value (@code{abs}), Heaviside step function (@code{step}) with value 1
+defined for x = 0, Dirac delta function with infinity (@code{delta}) and
+not-a-number (@code{nandelta}) values defined for x = 0, and error
+function (@code{erf})
 
 Supported unary operation is unary minus (@code{'-'}).
 

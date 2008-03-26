@@ -1,6 +1,6 @@
 /* 
- * Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
- * Foundation, Inc.
+ * Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free
+ * Software Foundation, Inc.
  * 
  * This file is part of GNU libmatheval
  * 
@@ -1187,6 +1187,30 @@ node_derivative(Node * node, char *name, SymbolTable * symbol_table)
 								 data.
 								 function.
 								 child)));
+		/* Apply rule of erf function derivative. */
+		else if (!strcmp(node->data.function.record->name, "erf"))
+			return node_create('b', '*',
+					   node_create('c',
+						       symbol_table_lookup
+						       (symbol_table,
+							"2_sqrtpi")),
+					   node_create('f',
+						       symbol_table_lookup
+						       (symbol_table,
+							"exp"),
+						       node_create('u',
+								   '-',
+								   node_create
+								   ('b',
+								    '^',
+								    node_copy
+								    (node->
+								     data.
+								     function.
+								     child),
+								    node_create
+								    ('n',
+								     2.0)))));
 
 	case 'u':
 		switch (node->data.un_op.operation) {
