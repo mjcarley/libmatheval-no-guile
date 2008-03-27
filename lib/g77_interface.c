@@ -23,6 +23,12 @@
 #include "config.h"
 #endif
 
+#if HAVE_STDINT_H
+#include <stdint.h>
+#else
+#error no <stdint.h> avaialable
+#endif
+
 #include "common.h"
 #include "matheval.h"
 
