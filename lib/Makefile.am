@@ -40,5 +40,5 @@ AM_YFLAGS = -d
 .PHONY: beauty
 
 beauty:
-	-for file in $$(ls *.c *.h); do gindent -orig -i8 -ncdb $$file; done
+	-for file in $$(ls *.c *.h); do indent -orig -i8 -ncdb $$file; done
 	-rm -f *~

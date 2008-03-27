@@ -75,5 +75,5 @@ matheval_LDFLAGS = $(GUILE_LDFLAGS)
 .PHONY: beauty
 
 beauty:
-	-for file in $$(ls *.c); do gindent -orig -i8 -ncdb $$file; done
+	-for file in $$(ls *.c); do indent -orig -i8 -ncdb $$file; done
 	-rm -f *~

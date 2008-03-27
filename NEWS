@@ -6,6 +6,11 @@ permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
 
 
+Version 1.1.7
+
+* Fixed wrong derivative calculation for erf function.
+
+
 Version 1.1.6
 
 * Added support for erorr function (erf).
