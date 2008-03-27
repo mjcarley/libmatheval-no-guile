@@ -22,8 +22,8 @@ $(ac_aux_dir)/config.sub $(ac_aux_dir)/depcomp $(ac_aux_dir)/install-sh	\
 $(ac_aux_dir)/ltmain.sh $(ac_aux_dir)/mdate-sh $(ac_aux_dir)/missing	\
 $(ac_aux_dir)/mkinstalldirs $(ac_aux_dir)/texinfo.tex
 
-MAINTAINERCLEANFILES = Makefile.in _stdint.h aclocal.m4 configure	\
-config.h.in config.log config.status stamp-h.in $(AUX_DIST)
+MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure config.h.in	\
+config.log config.status stamp-h.in $(AUX_DIST)
 
 SUBDIRS = doc lib tests
 

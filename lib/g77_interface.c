@@ -23,7 +23,6 @@
 #include "config.h"
 #endif
 
-#include "_stdint.h"
 #include "common.h"
 #include "matheval.h"
 
