@@ -1615,7 +1615,7 @@ conversation use author e-mail address
 
 The library is developed as a back-end for ``Numerical Analysis''
 course taught during 1999/2000, 2000/2001 and 2001/2002 school years
-at Faculty of Mathematics, University of Belgrade.  Most numerical
+at Department of Mathematics, University of Belgrade.  Most numerical
 libraries (library accompanying ``Numerical Recipes'' book most
 notably example) are asking programmer to write corresponding C code
 when it comes to evaluate mathematical functions.  It seemed to me
