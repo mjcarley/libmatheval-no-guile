@@ -41,7 +41,7 @@ evaluator_create__(char *string, int length)
 {
 	char           *stringz;	/* Zero-terminated string
 					 * representing function.  */
-	int             evaluator;	/* Evaluator created for function. 
+	int64_t         evaluator;	/* Evaluator created for function. 
 					 */
 
 	/* Copy string passed from Fortran code and terminate it with
@@ -51,12 +51,12 @@ evaluator_create__(char *string, int length)
 	stringz[length] = '\0';
 
 	/* Call evaluator_create() function. */
-	evaluator = (int) evaluator_create(stringz);
+	evaluator = (int64_t) evaluator_create(stringz);
 
 	/* Free string used to create evaluator. */
 	XFREE(stringz);
 
-	return (int64_t) evaluator;
+	return evaluator;
 }
 
 /* Wrapper for evaluator_destroy() function.  */
@@ -181,13 +181,13 @@ evaluator_get_variables_chars__(int64_t * evaluator, char *string,
 }
 
 /* Wrapper for evaluator_derivative() function.  */
-int
+int64_t
 evaluator_derivative__(int64_t * evaluator, char *name, int length)
 {
 	char           *stringz;	/* Zero terminated string
 					 * containing derivation variable
 					 * name.  */
-	int             derivative;	/* Evaluator for function
+	int64_t         derivative;	/* Evaluator for function
 					 * derivative.  */
 
 	/* Copy variable name passed from Fortran code and terminate it
@@ -198,7 +198,7 @@ evaluator_derivative__(int64_t * evaluator, char *name, int length)
 
 	/* Call evaluator_derivative() function. */
 	derivative =
-	    (int) evaluator_derivative((void *) *evaluator, stringz);
+	    (int64_t) evaluator_derivative((void *) *evaluator, stringz);
 
 	/* Free string containing derivation variable name. */
 	XFREE(stringz);
@@ -229,22 +229,22 @@ evaluator_evaluate_x_y_z__(int64_t * evaluator, double *x, double *y,
 }
 
 /* Wrapper for evaluator_derivative_x() function.  */
-int
+int64_t
 evaluator_derivative_x__(int64_t * evaluator)
 {
-	return (int) evaluator_derivative_x((void *) *evaluator);
+	return (int64_t) evaluator_derivative_x((void *) *evaluator);
 }
 
 /* Wrapper for evaluator_derivative_y() function.  */
-int
+int64_t
 evaluator_derivative_y__(int64_t * evaluator)
 {
-	return (int) evaluator_derivative_y((void *) *evaluator);
+	return (int64_t) evaluator_derivative_y((void *) *evaluator);
 }
 
 /* Wrapper for evaluator_derivative_z() function.  */
-int
+int64_t
 evaluator_derivative_z__(int64_t * evaluator)
 {
-	return (int) evaluator_derivative_z((void *) *evaluator);
+	return (int64_t) evaluator_derivative_z((void *) *evaluator);
 }
