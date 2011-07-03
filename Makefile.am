@@ -17,6 +17,8 @@
 # along with GNU libmatheval.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+ACLOCAL_AMFLAGS = -I m4
+
 AUX_DIST = $(ac_aux_dir)/compile $(ac_aux_dir)/config.guess		\
 $(ac_aux_dir)/config.sub $(ac_aux_dir)/depcomp $(ac_aux_dir)/install-sh	\
 $(ac_aux_dir)/ltmain.sh $(ac_aux_dir)/mdate-sh $(ac_aux_dir)/missing	\
