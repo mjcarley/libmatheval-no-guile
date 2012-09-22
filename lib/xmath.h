@@ -48,6 +48,12 @@
 #define MATH_NAN (0.0/0.0)
 #endif
 
+#ifdef isnan
+#define MATH_ISNAN(x) isnan(x)
+#else
+#define MATH_ISNAN(x) ((x) != (x))
+#endif
+
 /* Calculate cotangent of value x.  */
 double          math_cot(double x);
 
