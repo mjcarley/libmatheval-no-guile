@@ -1409,7 +1409,7 @@ f77 example.f -ff90 -ffree-form -L/usr/local/lib -lmatheval -o example
 @section Design notes
 @cindex design notes
 
-As usual with an open source project, ultimate reference for anyone
+As usual with a free software project, ultimate reference for anyone
 willing to hack on it is its source code.  Every effort is put to have
 source code properly commented; having in mind that GNU
 @code{libmatheval} is rather simple project, it is reasonable to
@@ -1529,7 +1529,7 @@ As stated in @ref{Design notes} section, GNU @code{libmatheval} is
 designed with intention to be simple and understandable and to
 eventually have its usage to govern improvements.  Thus, further work
 will be primarily directed by user requests and of course, as usual
-with open source projects, with amount of spare time of primary
+with free software projects, with amount of spare time of primary
 developer (see @ref{Bugs} for contact information).  However, there
 exist several obvious improvements that I'm willing to work on
 immediately if any interest of library arise and these are (in random
