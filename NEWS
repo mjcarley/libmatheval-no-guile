@@ -1,9 +1,15 @@
-Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011
+Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2012
 Aleksandar Samardzic
 
 Copying and distribution of this file, with or without modification, are
 permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
+
+
+Version 1.1.9
+
+* Fixed bug in math_step function implementation.
+* Updated manual.
 
 
 Version 1.1.8
