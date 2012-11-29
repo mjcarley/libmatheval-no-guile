@@ -85,8 +85,10 @@ evaluator_create(char *string)
 
 	/* Return null pointer as error indicator if parsing error
 	 * occured. */
-	if (!ok)
+	if (!ok) {
+                symbol_table_destroy(symbol_table);
 		return NULL;
+        }
 
 	/* Simplify tree represention of function. */
 	root = node_simplify(root);
