@@ -6,6 +6,11 @@ permitted in any medium without royalty provided the copyright notice
 and this notice are preserved.
 
 
+Version 1.1.10
+
+* Fixed memory leak in evaluator_create function implementation.
+
+
 Version 1.1.9
 
 * Fixed bug in math_step function implementation.
