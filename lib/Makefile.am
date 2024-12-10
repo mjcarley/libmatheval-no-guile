@@ -21,7 +21,8 @@ MAINTAINERCLEANFILES = Makefile.in parser.c parser.h scanner.c
 
 EXTRA_DIST = parser.h
 
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+##INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_srcdir)
 
 lib_LTLIBRARIES = libmatheval.la
 

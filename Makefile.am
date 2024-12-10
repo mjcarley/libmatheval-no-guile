@@ -1,3 +1,14 @@
+# MODIFIED VERSION OF LIBRARY
+# 
+# This is a modified version of the original libmatheval library, which
+# has had the test suite removed (for now), so that it no longer
+# requires Guile in order to compile. This was done to make it easier to
+# use libmatheval on systems where it may be difficult to install extra
+# system-level packages, in particular various versions of such
+# packages, such as on a university's High Performance Computing system.
+# 
+# [Michael Carley, 2024]
+# 
 # Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011,
 # 2012, 2013 Free Software Foundation, Inc.
 #
@@ -27,7 +38,7 @@ $(ac_aux_dir)/mkinstalldirs $(ac_aux_dir)/texinfo.tex
 MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure config.h.in	\
 config.log config.status stamp-h.in $(AUX_DIST)
 
-SUBDIRS = doc lib tests
+SUBDIRS = lib
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libmatheval.pc
@@ -35,7 +46,7 @@ pkgconfig_DATA = libmatheval.pc
 .PHONY: beauty dist-hook
 
 beauty:
-	-for dir in lib tests; do cd $$dir; $(MAKE) $@; cd ..; done
+	-for dir in lib ; do cd $$dir; $(MAKE) $@; cd ..; done
 
 dist-hook:
 	for file in $(AUX_DIST); do \
