@@ -9,6 +9,20 @@ available, and not the older implementation which libmatheval used for
 its test code. I may at some point implement a test suite which does
 not use Guile. 
 
+# Installation
+
+Installation requires the autoconf suite and has been updated to use
+the current standards:
+
+`. autogen.sh`
+
+followed by 
+
+`./configure ...`
+
+should configure the code. `make` and `make install` will then install
+the library.
+
 # Original GNU copyright notice
 
 Copyright (C) 1999, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011,
@@ -42,9 +56,13 @@ suite) requires Guile to be present.
 
 For detailed GNU libmatheval installation instructions, see INSTALL
 document.  For impatient, simple sequence of:
-  `./configure
-  make
-  make install`
+
+`./configure`
+
+`make`
+
+`make install`
+
 will do the job.
 
 
