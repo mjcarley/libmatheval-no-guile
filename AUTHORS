@@ -2,3 +2,8 @@ libmatheval authors:
 
 - Aleksandar Samardzic <asamardzic@gnu.org>
   Department of Mathematics, University of Belgrade
+
+- Michael Carley <codes@paraffinalia.co.uk>
+  Department of Mechanical Engineering, University of Bath (responsible for
+  removing the Guile code)
+  
