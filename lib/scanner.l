@@ -64,6 +64,10 @@ extern char *input_string; /* String representing function.  */
 static int input_from_string (char *buffer, int max_size);
 %}
 
+/* added by Michael Carley to avoid problems linking on systems without
+   libfl */
+%option noyywrap
+
 /* Token definitions.  */
 whitespace [ \t]+
 digit [0-9]

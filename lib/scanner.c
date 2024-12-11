@@ -322,6 +322,9 @@ void yyfree ( void *  );
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
 /* Begin user sect3 */
+
+#define yywrap() (/*CONSTCOND*/1)
+#define YY_SKIP_YYWRAP
 typedef flex_uint8_t YY_CHAR;
 
 FILE *yyin = NULL, *yyout = NULL;
@@ -582,9 +585,11 @@ extern char *input_string; /* String representing function.  */
 
 /* Read next max_size character from string into buffer.  */
 static int input_from_string (char *buffer, int max_size);
-#line 585 "scanner.c"
+#line 588 "scanner.c"
+/* added by Michael Carley to avoid problems linking on systems without
+   libfl */
 /* Token definitions.  */
-#line 587 "scanner.c"
+#line 592 "scanner.c"
 
 #define INITIAL 0
 
@@ -801,10 +806,10 @@ YY_DECL
 		}
 
 	{
-#line 75 "scanner.l"
+#line 79 "scanner.l"
 
 
-#line 807 "scanner.c"
+#line 812 "scanner.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -863,12 +868,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 77 "scanner.l"
+#line 81 "scanner.l"
 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 79 "scanner.l"
+#line 83 "scanner.l"
 {
         /* Create node representing constant with appropriate value.  */
         yylval.node = node_create ('n', atof (yytext));
@@ -877,7 +882,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 85 "scanner.l"
+#line 89 "scanner.l"
 {
         Record *record; /* Symbol table record.  */
 
@@ -889,7 +894,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 94 "scanner.l"
+#line 98 "scanner.l"
 {
         /* Find symbol table record corresponding to function name.  */
         yylval.record = symbol_table_lookup (symbol_table, yytext);
@@ -898,7 +903,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 100 "scanner.l"
+#line 104 "scanner.l"
 {
         Record *record; /* Symbol table record.  */
 
@@ -910,49 +915,49 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 109 "scanner.l"
+#line 113 "scanner.l"
 {
         return '+';
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 113 "scanner.l"
+#line 117 "scanner.l"
 {
         return '-';
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 117 "scanner.l"
+#line 121 "scanner.l"
 {
         return '*';
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 121 "scanner.l"
+#line 125 "scanner.l"
 {
         return '/';
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 125 "scanner.l"
+#line 129 "scanner.l"
 {
         return '^';
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 129 "scanner.l"
+#line 133 "scanner.l"
 {
         return '(';
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 133 "scanner.l"
+#line 137 "scanner.l"
 {
         return ')';
 }
@@ -960,17 +965,17 @@ YY_RULE_SETUP
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 137 "scanner.l"
+#line 141 "scanner.l"
 {
         return '\n';
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 141 "scanner.l"
+#line 145 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 973 "scanner.c"
+#line 978 "scanner.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1975,7 +1980,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 141 "scanner.l"
+#line 145 "scanner.l"
 
 
 static int input_from_string (char *buffer, int max_size)
